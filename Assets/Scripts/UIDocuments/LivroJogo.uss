@@ -1,0 +1,22 @@
+:root {
+}
+
+.AtributoHabilidade {
+    color: rgb(44, 176, 228);
+    -unity-font-style: bold-and-italic;
+}
+
+.AtributoEnergia {
+    color: rgb(211, 47, 47);
+}
+
+.AtributoSorte {
+}
+
+.AtributoOuro {
+}
+
+.ValorAtributo {
+    -unity-font-style: bold;
+    font-size: 32px;
+}

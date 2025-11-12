@@ -1,0 +1,5 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Button text="1" name="ButtonJogoSalvo_1" />
+    <ui:Button text="2" name="ButtonJogoSalvo_2" />
+    <ui:Button text="3" name="ButtonJogoSalvo_3" />
+</ui:UXML>

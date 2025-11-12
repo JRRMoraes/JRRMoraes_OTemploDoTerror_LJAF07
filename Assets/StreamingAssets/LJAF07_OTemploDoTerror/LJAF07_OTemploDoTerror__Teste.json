@@ -1,0 +1,1170 @@
+{
+    "idLivroJogo": "LJAF07_OTemploDoTerror",
+    "titulo": "O Templo do Terror",
+    "autor": "Ian Livingstone",
+    "capa": "Capa.png",
+	    "copyright": [
+        "ESTE APLICATIVO É UMA HOMENAGEM AO LIVRO-JOGO 'O TEMPLO DO TERROR'",
+        "Publicado por Puffin Books, Penguin Books Ltd.",
+        "Copyright © 1985 por Ian Livingstone",
+        "Copyright © 1985 das ilustrações por Bill Houston",
+        "Direitos exclusivos para o Brasil adquiridos por Marques Saraiva Gráficos e Editores S.A.",
+        "ISBN 85-85238-32-1",
+        "Este aplicativo não possui fins lucrativos e foi criado com o objetivo de prestar uma homenagem à obra original e a seus autores.",
+        "Todos os direitos sobre os textos e ilustrações são reservados aos seus respectivos criadores e detentores dos direitos autorais.",
+        "Se você é o detentor dos direitos autorais e tem alguma preocupação sobre o uso do conteúdo, por favor, entre em contato conosco para que possamos resolver a questão prontamente."
+    ],
+    "apresentacoes": [
+        {
+            "textosApresentacao": [
+                "O sombrio poder do jovem Malbordus está chegando a seu ápice. Os elfos que o criaram atribuíram-lhe uma tarefa final:",
+                "Reaver os cinco artefatos do Dragão escondidos por séculos na cidade perdida de Vatos, em algum lugar no Deserto dos Crânios.",
+                "Somente quando os tiver em seu poder ele será capaz de rebelar-se e submeter Allansia. Cada dia que passa o aproxima mais desse objetivo, e somente VOCÊ pode detê-lo!"
+            ]
+        },
+        {
+            "textosApresentacao": [
+                "SUA missão é atravessar as areias escaldantes do deserto, encontrar a misteriosa cidade perdida e destruir os tesouros que Malbordus está procurando, antes que ele possa alcançá-los.",
+                "Mas cuidado! Cada passo que você dá o aproxima mais de sua perdição..."
+            ]
+        },
+        {
+            "textosApresentacao": [
+                "Ian Livingstone, co-fundador da Games Workshop, um sucesso absoluto, e editor de White Dwarf, criou uma aventura emocionante de espada e feitiçaria para você, com um elaborado sistema de combate e uma Folha de Aventuras para registrar seus ganhos e perdas.",
+                "Tudo o que você precisa é de dois dados, um lápis e uma borracha.",
+                "Há muitos perigos à sua frente, e seu sucesso não está de forma alguma garantido.",
+                "Adversários poderosos alinham-se nas fileiras do inimigo, e muitas vezes sua única alternativa será matar ou ser morto!."
+            ]
+        }
+    ],
+    "ilustrador": "Bill Houston",
+    "ISBN": "85-85238-32-1",
+    "paginasIniciais": [
+        {
+            "idPagina": 1,
+            "idCapitulo": "PAGINAS_INICIAIS",
+            "titulo": "LUTA CONTRA OS MONSTROS",
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Antes de embarcar em sua aventura, é preciso, em primeiro lugar, que você determine suas próprias forças e debilidades.",
+                        "Você tem em seu poder uma espada e um escudo, assim como uma mochila contendo provisões (comida e bebida) para a viagem.",
+                        "Você precisa usar os dados para determinar seus índices iniciais de HABILIDADE e de ENERGIA.",
+                        "Na página X, há uma Folha de Aventuras, na qual você pode registrar os detalhes de uma aventura.",
+                        "Nela você encontrará quadros para registrar seus índices de HABILIDADE e de ENERGIA."
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 2,
+                    "textoDestino": "Role os dados primeiro para continuar o jogo >>",
+                    "aprovacoes": [
+                        {
+                            "atributoAprovacao": "FUNCAO",
+                            "nomeAprovacao": "JogoAtual_Panilha",
+                            "comparacao": "POSSUIR"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "idPagina": 2,
+            "titulo": "Habilidade, Energia e Sorte",
+            "historias": [
+                {
+                    "textosHistoria": ["Seu índice de HABILIDADE reflete a sua capacidade como espadachim e sua aptidão geral como lutador."],
+                    "efeitos": [
+                        {
+                            "textoEfeito": "Deu ruim, -4 energia",
+                            "atributoEfeito": "ENERGIA",
+                            "quantidade": -4
+                        }
+                    ]
+                },
+                {
+                    "textosHistoria": [
+                        "Seu índice de HABILIDADE reflete a sua capacidade como espadachim e sua aptidão geral como lutador. O seu índice de ENERGIA reflete sua constituição física geral, vontade de sobreviver, determinação e condição física como um todo; quanto mais alto for seu índice de ENERGIA, mais tempo você conseguirá sobreviver. O seu índice de SORTE indica o quanto você é uma pessoa naturalmente de sorte. Sorte - e magia - é um fato da vida no reino da fantasia que você está prestes a explorar."
+                    ],
+                    "efeitos": [
+                        {
+                            "textoEfeito": "Deu bom, 6 energia mas vai ser 4 na verdade",
+                            "atributoEfeito": "ENERGIA",
+                            "quantidade": 6
+                        },
+                        {
+                            "textoEfeito": "Ainda ganhou 10 provisões",
+                            "atributoEfeito": "PROVISAO",
+                            "quantidade": 10
+                        }
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 3,
+                    "textoDestino": "Próximo >>"
+                },
+                {
+                    "idPagina": 1,
+                    "idCapitulo": "PAGINAS_CAMPANHA",
+                    "textoDestino": "Pule as introduções, jogar imediatamente >>"
+                }
+            ]
+        },
+        {
+            "idPagina": 3,
+            "titulo": "Combates",
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Luta Contra Mais de uma Criatura: Se você se defrontar com mais de uma criatura em determinado encontro, as instruções na página em questão lhe dirão como lidar com o combate. Algumas vezes você as tratará como se fossem um único monstro; em outras, lutará contra uma de cada vez."
+                    ]
+                }
+            ],
+            "combate": {
+                "inimigos": [
+                    {
+                        "inimigo": "HOMEM-LAGARTO",
+                        "habilidade": 5,
+                        "energia": 6
+                    },
+                    {
+                        "inimigo": "HOMEM-LAGARTO 2",
+                        "habilidade": 10,
+                        "energia": 4
+                    }
+                ],
+                "textosDerrota": ["Você se afogará se não matar o monstro aquático em menos Séries de Ataque do que o índice atual de sua HABILIDADE."],
+                "aprovacaoDerrota": "SerieDeAtaqueEhMaiorOuIgualAHabilidade"
+            },
+            "destinos": [
+                {
+                    "idPagina": 4,
+                    "textoDestino": "Próximo >>"
+                },
+                {
+                    "idPagina": 1,
+                    "idCapitulo": "PAGINAS_CAMPANHA",
+                    "textoDestino": "Pule as introduções, jogar imediatamente >>"
+                }
+            ]
+        },
+        {
+            "idPagina": 4,
+            "titulo": "Sorte",
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Em diversos momentos da sua aventura, tanto durante os combates quanto durante as situações em que você pode ter ou não sorte (detalhes sobre elas são dados nas próprias páginas), você pode apelar para sua sorte para tornar o resultado mais favorável.",
+                        "Mas tome cuidado! Usar a sorte é um negócio arriscado e, se você não tiver sorte, os resultados podem ser desastrosos.",
+                        "O procedimento para usar a sorte é o seguinte: jogue dois dados.",
+                        "- Se o número obtido for igual ou menor do que seu índice de SORTE atual, você teve sorte, e o resultado será a seu favor.",
+                        "- Se o número obtido for maior do que o seu índice de SORTE atual, você não teve sorte e sofrerá as consequências.",
+                        "Esse procedimento é conhecido como Testar a sua Sorte. A cada vez que 'Testar a sua Sorte', você terá que subtrair um ponto do seu índice de SORTE atual. Portanto, você logo compreenderá que, quanto mais confiar na sua sorte, mais arriscado isso se tornará.",
+                        "Em certas páginas do livro, você será orientado a Testar a sua Sorte e será comunicado quanto às consequências de ter ou não ter sorte.",
+                        "Porém, nos combates, você tem sempre a opção de usar a sorte, seja para causar um ferimento mais grave numa criatura que você acabou de ferir, seja para minimizar os efeitos de um ferimento que a criatura acabou de causar em você.",
+                        "Se você tiver acabado de ferir a criatura, pode Testar a sua Sorte conforme descrito acima.",
+                        "- Se tiver sorte, terá causado um ferimento grave e poderá subtrair 2 pontos extras do índice de ENERGIA da criatura.",
+                        "- Porém, se não tiver sorte, o ferimento será um mero arranhão, e você terá que devolver 1 ponto à ENERGIA da criatura (isto é, em vez dos 2 pontos normais de danos, você terá conseguido apenas 1).",
+                        "Se a criatura tiver acabado de feri-lo, você poderá Testar a sua Sorte para tentar minimizar o ferimento.",
+                        "- Se tiver sorte, conseguiu evitar que o golpe o atingisse com toda força. Você recupera 1 ponto de ENERGIA (isto é, em lugar de causar os 2 pontos de danos, o golpe causa apenas 1).",
+                        "- Se não tiver sorte, você recebeu um ferimento mais grave. Subtraia 1 ponto extra de sua ENERGIA.",
+                        "Lembre-se que você tem que subtrair um ponto da sua própria SORTE sempre que Testar a sua Sorte."
+                    ],
+                    "efeitos": [
+                        {
+                            "textoEfeito": "Você obteve 1 TesteX",
+                            "atributoEfeito": "ITENS",
+                            "nomeEfeito": "TesteX",
+                            "quantidade": 1
+                        }
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 5,
+                    "textoDestino": "Só com TesteX - Próximo >>",
+                    "aprovacoes": [
+                        {
+                            "atributoAprovacao": "ITENS",
+                            "nomeAprovacao": "TesteX",
+                            "comparacao": "POSSUIR"
+                        }
+                    ]
+                },
+                {
+                    "idPagina": 5,
+                    "textosDestino": ["Sem TesteX - Próximo >>", "Se você tiver Sorte, vá para 5.", "Se você não tiver Sorte, vá para 6."],
+                    "aprovacoes": [
+                        {
+                            "atributoAprovacao": "ITENS",
+                            "nomeAprovacao": "TesteX",
+                            "comparacao": "NAO_POSSUIR"
+                        }
+                    ],
+                    "testeAtributo": "SORTE",
+                    "idPaginaAzar": 6
+                },
+                {
+                    "idPagina": 1,
+                    "idCapitulo": "PAGINAS_CAMPANHA",
+                    "textoDestino": "Pule as introduções, jogar imediatamente >>"
+                }
+            ]
+        },
+        {
+            "idPagina": 5,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Se você estiver usando um medalhão de ouro com um coração gravado, vá para 258.",
+                        "Se você não estiver usando, Teste a sua Sorte.",
+                        "Se você tiver Sorte, vá para 284. Se você não tiver Sorte, vá para 71."
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 6,
+                    "textoDestino": "Se você estiver usando um medalhão de ouro com um coração gravado, vá para 6.",
+                    "aprovacoes": [
+                        {
+                            "atributoAprovacao": "ITENS",
+                            "nomeAprovacao": "Medalhão de Ouro",
+                            "comparacao": "POSSUIR"
+                        }
+                    ]
+                },
+                {
+                    "idPagina": 7,
+                    "textosDestino": ["Teste sua HABILIDADE", "Se você tiver Sorte, vá para 7.", "Se você não tiver HABILIDADE, vá para 8."],
+                    "aprovacoes": [
+                        {
+                            "atributoAprovacao": "ITENS",
+                            "nomeAprovacao": "Medalhão de Ouro",
+                            "comparacao": "NAO_POSSUIR"
+                        }
+                    ],
+                    "testeAtributo": "HABILIDADE",
+                    "testeSomarDados": 3,
+                    "idPaginaAzar": 8
+                }
+            ]
+        },
+        {
+            "idPagina": 6,
+            "titulo": "Recuperação de Energia e Provisões",
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "O seu índice de ENERGIA mudará muito durante a aventura, à medida que você lutar com monstros e empreender tarefas árduas. Quando estiver próximo de seu objetivo, seu índice de ENERGIA poderá estar perigosamente baixo, e os combates poderão ser particularmente arriscados; portanto, seja cuidadoso!",
+                        "Sua mochila contém Provisões suficientes para 10 refeições. Você pode descansar e comer em qualquer momento, exceto quando estiver lutando, mas só poderá fazer una refeição a cada vez. Comer uma refeição restaura 4 pontos de ENERGIA. Quando fizer uma refeição, adicione 4 pontos em seu índice de ENERGIA e deduza um ponto de suas Provisões. Um quadro separado das Provisões Remanescentes faz parte da Folha de Aventuras para registro dos detalhes sobre Provisões. Lembre-se que você tem um longo caminho a seguir e que, portanto, deve usar suas Provisões de maneira sensata!",
+                        "Lembre-se também que seu índice de ENERGIA nunca poderá exceder seu quantidade Inicial, a menos que isso seja especificamente indicado numa página."
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 7,
+                    "textoDestino": "Próximo >>"
+                }
+            ]
+        },
+        {
+            "idPagina": 7,
+            "titulo": "Recuperação de Sorte",
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Acréscimos em seu índice de SORTE podem ser permitidos durante a aventura, quando você tiver uma dose especial de sorte. Detalhes são fornecidos nas páginas do livro.",
+                        "Lembre-se que, assim como seus índices de HABILIDADE e de ENERGIA, seu índice de SORTE jamais poderá exceder seu quantidade Inicial."
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 8,
+                    "textoDestino": "Próximo >>"
+                }
+            ]
+        },
+        {
+            "idPagina": 8,
+            "titulo": "Equipamento",
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Você começará sua aventura com o mínimo estritamente necessário de equipamento, mas poderá encontrar novos itens durante suas viagens. Está armado com uma espada e trajado com uma armadura de couro. Você tem uma mochila ou coisa semelhante nas costas para guardar suas Provisões e qualquer tesouro que vier a encontrar. Também leva uma lanterna para iluminar-lhe o caminho."
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 9,
+                    "textoDestino": "Próximo >>"
+                }
+            ]
+        },
+        {
+            "idPagina": 9,
+            "titulo": "DICAS PARA O JOGO",
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Sua jornada será perigosa, e é provável que você venha a falhar na primeira tentativa.",
+                        "Tome notas e faça um mapa à medida que prosseguir na exploração - esse mapa terá quantidade inestimável em aventuras futuras, e o ajudará a progredir rapidamente para etapas inexploradas.",
+                        "Nem todas as áreas contêm tesouros; elas podem conter simplesmente armadilhas e criaturas pelas quais você será sem dúvida enganado. Pode acontecer que você faça opções erradas durante sua jornada, e, embora possa estar de fato progredindo para seu destino final, não é em absoluto certo que você encontre o que está procurando.",
+                        "Você perceberá que os itens não farão sentido se forem lidos em ordem numérica. É essencial que você leia somente os itens que for instruído a ler. Ler outros itens somente causa confusão e pode diminuir a graça do jogo. O único caminho verdadeiro implica um mínimo de riscos, e qualquer jogador, por mais que seus índices iniciais sejam fracos, deverá ser capaz de chegar a seu destino com bastante facilidade.",
+                        "Que a sorte dos deuses o acompanhe na aventura a seguir!"
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 0,
+                    "idCapitulo": "PAGINAS_CAMPANHA",
+                    "textoDestino": "INICIAR O JOGO"
+                }
+            ]
+        }
+    ],
+    "paginasCampanha": [
+        {
+            "idPagina": 0,
+            "idCapitulo": "PAGINAS_CAMPANHA",
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Talvez por Malbordus ter nascido em noite de lua cheia, com os lobos uivando ao redor da cabana de sua mãe na floresta, sua natureza era maligna. Talvez fosse algo mais sinistro do que isso. Mas é certo que, depois que sua mãe o abandonou, Malbordus cresceu na Floresta de Darkwood aos cuidados dos Elfos do Darkside. Ensinaram-lhe os malvados estratagemas dos Elfos, e ele também descobriu poderes próprios. Ele podia fazer plantas murcharem ou morrerem simplesmente estalando os dedos; podia fazer se obedecer pelos animais com seu olhar fixo e penetrante. Os Elfos o estimularam e ajudaram-no a desenvolver seus poderes, para que pudesse ensinar-lhe a magia milenar e maligna dos antigos Senhores Elfos - magia tão vil e poderosa que mata os usuários despreparados. Foi na busca de tais poderes malignos que Malbordus tornou-se um homem. Para provar que estava pronto para receber os conhecimentos dos Senhores Elfos, ele deveria, primeiro, passar por um teste. Ordenaram-lhe viajar em direção ao sul, para o Deserto dos Crânios, a fim de encontrar a cidade perdida de Vatos. Na cidade estavam escondidos os cinco artefatos do Dragão, que ele deveria localizar e recolher.",
+                        "Um simples encanto poderia trazer os Dragões de volta à vida para servir às forças do mal. Malbordus os instruiria então para que voassem com ele de volta para a Floresta de Darkwood, onde um grande exército estaria reunido. Ele receberia os poderes milenares e conduziria as hordas do caos por toda a Allansia, numa onda irresistível de morte e destruição.",
+                        "Foi graças unicamente a um golpe de sorte que esses planos terríveis foram descobertos.",
+                        "Nos limites da Floresta de Darkwood, vivia um estranho e velho Mágico chamado Yaztromo. Algo excêntrico, ele vivia sozinho em sua torre, praticando mágicas simples e se comunicando com animais e pássaros. Estava sempre querendo vender pequenos produtos mágicos, de modo a poder pagar para que lhe trouxessem deliciosos bolos de toda a Allansia. Seu gosto pelos doces era a causa de sua única ligação com o mundo exterior, pois raramente deixava sua torre. Foi, portanto uma grande surpresa para todos quando ele chegou, esbravejando e ofegante, ao povoado de Stonebridge. O que poderia ter forçado o velho Yaztromo a se aventurar através da Floresta de Darkwood até Stonebridge? Todos os Anões que viviam ali estavam ansiosos para descobrir, e uma mensagem foi enviada a Gillibran, seu rei.",
+                        "Depois dos rigores de uma missão recente, você repousa em Stonebridge, gozando a alegre companhia dos Anões. Seus ferimentos estão quase curados, e o ferreiro local afiou a lâmina dá sua espada como só os Anões sabem fazer. Descansando numa varanda com o pé sobre a balaustrada, você está intrigado pela comoção à sua frente, na praça do povoado. Seguido por uma multidão de Anões inquisitivos, Yaztromo sobe os degraus de pedra da casa de Gillibran e é saudado afetuosamente pelo rei. A multidão silencia quando o rei ergue a mão, e Yaztromo volta-se para falar. Você se levanta lentamente de sua cadeira e junta-se à multidão para escutar o que o Mágico tem a dizer.",
+                        "Com sombria expressão, o rosto quase tão longo quanto a barba, Yaztromo relata as más notícias a respeito de Malbordus. Os Anões olham apreensivos para o alto, como se esperassem que os cinco Dragões caíssem sobre eles a qualquer momento. O Mágico faz um apelo para que mostrem coragem, dizendo: 'Amigos, olhem para o lado bom, ao menos estamos prevenidos sobre nosso destino iminente, graças a meu corvo de estimação que escutou a conversa entre os Elfos Negros e Malbordus. O que precisamos fazer agora é encontrar alguém que possa achar a cidade perdida antes de Malbordus e destruir os artefatos do Dragão. Precisamos de um guerreiro destemido que deseje arriscar a própria vida para salvar a todos nós. Há entre vocês algum voluntário?'",
+                        "Cada Anão olha em torno para ver se algum outro ousaria aceitar o desafio. Parado ali, vendo os Anões tão preocupados, você compreende que só há uma coisa a fazer. Com um sorriso meio crispado no rosto, você levanta o braço e oferece seus serviços.",
+                        "Yaztromo o vê e diz: 'Eu já não o vi antes em algum lugar? Não importa, você parece ser o tipo de pessoa que precisamos. Abram caminho para nosso bravo voluntário. Devemos partir imediatamente para minha torre. Vamos embora. Você tem muito a aprender, mas nada posso ensinar até que tenhamos atravessado a salvo a Floresta de Darkwood e estejamos dentro de meu laboratório'.",
+                        "Você mal tem tempo de enfiar suas coisas na mochila antes que o impaciente Mágico o leve para fora de Stonebridge rumo à sua torre, no limite sul da Floresta de Darkwood."
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 1,
+                    "idCapitulo": "PAGINAS_CAMPANHA",
+                    "textoDestino": "Vá para 1."
+                }
+            ]
+        },
+        {
+            "idPagina": 1,
+            "idCapitulo": "PAGINAS_CAMPANHA",
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Para um homem velho, Yaztromo é surpreendentemente vivaz.",
+                        "Você atravessa Red River e os campos arados além, e logo chega ao limite da floresta.",
+                        "Yaztromo continua.",
+                        "Toma um caminho estreito em direção à escura muralha de árvores.",
+                        "Está escurecendo; raízes emaranhadas obstruem a passagem e tornam a caminhada muito cansativa.",
+                        "Você pergunta a Yaztromo por que ele parece tão despreocupado em relação à possibilidade de ser atacado pelos monstros da floresta.",
+                        "Ele ironiza e diz que sua magia é bem conhecida e respeitada por todas as criaturas numa área de muitas milhas - ninguém ousaria desafiar Yaztromo!",
+                        "Depois de passar uma calma noite na floresta, você chega à torre de Yaztromo no meio da manhã do dia seguinte.",
+                        "Você o segue pela escadaria em caracol até uma ampla sala no topo da torre.",
+                        "Prateleiras, cristaleiras e armários se espalham pelas paredes, cheios de garrafas, potes de vidro e livros, caixas e toda variedade de estranhos objetos.",
+                        "Yaztromo cai sentado na sua velha cadeira de carvalho, parecendo nesse momento muito cansado da longa jornada.",
+                        "Ele põe a mão no bolso e tira dali um delicado par de óculos de armação de ouro.",
+                        "Depois de colocá-los no nariz, ele observa você furtivamente por sobre eles, e você se sente bastante intimidado com aquele olhar penetrante.",
+                        "Finalmente, ele diz: 'Qualquer um que espere derrotar Malbordus tem que conhecer um mínimo de magia. Você parece bastante inteligente para aprender mas não acho que tenha tempo suficiente para absorver os dez encantos que gostaria de ensinar a você. Falando nisso, gostaria que você compreendesse o quanto é privilegiado por poder aprender minha magia. Mas uma crise é uma crise. Agora, vamos começar. Que encantos devo ensinar? Você pode optar pelo encanto de Abrir Portas, do Sono das Criaturas, da Flecha Mágica, do Idioma, de Ler Símbolos, da Luz, do Fogo, de Saltar, de Detectar Armadilha e de Criar Água.'"
+                    ],
+                    "imagem": "Mago Yaztromo"
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 34,
+                    "idCapitulo": "PAGINAS_CAMPANHA",
+                    "textoDestino": "Para fazer sua escolha, vá para 34."
+                }
+            ]
+        },
+        {
+            "idPagina": 2,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "O quarto é pequeno e esparsamente mobiliado, contando apenas com uma mesa e uma cadeira.",
+                        "Um cinzel e uma marreta estão sobre a cadeira, e o chão está coberto de farpas.",
+                        "Na parede, à esquerda, há uma grande talha de madeira, medindo 2 por 3 metros.",
+                        "Ela representa uma cena da cidade perdida sendo atacada por Vermes da Areia Gigantes."
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 3,
+                    "textoDestino": "Se você desejar olhar mais de perto o entalhe, vá para 3."
+                },
+                {
+                    "idPagina": 5,
+                    "textoDestino": "Se preferir passar pela porta na parede oposta, vá para 5."
+                }
+            ]
+        },
+        {
+            "idPagina": 3,
+            "historias": [
+                {
+                    "textosHistoria": ["A porta dá para um outro corredor bem iluminado e que parece ser regularmente utilizado."]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 7,
+                    "textoDestino": "Se você quiser ir para a esquerda, vá para 7."
+                },
+                {
+                    "idPagina": 8,
+                    "textoDestino": "Se quiser ir para a direita, vá para 8."
+                }
+            ]
+        },
+        {
+            "idPagina": 4,
+            "historias": [
+                {
+                    "textosHistoria": ["A água fresca sacia sua sede. Você se sente imediatamente revigorado, já que a água contém raras substâncias fortificantes."],
+                    "efeito": {
+                        "textoEfeito": "Some 4 pontos de ENERGIA.",
+                        "atributoEfeito": "ENERGIA",
+                        "quantidade": 4
+                    }
+                },
+                {
+                    "textosHistoria": ["Com a água ainda escorrendo pelo queixo, sua procura continua."]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 2,
+                    "textoDestino": "Vá para 2."
+                }
+            ]
+        },
+        {
+            "idPagina": 5,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Você pega uma de suas facas e a coloca na mochila.",
+                        "Seguindo o corredor, você chega rapidamente a um beco sem saída, e não tem outra escolha a não ser refazer seus passos e caminhar sob a chuva dourada."
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 8,
+                    "textoDestino": "Vá para 8."
+                }
+            ]
+        },
+        {
+            "idPagina": 6,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "É impossível evitar pisar nas centenas de conchas de mariscos.",
+                        "E, ao fazê-lo, elas repentinamente se aglutinam formando uma figura humanóide, que o ataca.",
+                        "Você se sente como se estivesse sendo apedrejado até a morte.",
+                        "Você:"
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 8,
+                    "textoDestino": "Fugirá? Vá para 8."
+                },
+                {
+                    "idPagina": 9,
+                    "textoDestino": "Pulará no mar? Vá para 9."
+                }
+            ]
+        },
+        {
+            "idPagina": 7,
+            "historias": [
+                {
+                    "textosHistoria": ["You died. Um meteoro caiu em cima de você"],
+                    "efeitos": [
+                        {
+                            "textoEfeito": "999 pontos de dano em ENERGIA.",
+                            "atributoEfeito": "ENERGIA",
+                            "quantidade": -999
+                        }
+                    ]
+                },
+                {
+                    "textosHistoria": ["'O menino de vô vai deixar vovó, menino de vô vai deixar vovó.''"]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 8,
+                    "textoDestino": "Vá para 8.  Pegadinha, não deve aparecer esse cara."
+                }
+            ]
+        },
+        {
+            "idPagina": 8,
+            "historias": [
+                {
+                    "textosHistoria": ["Ao vê-lo, o Homem-Lagarto sibila com força e avança na sua direção, espada erguida sobre a cabeça."]
+                }
+            ],
+            "combates": [
+                {
+                    "inimigo": "HOMEM-LAGARTO",
+                    "habilidade": 9,
+                    "energia": 8
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 9,
+                    "textoDestino": "Se você vencer, vá para 9."
+                }
+            ]
+        },
+        {
+            "idPagina": 9,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "As escadas levam do alçapão para o negrume lá embaixo. Um cheiro forte de mofo sobe da escuridão, e a emanação dá uma sensação de frio no seu rosto.",
+                        "Você caminha pela escada irregular até não conseguir ver mais nada.",
+                        "Você:"
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 12,
+                    "textoDestino": "Lançará um encanto da Luz (se você souber)?",
+                    "depende": "Item=Encanto da Luz"
+                },
+                {
+                    "idPagina": 2,
+                    "textoDestino": "Caminhará mais para dentro da escuridão?"
+                },
+                {
+                    "idPagina": 10,
+                    "textoDestino": "Subirá de volta pelas escadas e abrirá a outra porta?"
+                }
+            ]
+        },
+        {
+            "idPagina": 10,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "No meio da noite, você é acordado pelo som de passos pesados que marcham sobre o chão. A lua está quase cheia e dá luz suficiente para que você veja um grande vulto que se avoluma, vindo na sua direção.",
+                        "Apanhando sua espada, você se levanta para se defender do Troll da Caverna, que o descobriu durante a caçada noturna."
+                    ]
+                }
+            ],
+            "combates": [
+                {
+                    "inimigo": "TROLL DA CAVERNA",
+                    "habilidade": 8,
+                    "energia": 9
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 11,
+                    "destinos": ["Se você vencer, tentará dormir de novo, mas ficará dando voltas pelo resto da noite.", "De manhã, você parte de novo. Volte para 11."]
+                }
+            ]
+        },
+        {
+            "idPagina": 12,
+            "historias": [
+                {
+                    "textosHistoria": ["Incapaz de abrir a porta, você recua para caminhar de volta pelo corredor, passando pela última encruzilhada."]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 13,
+                    "textoDestino": "Volte para 13."
+                }
+            ]
+        },
+        {
+            "idPagina": 13,
+            "historias": [
+                {
+                    "textosHistoria": ["O Pterodáctilo em mergulho é um alvo difícil de atingir, e você mira cuidadosamente antes de soltar a flecha."]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 999,
+                    "textosDestino": [
+                        "Jogue dois dados e some 3 ao total obtido.",
+                        "Se o total for igual ou menor do que sua HABILIIDADE, volte para 99.",
+                        "Se o total for maior que sua HABILIDADE, vá para 254."
+                    ],
+                    "testeAtributo": "HABILIDADE",
+                    "testeSomarDados": 3,
+                    "idPaginaAzar": 274
+                }
+            ]
+        },
+
+        {
+            "idPagina": 32,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Yaztromo explica que seu encanto de Abrir Portas abrirá qualquer porta trancada.",
+                        "Ele lhe revela as palavras necessárias para lançar o encanto, e diz que ele não consumirá demasiadamente as suas forças;",
+                        "somente 2 pontos de ENERGIA serão perdidos a cada vez que você usar o encanto."
+                    ],
+                    "efeitos": [
+                        {
+                            "textoEfeito": "Você aprendeu o encanto de Abrir Portas",
+                            "atributoEfeito": "ENCANTOS",
+                            "nomeEfeito": "Abrir Portas",
+                            "quantidade": 1
+                        }
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 34,
+                    "textoDestino": "Volte para 34 depois de ter registrado o encanto e seu custo em ENERGIA na sua Folha de Aventuras."
+                }
+            ]
+        },
+        {
+            "idPagina": 34,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Escolha qualquer um dos seguintes encantos. Você será mandado de volta a esta referência depois de ter aprendido um encanto.",
+                        "Quando tiver aprendido quatro encantos, vá para 180.",
+                        "Pense sobre a tarefa à sua frente antes de dizer a Yaztromo qual foi sua escolha:"
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 32,
+                    "textoDestino": "De Abrir Portas, volte para 12",
+                    "aprovacoes": [
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "nomeAprovacao": "Abrir Portas",
+                            "comparacao": "NAO_POSSUIR"
+                        },
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "comparacao": "MENOR",
+                            "quantidade": 4
+                        }
+                    ]
+                },
+                {
+                    "idPagina": 58,
+                    "textoDestino": "Do Sono das Criaturas, vá para 58",
+                    "aprovacoes": [
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "nomeAprovacao": "Sono das Criaturas",
+                            "comparacao": "NAO_POSSUIR"
+                        },
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "comparacao": "MENOR",
+                            "quantidade": 4
+                        }
+                    ]
+                },
+                {
+                    "idPagina": 136,
+                    "textoDestino": "Da Flecha Mágica, vá para 136",
+                    "aprovacoes": [
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "nomeAprovacao": "Flecha Mágica",
+                            "comparacao": "NAO_POSSUIR"
+                        },
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "comparacao": "MENOR",
+                            "quantidade": 4
+                        }
+                    ]
+                },
+                {
+                    "idPagina": 194,
+                    "textoDestino": "Do Idioma, vá para 194",
+                    "aprovacoes": [
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "nomeAprovacao": "Idioma",
+                            "comparacao": "NAO_POSSUIR"
+                        },
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "comparacao": "MENOR",
+                            "quantidade": 4
+                        }
+                    ]
+                },
+                {
+                    "idPagina": 391,
+                    "textoDestino": "De Ler Símbolos, vá para 391",
+                    "aprovacoes": [
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "nomeAprovacao": "Ler Símbolos",
+                            "comparacao": "NAO_POSSUIR"
+                        },
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "comparacao": "MENOR",
+                            "quantidade": 4
+                        }
+                    ]
+                },
+                {
+                    "idPagina": 223,
+                    "textoDestino": "Da Luz, vá para 223",
+                    "aprovacoes": [
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "nomeAprovacao": "Luz",
+                            "comparacao": "NAO_POSSUIR"
+                        },
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "comparacao": "MENOR",
+                            "quantidade": 4
+                        }
+                    ]
+                },
+                {
+                    "idPagina": 264,
+                    "textoDestino": "Do Fogo, vá para 264",
+                    "aprovacoes": [
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "nomeAprovacao": "Fogo",
+                            "comparacao": "NAO_POSSUIR"
+                        },
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "comparacao": "MENOR",
+                            "quantidade": 4
+                        }
+                    ]
+                },
+                {
+                    "idPagina": 301,
+                    "textoDestino": "De Saltar, vá para 301",
+                    "aprovacoes": [
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "nomeAprovacao": "Saltar",
+                            "comparacao": "NAO_POSSUIR"
+                        },
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "comparacao": "MENOR",
+                            "quantidade": 4
+                        }
+                    ]
+                },
+                {
+                    "idPagina": 342,
+                    "textoDestino": "De Detectar Armadilha, vá para 342",
+                    "aprovacoes": [
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "nomeAprovacao": "Detectar Armadilha",
+                            "comparacao": "NAO_POSSUIR"
+                        },
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "comparacao": "MENOR",
+                            "quantidade": 4
+                        }
+                    ]
+                },
+                {
+                    "idPagina": 367,
+                    "textoDestino": "De Criar Água, vá para 367.",
+                    "aprovacoes": [
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "nomeAprovacao": "Criar Água",
+                            "comparacao": "NAO_POSSUIR"
+                        },
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "comparacao": "MENOR",
+                            "quantidade": 4
+                        }
+                    ]
+                },
+                {
+                    "idPagina": 2,
+                    "textoDestino": "Quando tiver aprendido quatro encantos, vá para 2.",
+                    "aprovacoes": [
+                        {
+                            "atributoAprovacao": "ENCANTOS",
+                            "comparacao": "MAIOR_IGUAL",
+                            "quantidade": 4
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "idPagina": 58,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Yaztromo explica que seu encanto do Sono das Criaturas fará dormir qualquer criatura humanóide.",
+                        "Ele conta para você as palavras necessárias para lançar o encanto e diz que ele praticamente nada exigirá de suas forças, somente 1 ponto de ENERGIA a cada vez que você o utilizar."
+                    ],
+                    "efeitos": [
+                        {
+                            "textoEfeito": "Você aprendeu o encanto de Sono das Criaturas",
+                            "atributoEfeito": "ENCANTOS",
+                            "nomeEfeito": "Sono das Criaturas",
+                            "quantidade": 1
+                        }
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 34,
+                    "textoDestino": "Volte para 34, depois de ter anotado o encanto e seu custo em ENERGIA na sua Folha de Aventuras."
+                }
+            ]
+        },
+        {
+            "idPagina": 136,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Yaztromo explica que o encanto da Flecha Mágica fará com que um pequeno e brilhante dardo seja disparado da ponta de seu dedo com precisão mortal contra qualquer alvo.",
+                        "Ele lhe ensina as palavras necessárias para lançar o encanto e diz que isso não exigirá muito de suas forças: somente 2 pontos de ENERGIA a cada vez que usá-lo."
+                    ],
+                    "efeitos": [
+                        {
+                            "textoEfeito": "Você aprendeu o encanto de Flecha Mágica",
+                            "atributoEfeito": "ENCANTOS",
+                            "nomeEfeito": "Flecha Mágica",
+                            "quantidade": 1
+                        }
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 34,
+                    "textoDestino": "Volte para 34, depois de anotar o encanto e seu custo em ENERGIA na sua Folha de Aventuras."
+                }
+            ]
+        },
+        {
+            "idPagina": 194,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Yaztromo explica que seu encanto do Idioma permitirá que você compreenda qualquer criatura com a qual tente se comunicar, qualquer que seja a língua que ela fale.",
+                        "Ele diz a você as palavras necessárias para lançar o encanto e conta que a energia perdida ao usá-lo é insignificante.",
+                        "Perde-se meramente 1 ponto de ENERGIA a cada vez que ele é lançado."
+                    ],
+                    "efeitos": [
+                        {
+                            "textoEfeito": "Você aprendeu o encanto de Idioma",
+                            "atributoEfeito": "ENCANTOS",
+                            "nomeEfeito": "Idioma",
+                            "quantidade": 1
+                        }
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 34,
+                    "textoDestino": "Volte para 34, depois de anotar o encanto e seu custo em ENERGIA na sua Folha de Aventuras."
+                }
+            ]
+        },
+        {
+            "idPagina": 223,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Yaztromo explica que seu encanto da Luz iluminará qualquer aposento, caverna ou área, seja sua escuridão natural ou mágica.",
+                        "Ele lhe ensina as palavras necessárias para lançar o encanto e diz que a energia gasta para lançá-lo, não é muita: só 2 pontos de ENERGIA a cada vez que você o usa."
+                    ],
+                    "efeitos": [
+                        {
+                            "textoEfeito": "Você aprendeu o encanto de Luz",
+                            "atributoEfeito": "ENCANTOS",
+                            "nomeEfeito": "Luz",
+                            "quantidade": 1
+                        }
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 34,
+                    "textoDestino": "Volte para 34 depois de anotar o encanto e seu custo em ENERGIA na sua Folha de Aventuras."
+                }
+            ]
+        },
+        {
+            "idPagina": 264,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Yaztromo explica que esse encanto do Fogo pode ser usado tanto para criar uma parede defensiva em torno de quem o lança quanto para simplesmente acender uma tocha ou lanterna com a ponta dos dedos.",
+                        "Ele lhe ensina as palavras necessárias para que o encanto seja lançado e diz que a energia perdida ao lançar o encanto varia de acordo com a intensidade de fogo exigida, mas que serão gastos 1 ou 2 pontos de ENERGIA a cada vez."
+                    ],
+                    "efeitos": [
+                        {
+                            "textoEfeito": "Você aprendeu o encanto de Fogo",
+                            "atributoEfeito": "ENCANTOS",
+                            "nomeEfeito": "Fogo",
+                            "quantidade": 1
+                        }
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 34,
+                    "textoDestino": "Depois de anotar o encanto e seu custo em ENERGIA na sua Folha de Aventuras, volte para 34."
+                }
+            ]
+        },
+        {
+            "idPagina": 301,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Yaztromo explica que o encanto de Saltar permitirá que você pule por cima de muralhas ou fossos quando quiser.",
+                        "Ele lhe ensina as palavras necessárias para lançar o encanto e avisa que a força exigida para usar o encanto custa 3 pontos de ENERGIA."
+                    ],
+                    "efeitos": [
+                        {
+                            "textoEfeito": "Você aprendeu o encanto de Saltar",
+                            "atributoEfeito": "ENCANTOS",
+                            "nomeEfeito": "Saltar",
+                            "quantidade": 1
+                        }
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 34,
+                    "textoDestino": "Depois de anotar o encanto e o desconto em ENERGIA na sua Folha de Aventuras, volte para 34."
+                }
+            ]
+        },
+        {
+            "idPagina": 342,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Yaztromo explica que o encanto de Detectar Armadilha o advertirá com antecedência de qualquer armadilha perigosa que possa estar colocada em seu caminho, embora você ainda tenha que superar o problema usando sua própria iniciativa.",
+                        "Ele lhe ensina as palavras necessárias para lançar o encanto e diz que, a cada vez que você usá-lo, perderá 2 pontos de ENERGIA."
+                    ],
+                    "efeitos": [
+                        {
+                            "textoEfeito": "Você aprendeu o encanto de Detectar Armadilha",
+                            "atributoEfeito": "ENCANTOS",
+                            "nomeEfeito": "Detectar Armadilha",
+                            "quantidade": 1
+                        }
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 34,
+                    "textoDestino": "Depois de anotar o encanto e o custo em ENERGIA na sua Folha de Aventuras, volte para 34."
+                }
+            ]
+        },
+        {
+            "idPagina": 367,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Yaztromo explica que o encanto de Criar Água encherá suas mãos de água potável a cada vez que você as juntar em concha.",
+                        "Ele lhe diz as palavras necessárias para lançar o encanto e conta que, curiosamente, esse encanto não requer energia alguma para ser lançado."
+                    ],
+                    "efeitos": [
+                        {
+                            "textoEfeito": "Você aprendeu o encanto de Criar Água",
+                            "atributoEfeito": "ENCANTOS",
+                            "nomeEfeito": "Criar Água",
+                            "quantidade": 1
+                        }
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 34,
+                    "textoDestino": "Depois de anotar o encanto na sua Folha de Aventuras, volte para 34."
+                }
+            ]
+        },
+        {
+            "idPagina": 391,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Yaztromo explica que o encanto de Ler Símbolos permite ao usuário ler quaisquer runas ou símbolos mágicos.",
+                        "Ele lhe diz as palavras necessárias para lançar o encanto e conta que praticamente nenhuma energia é exigida para lançá-lo; só se perde 1 ponto de ENERGIA a cada vez que ele é usado."
+                    ],
+                    "efeitos": [
+                        {
+                            "textoEfeito": "Você aprendeu o encanto de Ler Símbolos",
+                            "atributoEfeito": "ENCANTOS",
+                            "nomeEfeito": "Ler Símbolos",
+                            "quantidade": 1
+                        }
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 34,
+                    "textoDestino": "Volte para 34, depois de anotar o encanto e o custo em ENERGIA na sua Folha de Aventuras."
+                }
+            ]
+        },
+        {
+            "idPagina": 274,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Duas figuras se tornam visíveis - um frio percorre sua espinha.",
+                        "Com armaduras que pendem frouxamente de seus ossos amarelados, dois Guerreiros-Esqueleto caminham aos arrancos na sua direção, armados de espadas."
+                    ]
+                }
+            ],
+            "combate": {
+                "inimigos": [
+                    {
+                        "inimigo": "Primeiro GUERREIRO ESQUELETO",
+                        "habilidade": 7,
+                        "energia": 5
+                    },
+                    {
+                        "inimigo": "Segundo GUERREIRO ESQUELETO",
+                        "habilidade": 6,
+                        "energia": 6
+                    }
+                ],
+                "textosDerrota": [
+                    "Ambos os Esqueletos o atacam ao mesmo tempo.",
+                    "Eles atacarão em separado a cada Série de Ataque, mas você tem que escolher qual dos dois enfrentará a cada vez.",
+                    "Ataque o Esqueleto escolhido como num combate normal.",
+                    "Contra o outro, você jogará para saber sua Força de Ataque de modo normal, mas não causará ferimentos se sua Força de Ataque for maior; terá que contar isso apenas como se tivesse se defendido de seu golpe. É claro que, se a Força de Ataque dele for maior, ele o ferirá."
+                ],
+                "combateMultiplo_2osApoio": true
+            },
+            "destinos": [
+                {
+                    "idPagina": 310,
+                    "textoDestino": "Se você vencer, vá para 310."
+                }
+            ]
+        },
+
+        {
+            "idPagina": 377,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Caminhando decididamente para o sul, você não se dá conta do perigo invisível à sua frente.",
+                        "Seu pé direito afunda na areia, e você sente uma dor aguda quando alguma coisa começa a dilacerar-lhe a perna.",
+                        "Você enfia a espada na areia quando um Abocanhador da Areia tenta derrubá-lo.",
+                        "Ele se debate, a areia se desprende daquele corpo pardo, revelando mandíbulas abertas, repletas de dentes cortantes.",
+                        "É impossível penetrar nas escamas grossas que lhe cobrem a pele. Algumas das escamas subitamente se abrem para dar passagem a dois longos tentáculos que tentam agarrá-lo e puxá-lo para a goela do Abocanhador.",
+                        "Ignorando a dor na perna, você golpeia os tentáculos robustos com sua espada."
+                    ],
+
+                    "combate": {
+                        "inimigos": [
+                            {
+                                "inimigo": "Primeiro TENTÁCULO",
+                                "habilidade": 7,
+                                "energia": 7
+                            },
+                            {
+                                "inimigo": "Segundo TENTÁCULO",
+                                "habilidade": 7,
+                                "energia": 7
+                            }
+                        ],
+                        "textosDerrota": ["Se qualquer um dos dois tentáculos vencer duas Séries de Ataque consecutivas durante o combate, volte para 149."],
+                        "aprovacaoDerrota": "InimigoComSerieDeAtaqueVencidoConsecutivo_2",
+                        "destinoDerrota": 149
+                    }
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": 149,
+                    "textoDestino": "Se qualquer um dos dois tentáculos vencer duas Séries de Ataque consecutivas durante o combate, volte para 149."
+                },
+                {
+                    "idPagina": 266,
+                    "textoDestino": "Se você conseguir decepar os dois tentáculos, volte para 266."
+                }
+            ]
+        },
+
+        {
+            "idPagina": 999,
+            "historias": [
+                {
+                    "textosHistoria": [
+                        "Malbordus está morto, e os artefatos do Dragão remanescentes estão esperando para ser destruídos.",
+                        "Você descarrega o martelo de guerra sobre eles repetidas vezes, de modo que nenhum ser possa algum dia ter novamente a oportunidade de usar o poder deles.",
+                        "Com o tempo, os Elfos Negros da Floresta de Darkwood saberão da derrota do líder e recuarão de volta para as profundezas da floresta.",
+                        "Suas provações no interior do Templo do Terror salvaram Allansia.",
+                        "Você poderá agora fazer orgulhosamente a jornada de volta para Stonebridge e devolver o martelo de guerra ao Rei Gillibran.",
+                        "Não há dúvida que Yaztromo ensinará mais de sua mágica a você, e talvez você tenha oportunidade de gastar parte das riquezas que encontrou."
+                    ]
+                }
+            ],
+            "destinos": [
+                {
+                    "idPagina": "#FIM_DETONADO#",
+                    "textoDestino": "Parabéns"
+                }
+            ]
+        }
+    ]
+}
