@@ -84,5 +84,12 @@ namespace Assets.Scripts.Tipos {
             HABILIDADE,
             SORTE
         }
+
+
+        public enum VISUALIZACAO_DESKTOP {
+            PANILHA,
+            TUDO,
+            CAMPANHA
+        }
     }
 }

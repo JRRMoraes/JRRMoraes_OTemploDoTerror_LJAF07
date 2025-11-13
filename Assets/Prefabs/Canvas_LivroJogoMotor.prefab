@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2755003949017350474}
   - component: {fileID: 3122038475258571148}
   - component: {fileID: 2195418478242301815}
+  - component: {fileID: 1643055870543000621}
   m_Layer: 5
   m_Name: Canvas_LivroJogoMotor
   m_TagString: Untagged
@@ -116,9 +117,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29e8dfb7eae750a48b253373dd0e74f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  visualizacaoDesktop: 1
   book: {fileID: 2499035417667028003}
   autoFlip: {fileID: 4829867647746919077}
   uiDocument: {fileID: 8871113129787658451}
+--- !u!114 &1643055870543000621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614616215826602027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 276f51218dacc2e4fa64220a6b05d20a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Componentes.PaginaPanilha
 --- !u!1 &4459659474112097678
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,7 +203,7 @@ PrefabInstance:
     - target: {fileID: 11403584, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 1277573921937197480, guid: d9c8e3e7dc741fd4eb7afebab4042f5d, type: 3}
+      objectReference: {fileID: 8893637928738710979, guid: e4fdaed3361a1e749ad3501dc76ec1a5, type: 3}
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: canvas
       value: 
@@ -253,7 +267,7 @@ PrefabInstance:
     - target: {fileID: 11430880, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 2378690090210548485, guid: 15ed983576f1e2f409be9be3b1bebe8a, type: 3}
+      objectReference: {fileID: 4338659763694851373, guid: 3772237eb33d5a74395dd8bf55a6c1c1, type: 3}
     - target: {fileID: 22280180, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: m_CullTransparentMesh
       value: 0
@@ -264,7 +278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22407488, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 562.5
+      value: -187.5
       objectReference: {fileID: 0}
     - target: {fileID: 22433904, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: m_Pivot.y
@@ -292,7 +306,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22436914, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -285.00006
+      value: -285.00003
       objectReference: {fileID: 0}
     - target: {fileID: 22437570, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: m_SizeDelta.x
@@ -304,11 +318,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22437570, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000047833
+      value: -1.9645e-10
       objectReference: {fileID: 0}
     - target: {fileID: 22437570, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -285.00003
+      value: -285.00006
       objectReference: {fileID: 0}
     - target: {fileID: 22443772, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: m_Pivot.x
@@ -392,11 +406,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22447500, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -104.7759
+      value: -161.2202
       objectReference: {fileID: 0}
     - target: {fileID: 22447500, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 562.5
+      value: -187.5
       objectReference: {fileID: 0}
     - target: {fileID: 22488492, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: m_Pivot.y

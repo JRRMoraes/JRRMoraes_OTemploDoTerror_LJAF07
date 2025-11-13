@@ -1,7 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <ui:Template name="TelaPanilhaNova" src="project://database/Assets/Scripts/UIDocuments/Desktop/TelaPanilhaNova.uxml?fileID=9197481963319205126&amp;guid=ee863795f0f29f242985256ae3e1e857&amp;type=3#TelaPanilhaNova" />
-    <ui:Template name="TelaPanilha" src="project://database/Assets/Scripts/UIDocuments/Desktop/TelaPanilha.uxml?fileID=9197481963319205126&amp;guid=fc28f416cb4af3c4391b2889e429badc&amp;type=3#TelaPanilha" />
+    <ui:Template name="TelaPanilha" src="project://database/Assets/Scripts/UIDocuments/Desktop/TelaPanilhaCompleta.uxml?fileID=9197481963319205126&amp;guid=fc28f416cb4af3c4391b2889e429badc&amp;type=3#TelaPanilhaCompleta" />
+    <ui:Template name="TelaPanilhaMenor" src="project://database/Assets/Scripts/UIDocuments/Desktop/TelaPanilhaMenor.uxml?fileID=9197481963319205126&amp;guid=60ce3a99d3f316f43a141ed022dcf9af&amp;type=3#TelaPanilhaMenor" />
     <Style src="project://database/Assets/Scripts/UIDocuments/LivroJogo.uss?fileID=7433441132597879392&amp;guid=9cb962d2be427cf458b6a5c85056ea23&amp;type=3#LivroJogo" />
-    <ui:Instance template="TelaPanilhaNova" />
-    <ui:Instance template="TelaPanilha" />
+    <ui:Instance template="TelaPanilhaNova" name="PanilhaNova" enabled="false" />
+    <ui:Instance template="TelaPanilha" name="PanilhaCompleta" />
+    <ui:Instance template="TelaPanilhaMenor" name="PanilhaMenor" enabled="false" />
 </ui:UXML>
