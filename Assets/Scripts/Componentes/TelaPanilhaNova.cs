@@ -14,7 +14,7 @@ namespace Assets.Scripts.Componentes {
 
 
         void Start() {
-            Iniciar();
+            ///  Iniciar();
         }
 
 
@@ -25,16 +25,16 @@ namespace Assets.Scripts.Componentes {
 
         void Iniciar() {
             livroJogoMotor = GetComponent<LivroJogoMotor>();
-            if (livroJogoMotor is null)
+            if (!LivroJogoMotor.EhValido(livroJogoMotor))
                 return;
-            panilhaNova = livroJogoMotor.panilhaNova;
-            if (panilhaNova is null)
-                return;
-            panilhaNova.dataSource = LivroJogo.INSTANCIA.jogoAtual;
-            bool _ativo = (LivroJogo.INSTANCIA.jogoAtual != null)
-                && (LivroJogo.INSTANCIA.jogoAtual.panilha is null);
-            if (panilhaNova.enabledSelf != _ativo)
-                panilhaNova.SetEnabled(_ativo);
+            /*           panilhaNova = livroJogoMotor.panilhaNova;
+                       if (panilhaNova is null)
+                           return;
+                       panilhaNova.dataSource = LivroJogo.INSTANCIA.jogoAtual;
+                       bool _ativo = (Jogo.EhValido(LivroJogo.INSTANCIA.jogoAtual))
+                           && (!Panilha.EhValido(LivroJogo.INSTANCIA.jogoAtual.panilha));
+                       if (panilhaNova.enabledSelf != _ativo)
+                           panilhaNova.SetEnabled(_ativo);*/
         }
     }
 }

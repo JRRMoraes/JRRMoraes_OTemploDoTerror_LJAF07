@@ -1,4 +1,8 @@
-﻿namespace Assets.Scripts.Tipos {
+﻿using System;
+using System.IO;
+using UnityEngine;
+
+namespace Assets.Scripts.Tipos {
 
     [System.Serializable]
     public class Destino {
@@ -30,6 +34,30 @@
     public class DestinoExecucao : Destino {
 
         public string imagemArquivo;
+
+
+        public static DestinoExecucao CriarCom(Destino destino) {
+            DestinoExecucao _destinoExecucao = new DestinoExecucao();
+            _destinoExecucao.idPagina = destino.idPagina;
+            _destinoExecucao.idCapitulo = destino.idCapitulo;
+            if (_destinoExecucao.idCapitulo == Conjuntos.CAMPANHA_CAPITULO.NULO)
+                _destinoExecucao.idCapitulo = LivroJogo.INSTANCIA.jogoAtual.campanhaIdCapitulo;
+            _destinoExecucao.textoDestino = destino.textoDestino;
+            _destinoExecucao.textosDestino = destino.textosDestino;
+            _destinoExecucao.aprovacoes = destino.aprovacoes;
+            _destinoExecucao.testeAtributo = destino.testeAtributo;
+            _destinoExecucao.testeSomarDados = destino.testeSomarDados;
+            _destinoExecucao.idPaginaAzar = destino.idPaginaAzar;
+            _destinoExecucao.imagem = destino.imagem;
+            if (string.IsNullOrWhiteSpace(_destinoExecucao.imagem)) {
+                _destinoExecucao.imagemArquivo = LivroJogo.MontarArquivoECaminho(LivroJogo.IMAGEM_CAMINHO_LIVRO_JOGO, _destinoExecucao.imagem + LivroJogo.IMAGEM_EXTENSAO);
+                if (!File.Exists(_destinoExecucao.imagemArquivo)) {
+                    Debug.LogError($"Arquivo Imagem Destino não encontrado: {_destinoExecucao.imagemArquivo}");
+                    _destinoExecucao.imagemArquivo = "";
+                }
+            }
+            return _destinoExecucao;
+        }
     }
 
 

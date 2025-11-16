@@ -2,9 +2,10 @@
 
     public class Constantes {
 
-        public const int TEMPO_ANIMACAO_PEQUENO = 200;
-        public const int TEMPO_ANIMACAO_NORMAL = 2000;
-        public const int TEMPO_ANIMACAO_GRANDE = 4000;
+        public const float TEMPO_OBSERVADOR = 0.010f;
+        public const float TEMPO_ANIMACAO_PEQUENO = 0.200f;
+        public const float TEMPO_ANIMACAO_NORMAL = 2.000f;
+        public const float TEMPO_ANIMACAO_GRANDE = 4.000f;
         public const int TEMPO_DADOS_ROLANDO_SEGUNDOS = 2;
         public const int TEMPO_DADOS_RESULTADO_MILESIMOS = (TEMPO_DADOS_ROLANDO_SEGUNDOS + 1) * 1000;
 
@@ -35,5 +36,8 @@
 
         public const string COMBATE_APROVACAO_DERROTA__SERIE_DE_ATAQUE_EH_MAIOR_OU_IGUAL_A_HABILIDADE = "SerieDeAtaqueEhMaiorOuIgualAHabilidade";
         public const string COMBATE_APROVACAO_DERROTA__INIMIGO_COM_SERIE_DE_ATAQUE_VENCIDO_CONSECUTIVO_2 = "InimigoComSerieDeAtaqueVencidoConsecutivo_2";
+
+        public const float HISTORIA_VELOCIDADE_TEXTO_NORMAL = 0.075f;
+        public const float HISTORIA_VELOCIDADE_TEXTO_RAPIDO = 0.001f;
     }
 }

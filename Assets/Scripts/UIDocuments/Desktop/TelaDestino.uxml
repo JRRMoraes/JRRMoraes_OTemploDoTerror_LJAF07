@@ -1,6 +1,14 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Button text="Salvar progresso" />
-    <ui:Label text="Escolha para onde vai" style="white-space: pre-wrap;" />
-    <ui:Button text="Colocará o anel no dedo?&#10;Vá para 277." style="white-space: pre-wrap;" />
-    <ui:Button text="Atravessará a peça em direção à passagem em arco na parede oposta?&#10;Vá para 20." style="white-space: pre-wrap;" />
+    <Style src="project://database/Assets/Scripts/UIDocuments/LivroJogo.uss?fileID=7433441132597879392&amp;guid=9cb962d2be427cf458b6a5c85056ea23&amp;type=3#LivroJogo" />
+    <ui:GroupBox name="DestinoComandosGroupBox" style="flex-direction: row; align-items: center; justify-content: space-between;">
+        <ui:Label text="Escolha o seu&#10;Destino:" name="ComandoTituloLabel" style="white-space: pre-wrap; font-size: 18px; -unity-font-style: bold-and-italic; -unity-text-align: upper-center;" />
+        <ui:GroupBox name="DestinoComandos2GroupBox">
+            <ui:Button text="SALVAR JOGO ?" name="SalvarJogoAtualButton" />
+            <ui:Button text="CURAR ?" name="CurarJogadorButton" />
+        </ui:GroupBox>
+    </ui:GroupBox>
+    <ui:GroupBox name="DestinoSelecaoGroupBox">
+        <ui:Button text="Atravessará a peça em direção à passagem em arco na parede oposta?&#10;Vá para 20." style="white-space: pre-wrap;" />
+        <ui:Button text="Colocará o anel no dedo?&#10;Vá para 277." style="white-space: pre-wrap;" />
+    </ui:GroupBox>
 </ui:UXML>

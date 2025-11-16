@@ -52,7 +52,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -131,12 +131,12 @@ TextureImporter:
       name: Dados6_Dourado_rgbFE8E20_0
       rect:
         serializedVersion: 2
-        x: 21
-        y: 15
-        width: 67
-        height: 67
+        x: 22
+        y: 16
+        width: 65
+        height: 65
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -153,12 +153,12 @@ TextureImporter:
       name: Dados6_Dourado_rgbFE8E20_1
       rect:
         serializedVersion: 2
-        x: 109
-        y: 15
-        width: 67
-        height: 67
+        x: 110
+        y: 16
+        width: 65
+        height: 65
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -175,12 +175,12 @@ TextureImporter:
       name: Dados6_Dourado_rgbFE8E20_2
       rect:
         serializedVersion: 2
-        x: 196
-        y: 15
-        width: 67
-        height: 67
+        x: 197
+        y: 16
+        width: 65
+        height: 65
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -197,12 +197,12 @@ TextureImporter:
       name: Dados6_Dourado_rgbFE8E20_3
       rect:
         serializedVersion: 2
-        x: 283
-        y: 15
-        width: 68
-        height: 67
+        x: 284
+        y: 16
+        width: 66
+        height: 65
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -219,12 +219,12 @@ TextureImporter:
       name: Dados6_Dourado_rgbFE8E20_4
       rect:
         serializedVersion: 2
-        x: 371
-        y: 15
-        width: 67
-        height: 67
+        x: 372
+        y: 16
+        width: 65
+        height: 65
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -241,12 +241,12 @@ TextureImporter:
       name: Dados6_Dourado_rgbFE8E20_5
       rect:
         serializedVersion: 2
-        x: 459
-        y: 15
-        width: 67
-        height: 67
+        x: 460
+        y: 16
+        width: 65
+        height: 65
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -263,7 +263,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: c4aad0cb13610074590f73790a92d95f
     internalID: 0
     vertices: []
     indices: 
@@ -271,7 +271,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Dados6_Dourado_rgbFE8E20_0: -3311375354286239081
       Dados6_Dourado_rgbFE8E20_1: -975382572910873311

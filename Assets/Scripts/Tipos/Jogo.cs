@@ -1,4 +1,5 @@
 ﻿using System;
+using static Assets.Scripts.Tipos.Conjuntos;
 
 
 namespace Assets.Scripts.Tipos {
@@ -10,9 +11,9 @@ namespace Assets.Scripts.Tipos {
 
         public Panilha panilha;
 
-        public Conjuntos.CAMPANHA_CAPITULO campanhaCapitulo;
+        public int campanhaIdPagina;
 
-        public int campanhaPagina;
+        public Conjuntos.CAMPANHA_CAPITULO campanhaIdCapitulo;
 
         public DateTime dataCriacao;
 
@@ -21,33 +22,44 @@ namespace Assets.Scripts.Tipos {
 
         public Jogo(int idJogo) {
             this.idJogo = idJogo;
-            this.campanhaCapitulo = PaginaUtils.PAGINA_INICIAL().idCapitulo;
-            this.campanhaPagina = PaginaUtils.PAGINA_INICIAL().idPagina;
+            this.campanhaIdCapitulo = PaginaUtils.PAGINA_INICIAL().idCapitulo;
+            this.campanhaIdPagina = PaginaUtils.PAGINA_INICIAL().idPagina;
             this.panilha = null;
         }
 
 
-        public void AjustarSeForNovoJogo() {
-            if (dataCriacao == DateTime.MinValue) {
-                dataCriacao = DateTime.Now;
-                dataSalvo = dataCriacao;
-                panilha = null;
-            }
-            if (campanhaCapitulo == PaginaUtils.PAGINA_ZERADA().idCapitulo) {
-                campanhaCapitulo = PaginaUtils.PAGINA_INICIAL().idCapitulo;
-                campanhaPagina = PaginaUtils.PAGINA_INICIAL().idPagina;
-                panilha = null;
-            }
-            if ((campanhaCapitulo == PaginaUtils.PAGINA_INICIAL().idCapitulo) && (campanhaPagina < PaginaUtils.PAGINA_INICIAL().idPagina)) {
-                campanhaPagina = PaginaUtils.PAGINA_INICIAL().idPagina;
-                panilha = null;
-            }
+        public static bool EhValido(Jogo jogo) {
+            if (jogo is null)
+                return false;
+            if (jogo.idJogo == 0)
+                return false;
+            if (!Panilha.EhValido(jogo.panilha))
+                return false;
+            if (jogo.campanhaIdCapitulo == PaginaUtils.PAGINA_ZERADA().idCapitulo)
+                return false;
+            if (jogo.campanhaIdPagina < PaginaUtils.PAGINA_INICIAL().idPagina)
+                return false;
+            if (jogo.dataCriacao == DateTime.MinValue)
+                return false;
+            return true;
+        }
+
+
+        public bool AjustarSeForNovoJogo() {
+            if (Jogo.EhValido(this))
+                return false;
+            panilha = null;
+            campanhaIdCapitulo = PaginaUtils.PAGINA_INICIAL().idCapitulo;
+            campanhaIdPagina = PaginaUtils.PAGINA_INICIAL().idPagina;
+            dataCriacao = DateTime.Now;
+            dataSalvo = dataCriacao;
+            return true;
         }
 
 
         public Jogo Clonar() {
             Jogo _clone = Uteis.Clonar<Jogo>(this);
-            if ((_clone.panilha != null) && ((_clone.panilha.habilidadeInicial + _clone.panilha.energiaInicial + _clone.panilha.sorteInicial) == 0))
+            if (!Panilha.EhValido(_clone.panilha))
                 _clone.panilha = null;
             return _clone;
         }

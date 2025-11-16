@@ -1,0 +1,73 @@
+﻿using Assets.Scripts.Tipos;
+using System.Collections;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.UIElements;
+using static Assets.Scripts.Tipos.Conjuntos;
+
+namespace Assets.Scripts.Componentes {
+    public class TelaCombate : MonoBehaviour, IPadraoObservador {
+
+        LivroJogoMotor livroJogoMotor;
+
+        VisualElement combateGroupBox;
+
+
+        void Awake() {
+            livroJogoMotor = GetComponent<LivroJogoMotor>();
+            LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Inscrever(this);
+        }
+
+
+        void OnDestroy() {
+            LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Desinscrever(this);
+        }
+
+        public PaginaExecutora PaginaExecutoraAtual() {
+            return LivroJogo.INSTANCIA.paginaExecutora;
+        }
+
+
+        public void AoNotificar(OBSERVADOR_CONDICAO observadorCondicao) {
+            if (!LivroJogoMotor.EhValido(livroJogoMotor))
+                return;
+            if (combateGroupBox is null)
+                combateGroupBox = livroJogoMotor.raiz.Query<VisualElement>("CombateGroupBox");
+
+            AoNotificar_ProcessarTelaCombate(observadorCondicao);
+        }
+
+
+        bool AoNotificar_ProcessarTelaCombate(OBSERVADOR_CONDICAO observadorCondicao) {
+            if (!OBSERVADOR_CONDICAO__JogoAtualEPaginaExecutora.Contains(observadorCondicao))
+                return false;
+            if (combateGroupBox is null)
+                return false;
+            if (!PaginaExecutora.EhValido(PaginaExecutoraAtual())) {
+                while (combateGroupBox.childCount >= 1)
+                    combateGroupBox.Remove(combateGroupBox.Children().First());
+                return true;
+            }
+            if (PaginaExecutoraAtual().paginaEstado != PAGINA_EXECUTOR_ESTADO.COMBATE)
+                return false;
+            if (!Jogo.EhValido(LivroJogo.INSTANCIA.jogoAtual))
+                return false;
+
+            switch (PaginaExecutoraAtual().combateProcesso) {
+                case PROCESSO.ZERO:
+                    //if (PaginaExecutoraAtual().combate != null)
+                    //    PaginaExecutoraAtual().combateProcesso = PROCESSO.INICIANDO;
+                    //else
+                    PaginaExecutoraAtual().combateProcesso = PROCESSO.CONCLUIDO;
+                    LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
+                    return true;
+                case PROCESSO.CONCLUIDO:
+                    PaginaExecutoraAtual().combateProcesso = PROCESSO.DESTRUIDO;
+                    PaginaExecutoraAtual().paginaEstado = PAGINA_EXECUTOR_ESTADO.DESTINOS;
+                    LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
+                    return true;
+            }
+            return false;
+        }
+    }
+}

@@ -1,4 +1,7 @@
-﻿namespace Assets.Scripts.Tipos {
+﻿using System;
+using static Assets.Scripts.Tipos.Conjuntos;
+
+namespace Assets.Scripts.Tipos {
 
     [System.Serializable]
     public class Efeito {
@@ -18,8 +21,22 @@
 
     [System.Serializable]
     public class EfeitoExecucao : Efeito {
+
         public Conjuntos.PROCESSO exeProcessoEfeito;
+
         public int exeIdEfeito;
+
+
+        public static EfeitoExecucao CriarCom(Efeito efeito) {
+            EfeitoExecucao _efeitoExecucao = new EfeitoExecucao();
+            _efeitoExecucao.textoEfeito = efeito.textoEfeito;
+            _efeitoExecucao.atributoEfeito = efeito.atributoEfeito;
+            _efeitoExecucao.nomeEfeito = efeito.nomeEfeito;
+            _efeitoExecucao.quantidade = efeito.quantidade;
+            _efeitoExecucao.exeProcessoEfeito = PROCESSO.ZERO;
+            _efeitoExecucao.exeIdEfeito = UnityEngine.Random.Range(1, 1000);
+            return _efeitoExecucao;
+        }
     }
 
 
@@ -28,7 +45,15 @@
 
     [System.Serializable]
     public class EfeitoInimigoExecucao : EfeitoExecucao {
+
         public int exeIdInimigo;
+
+
+        public static EfeitoInimigoExecucao CriarCom(Inimigo inimigoI, int indiceInimigo) {
+            EfeitoInimigoExecucao _efeitoInimigoExecucao = new EfeitoInimigoExecucao();
+            _efeitoInimigoExecucao.exeIdInimigo = indiceInimigo;
+            return _efeitoInimigoExecucao;
+        }
     }
 
 

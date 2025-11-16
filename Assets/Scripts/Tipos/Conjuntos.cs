@@ -86,10 +86,19 @@ namespace Assets.Scripts.Tipos {
         }
 
 
-        public enum VISUALIZACAO_DESKTOP {
+        public enum VISUALIZACAO {
             PANILHA,
             TUDO,
             CAMPANHA
         }
+
+
+        public enum OBSERVADOR_CONDICAO {
+            VISUALIZACAO,
+            JOGO_ATUAL,
+            PAGINA_EXECUTORA
+        }
+        public static OBSERVADOR_CONDICAO[] OBSERVADOR_CONDICAO__VisualizacaoEPaginaExecutora = new OBSERVADOR_CONDICAO[] { OBSERVADOR_CONDICAO.VISUALIZACAO, OBSERVADOR_CONDICAO.PAGINA_EXECUTORA };
+        public static OBSERVADOR_CONDICAO[] OBSERVADOR_CONDICAO__JogoAtualEPaginaExecutora = new OBSERVADOR_CONDICAO[] { OBSERVADOR_CONDICAO.JOGO_ATUAL, OBSERVADOR_CONDICAO.PAGINA_EXECUTORA };
     }
 }

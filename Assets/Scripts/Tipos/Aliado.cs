@@ -22,5 +22,19 @@
         public bool exeEhAliado;
 
         public bool exeEstaVivo;
+
+
+        public static AliadoExecucao CriarCom(Aliado aliado) {
+            if (aliado is null)
+                return null;
+            AliadoExecucao _aliadoExecucao = new AliadoExecucao();
+            _aliadoExecucao.aliado = aliado.aliado;
+            _aliadoExecucao.habilidade = aliado.habilidade;
+            _aliadoExecucao.energia = aliado.energia;
+            _aliadoExecucao.exeEnergiaAtual = _aliadoExecucao.energia;
+            _aliadoExecucao.exeEhAliado = true;
+            _aliadoExecucao.exeEstaVivo = true;
+            return _aliadoExecucao;
+        }
     }
 }

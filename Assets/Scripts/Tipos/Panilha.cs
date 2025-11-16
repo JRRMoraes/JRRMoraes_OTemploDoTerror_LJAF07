@@ -32,6 +32,20 @@ namespace Assets.Scripts.Tipos {
         public Encanto[] encantos = new Encanto[] { };
 
 
+
+        public static bool EhValido(Panilha panilha) {
+            if (panilha is null)
+                return false;
+            if (panilha.habilidadeInicial <= 0)
+                return false;
+            if (panilha.energiaInicial <= 0)
+                return false;
+            if (panilha.sorteInicial <= 0)
+                return false;
+            return true;
+        }
+
+
         public static Panilha CriarPanilhaViaRolagens(DadosRoladosTotaisParaPanilhaNova totaisRolados, string nome, Conjuntos.JOGO_NIVEL nivel) {
             Panilha _panilha = new Panilha();
             _panilha.nome = nome;

@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿using Newtonsoft.Json;
+using System.IO;
+using System.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 
 namespace Assets.Scripts {
@@ -19,7 +23,7 @@ namespace Assets.Scripts {
 
         public static T[] AdicionarNoArray<T>(T[] array, T item) {
             if (array == null)
-                array = new T[0];
+                array = new T[] { };
             if (item == null)
                 return array;
             T[] novoArray = new T[array.Length + 1];
@@ -31,8 +35,31 @@ namespace Assets.Scripts {
 
 
         public static T Clonar<T>(T objetoOriginal) {
-            string _json = JsonUtility.ToJson(objetoOriginal);
-            return JsonUtility.FromJson<T>(_json);
+            string _json = JsonConvert.SerializeObject(objetoOriginal);
+            return JsonConvert.DeserializeObject<T>(_json);
+        }
+
+
+        public static Visibility ObterVisibility(bool ehVisivel) {
+            return (ehVisivel) ? Visibility.Visible : Visibility.Hidden;
+        }
+
+
+        public static async Task<Texture2D> CarregarImagemAsync(string caminho) {
+            byte[] _dados;
+#if UNITY_ANDROID && !UNITY_EDITOR
+        //// Android requer WWW para acessar StreamingAssets
+        var www = new WWW(caminho);
+        await Task.Run(() => { while (!www.isDone) { } });
+        dados = www.bytes;
+#else
+            _dados = await File.ReadAllBytesAsync(caminho);
+#endif
+            Texture2D _textura = new Texture2D(2, 2);
+            if (_textura.LoadImage(_dados))
+                return _textura;
+            UnityEngine.Debug.LogError($"Falha ao carregar imagem '{caminho}'.");
+            return null;
         }
     }
 }

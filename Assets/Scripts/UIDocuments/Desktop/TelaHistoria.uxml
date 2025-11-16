@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Scripts/UIDocuments/LivroJogo.uss?fileID=7433441132597879392&amp;guid=9cb962d2be427cf458b6a5c85056ea23&amp;type=3#LivroJogo" />
-    <ui:Label text="Yaztromo explica que seu encanto de Abrir Portas abrirá qualquer porta trancada." parse-escape-sequences="false" triple-click-selects-line="true" style="white-space: normal;" />
-    <ui:Label text="Ele lhe revela as palavras necessárias para lançar o encanto, e diz que ele não consumirá demasiadamente as suas forças;" style="white-space: pre-wrap;" />
-    <ui:Label text="Somente 2 pontos de ENERGIA serão perdidos a cada vez que você usar o encanto." style="white-space: pre-wrap;" />
-    <ui:Label text="Você aprendeu o encanto de Abrir Portas" style="-unity-text-align: upper-center; white-space: pre-wrap; -unity-font-style: italic;" />
+    <ui:GroupBox name="HistoriaGroupBox" style="flex-grow: 1; flex-shrink: 1;" />
+    <ui:GroupBox name="ComandosGroupBox" style="flex-shrink: 0;">
+        <ui:Button text="Pular História" name="PularHistoriaButton" style="align-self: center; -unity-font-style: bold-and-italic; font-size: 16px;" />
+    </ui:GroupBox>
 </ui:UXML>

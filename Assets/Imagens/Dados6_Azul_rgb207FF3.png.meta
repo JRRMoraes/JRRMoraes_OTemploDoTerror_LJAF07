@@ -52,7 +52,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -131,12 +131,12 @@ TextureImporter:
       name: Dados6_Azul_rgb207FF3_0
       rect:
         serializedVersion: 2
-        x: 22
-        y: 15
-        width: 66
-        height: 66
+        x: 23
+        y: 16
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -153,12 +153,12 @@ TextureImporter:
       name: Dados6_Azul_rgb207FF3_1
       rect:
         serializedVersion: 2
-        x: 109
-        y: 15
-        width: 67
-        height: 66
+        x: 110
+        y: 16
+        width: 65
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -175,12 +175,12 @@ TextureImporter:
       name: Dados6_Azul_rgb207FF3_2
       rect:
         serializedVersion: 2
-        x: 197
-        y: 15
-        width: 66
-        height: 66
+        x: 198
+        y: 16
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -197,12 +197,12 @@ TextureImporter:
       name: Dados6_Azul_rgb207FF3_3
       rect:
         serializedVersion: 2
-        x: 284
-        y: 15
-        width: 67
-        height: 66
+        x: 285
+        y: 16
+        width: 65
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -219,12 +219,12 @@ TextureImporter:
       name: Dados6_Azul_rgb207FF3_4
       rect:
         serializedVersion: 2
-        x: 372
-        y: 15
-        width: 66
-        height: 66
+        x: 373
+        y: 16
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -241,12 +241,12 @@ TextureImporter:
       name: Dados6_Azul_rgb207FF3_5
       rect:
         serializedVersion: 2
-        x: 460
-        y: 15
-        width: 66
-        height: 66
+        x: 461
+        y: 16
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -263,7 +263,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 9c413b98a6d11a04488ad05653a2e862
     internalID: 0
     vertices: []
     indices: 
@@ -271,7 +271,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Dados6_Azul_rgb207FF3_0: -5571285548545631346
       Dados6_Azul_rgb207FF3_1: 9042472462197064545

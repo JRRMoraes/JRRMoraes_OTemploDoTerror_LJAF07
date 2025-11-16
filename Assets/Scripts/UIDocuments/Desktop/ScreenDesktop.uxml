@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <ui:Template name="PaginaPanilha" src="project://database/Assets/Scripts/UIDocuments/Desktop/PaginaPanilha.uxml?fileID=9197481963319205126&amp;guid=bd883dbe9ad302749b892fc844bddfbe&amp;type=3#PaginaPanilha" />
-    <ui:Template name="PaginaCampanha" src="project://database/Assets/Scripts/UIDocuments/Desktop/PaginaCampanha.uxml?fileID=9197481963319205126&amp;guid=ec8a361fda19dbb4ba43197da54fdbfe&amp;type=3" />
-    <ui:VisualElement name="Paginas" style="flex-grow: 1; flex-direction: row;">
-        <ui:Instance template="PaginaPanilha" name="PaginaPanilha" />
-        <ui:Instance template="PaginaCampanha" name="PaginaCampanha" />
+    <ui:Template name="PaginaCampanha" src="project://database/Assets/Scripts/UIDocuments/Desktop/PaginaCampanha.uxml?fileID=9197481963319205126&amp;guid=ec8a361fda19dbb4ba43197da54fdbfe&amp;type=3#PaginaCampanha" />
+    <ui:VisualElement name="Paginas" style="flex-grow: 1; flex-direction: row; border-top-width: 24px; border-right-width: 24px; border-bottom-width: 24px; border-left-width: 24px;">
+        <ui:Instance template="PaginaPanilha" name="PaginaPanilha" style="flex-direction: row; flex-grow: 1; border-right-width: 9px;" />
+        <ui:Instance template="PaginaCampanha" name="PaginaCampanha" style="flex-grow: 1; border-left-width: 9px;" />
     </ui:VisualElement>
 </ui:UXML>

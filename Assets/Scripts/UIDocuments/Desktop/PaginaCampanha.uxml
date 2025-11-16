@@ -3,7 +3,7 @@
     <ui:Template name="TelaCombate" src="project://database/Assets/Scripts/UIDocuments/Desktop/TelaCombate.uxml?fileID=9197481963319205126&amp;guid=f7da54529a7c5da419382278a34f6a63&amp;type=3#TelaCombate" />
     <ui:Template name="TelaDestino" src="project://database/Assets/Scripts/UIDocuments/Desktop/TelaDestino.uxml?fileID=9197481963319205126&amp;guid=0ca9b282d850d36428d500c543f8dd70&amp;type=3#TelaDestino" />
     <ui:Label text="Label" name="PaginaTitulo" />
-    <ui:Instance template="TelaHistoria" name="Historia" />
-    <ui:Instance template="TelaCombate" name="Combate" style="flex-direction: row;" />
-    <ui:Instance template="TelaDestino" name="Destino" />
+    <ui:Instance template="TelaHistoria" name="TelaHistoria" />
+    <ui:Instance template="TelaCombate" name="TelaCombate" style="flex-direction: row;" />
+    <ui:Instance template="TelaDestino" name="TelaDestino" />
 </ui:UXML>
