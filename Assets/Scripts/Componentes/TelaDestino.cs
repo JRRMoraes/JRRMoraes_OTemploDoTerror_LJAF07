@@ -1,16 +1,15 @@
 ﻿using Assets.Scripts.Tipos;
 using System.Collections;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using UnityEngine.UIElements;
 using static Assets.Scripts.Tipos.Conjuntos;
 using Button = UnityEngine.UIElements.Button;
 using Image = UnityEngine.UIElements.Image;
+
 
 namespace Assets.Scripts.Componentes {
     public class TelaDestino : MonoBehaviour, IPadraoObservador {
@@ -90,6 +89,7 @@ namespace Assets.Scripts.Componentes {
                     return true;
                 case PROCESSO.INICIANDO:
                     MontarElementosDeDestinosSelecoes();
+                    PaginaExecutoraAtual().destinoProcesso = PROCESSO.PROCESSANDO;
                     LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                     return true;
                 case PROCESSO.PROCESSANDO:
@@ -102,7 +102,7 @@ namespace Assets.Scripts.Componentes {
                     return true;
                 case PROCESSO.CONCLUIDO:
                     PaginaExecutoraAtual().destinoProcesso = PROCESSO.DESTRUIDO;
-                    ////PaginaExecutoraAtual().paginaEstado = PAGINA_EXECUTOR_ESTADO.DESTINOS;
+                    PaginaExecutoraAtual().paginaEstado = PAGINA_EXECUTOR_ESTADO.DESTRUIDO;
                     LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                     return true;
             }
@@ -140,7 +140,7 @@ namespace Assets.Scripts.Componentes {
                 //                desativado ={ AoObterDesativaBotao(destinoI)}
                 MontarDestinoSelecaoButtonTextos(_destinoI, _destinoSelecaoButton);
                 MontarDestinoSelecaoButtonTesteSorteHabilidade(_destinoI, _destinoSelecaoButton);
-                if (string.IsNullOrWhiteSpace(_destinoI.imagemArquivo))
+                if (!string.IsNullOrWhiteSpace(_destinoI.imagemArquivo))
                     StartCoroutine(MontarDestinoSelecaoButtonImagem(_destinoI, _destinoSelecaoButton));
                 destinoSelecaoGroupBox.Add(_destinoSelecaoButton);
             }
@@ -165,7 +165,7 @@ namespace Assets.Scripts.Componentes {
 
 
         void MontarDestinoSelecaoButtonTextos(DestinoExecucao destinoExecucao, Button destinoSelecaoButton) {
-            if (string.IsNullOrWhiteSpace(destinoExecucao.textoDestino)) {
+            if (!string.IsNullOrWhiteSpace(destinoExecucao.textoDestino)) {
                 destinoSelecaoButton.text = destinoExecucao.textoDestino;
             }
             else if ((destinoExecucao.textosDestino != null) && (destinoExecucao.textosDestino.Length >= 1)) {

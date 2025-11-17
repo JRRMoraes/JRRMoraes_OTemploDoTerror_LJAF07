@@ -22,7 +22,9 @@ namespace Assets.Scripts {
 
         public VisualElement raiz { get; set; }
 
-        public float historiaVelocidadeTexto = Constantes.HISTORIA_VELOCIDADE_TEXTO_NORMAL;
+        public float historiaVelocidadeNormalDoTexto = Constantes.HISTORIA_VELOCIDADE_TEXTO_NORMAL;
+
+        public float historiaVelocidadeDoTexto { get; set; } = Constantes.HISTORIA_VELOCIDADE_TEXTO_NORMAL;
 
 
 

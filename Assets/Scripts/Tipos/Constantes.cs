@@ -37,7 +37,7 @@
         public const string COMBATE_APROVACAO_DERROTA__SERIE_DE_ATAQUE_EH_MAIOR_OU_IGUAL_A_HABILIDADE = "SerieDeAtaqueEhMaiorOuIgualAHabilidade";
         public const string COMBATE_APROVACAO_DERROTA__INIMIGO_COM_SERIE_DE_ATAQUE_VENCIDO_CONSECUTIVO_2 = "InimigoComSerieDeAtaqueVencidoConsecutivo_2";
 
-        public const float HISTORIA_VELOCIDADE_TEXTO_NORMAL = 0.075f;
+        public const float HISTORIA_VELOCIDADE_TEXTO_NORMAL = 0.020f;
         public const float HISTORIA_VELOCIDADE_TEXTO_RAPIDO = 0.001f;
     }
 }

@@ -59,8 +59,8 @@ public class TelaHistoria : MonoBehaviour, IPadraoObservador {
             return false;
         if ((historiaGroupBox is null) || (comandosGroupBox is null))
             return false;
-        comandosGroupBox.style.visibility = Uteis.ObterVisibility(false);
         if (!PaginaExecutora.EhValido(PaginaExecutoraAtual())) {
+            comandosGroupBox.style.visibility = Uteis.ObterVisibility(false);
             while (historiaGroupBox.childCount >= 1)
                 historiaGroupBox.Remove(historiaGroupBox.Children().First());
             return true;
@@ -80,46 +80,50 @@ public class TelaHistoria : MonoBehaviour, IPadraoObservador {
                 return true;
             case PROCESSO.INICIANDO:
                 if (!LivroJogo.INSTANCIA.ehJogoCarregado) {
-                    livroJogoMotor.historiaVelocidadeTexto = Constantes.HISTORIA_VELOCIDADE_TEXTO_NORMAL;
-                    PaginaExecutoraAtual().historiaExibePularHistoriaButton = true;
+                    livroJogoMotor.historiaVelocidadeDoTexto = livroJogoMotor.historiaVelocidadeNormalDoTexto;
+                    comandosGroupBox.style.visibility = Uteis.ObterVisibility(true);
                 }
                 else {
-                    livroJogoMotor.historiaVelocidadeTexto = Constantes.HISTORIA_VELOCIDADE_TEXTO_RAPIDO;
-                    PaginaExecutoraAtual().historiaExibePularHistoriaButton = false;
+                    livroJogoMotor.historiaVelocidadeDoTexto = Constantes.HISTORIA_VELOCIDADE_TEXTO_RAPIDO;
+                    comandosGroupBox.style.visibility = Uteis.ObterVisibility(false);
                 }
                 PaginaExecutoraAtual().historiaIndice = 0;
                 PaginaExecutoraAtual().ImporHistoriaTextosExeProcessoTexto(PROCESSO.ZERO);
                 PaginaExecutoraAtual().ImporHistoriaEfeitosExeProcessoEfeito(PROCESSO.ZERO);
                 PaginaExecutoraAtual().ImporHistoriaImagensExeProcessoImagem(PROCESSO.ZERO);
-                PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO.ZERO;
+                PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO_HISTORIA.ZERO;
                 PaginaExecutoraAtual().historiaProcesso = PROCESSO.PROCESSANDO;
-                comandosGroupBox.style.visibility = Uteis.ObterVisibility(PaginaExecutoraAtual().historiaExibePularHistoriaButton);
                 LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                 return true;
 
             case PROCESSO.PROCESSANDO:
                 switch (PaginaExecutoraAtual().historiaProcessoIndice) {
-                    case PROCESSO.ZERO:
+                    case PROCESSO_HISTORIA.ZERO:
                         PaginaExecutoraAtual().ImporHistoriaTextosExeProcessoTexto(PROCESSO.ZERO);
                         PaginaExecutoraAtual().ImporHistoriaEfeitosExeProcessoEfeito(PROCESSO.ZERO);
                         PaginaExecutoraAtual().ImporHistoriaImagensExeProcessoImagem(PROCESSO.ZERO);
-                        PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO.INICIANDO;
+                        PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO_HISTORIA.INICIANDO;
                         LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                         return true;
-                    case PROCESSO.INICIANDO:
+                    case PROCESSO_HISTORIA.INICIANDO:
+                        PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO_HISTORIA.PROCESSANDO_TEXTOS;
+                        LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
+                        return true;
+                    case PROCESSO_HISTORIA.PROCESSANDO_TEXTOS:
                         return AoNotificar_ProcessarTelaHistoria_ProcessandoTextos();
-                    case PROCESSO.PROCESSANDO:
+                    case PROCESSO_HISTORIA.PROCESSANDO_EFEITOS:
                         return AoNotificar_ProcessarTelaHistoria_ProcessandoEfeitos();
-                    case PROCESSO.CONCLUIDO:
+                    case PROCESSO_HISTORIA.PROCESSANDO_IMAGENS:
                         return AoNotificar_ProcessarTelaHistoria_ProcessandoImagens();
-                    case PROCESSO.DESTRUIDO:
-                        PaginaExecutoraAtual().ImporHistoriaTextosExeProcessoTexto(PROCESSO.DESTRUIDO);
-                        PaginaExecutoraAtual().ImporHistoriaEfeitosExeProcessoEfeito(PROCESSO.DESTRUIDO);
-                        PaginaExecutoraAtual().ImporHistoriaImagensExeProcessoImagem(PROCESSO.DESTRUIDO);
-                        PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO.ZERO;
+                    case PROCESSO_HISTORIA.CONCLUIDO:
                         PaginaExecutoraAtual().historiaIndice++;
-                        if (PaginaExecutoraAtual().ObterHistoriaTextosAtuais() is null)
+                        if (PaginaExecutoraAtual().ObterHistoriaTextosAtuais() is null) {
+                            PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO_HISTORIA.DESTRUIDO;
                             PaginaExecutoraAtual().historiaProcesso = PROCESSO.CONCLUIDO;
+                        }
+                        else {
+                            PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO_HISTORIA.ZERO;
+                        }
                         LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                         return true;
                 }
@@ -136,10 +140,9 @@ public class TelaHistoria : MonoBehaviour, IPadraoObservador {
     }
 
 
-    ////    async Task<bool> AoNotificar_ProcessarTelaHistoria_ProcessandoTextos() {
     bool AoNotificar_ProcessarTelaHistoria_ProcessandoTextos() {
         if ((PaginaExecutoraAtual().ObterHistoriaTextosAtuais() is null) || (PaginaExecutoraAtual().ObterHistoriaTextosAtuais().textosHistoria is null) || (PaginaExecutoraAtual().ObterHistoriaTextosAtuais().textosHistoria.Length <= 0)) {
-            PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO.PROCESSANDO;
+            PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO_HISTORIA.PROCESSANDO_EFEITOS;
             LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
             return true;
         }
@@ -149,13 +152,13 @@ public class TelaHistoria : MonoBehaviour, IPadraoObservador {
                 LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                 return true;
             case PROCESSO.INICIANDO:
+                StartCoroutine(MontarLabelsHistoriaTextos());
                 PaginaExecutoraAtual().ImporHistoriaTextosExeProcessoTexto(PROCESSO.PROCESSANDO);
                 LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
-                StartCoroutine(MontarLabelsHistoriaTextos());
                 return true;
             case PROCESSO.CONCLUIDO:
                 PaginaExecutoraAtual().ImporHistoriaTextosExeProcessoTexto(PROCESSO.DESTRUIDO);
-                PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO.PROCESSANDO;
+                PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO_HISTORIA.PROCESSANDO_EFEITOS;
                 LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                 return true;
         }
@@ -165,7 +168,7 @@ public class TelaHistoria : MonoBehaviour, IPadraoObservador {
 
     bool AoNotificar_ProcessarTelaHistoria_ProcessandoEfeitos() {
         if ((PaginaExecutoraAtual().ObterHistoriaEfeitosAtuais() is null) || (PaginaExecutoraAtual().ObterHistoriaEfeitosAtuais().efeitos is null) || (PaginaExecutoraAtual().ObterHistoriaEfeitosAtuais().efeitos.Length <= 0)) {
-            PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO.CONCLUIDO;
+            PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO_HISTORIA.PROCESSANDO_IMAGENS;
             LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
             return true;
         }
@@ -176,14 +179,11 @@ public class TelaHistoria : MonoBehaviour, IPadraoObservador {
                 return true;
             case PROCESSO.INICIANDO:
                 if (!LivroJogo.INSTANCIA.ehJogoCarregado) {
-                    LivroJogo.INSTANCIA.AdicionarEmJogadorEfeitosAplicados(PaginaExecutoraAtual().ObterHistoriaEfeitosAtuais().efeitos);
                     StartCoroutine(MontarLabelsHistoriaEfeitos(true));
+                    LivroJogo.INSTANCIA.AdicionarEmJogadorEfeitosAplicados(PaginaExecutoraAtual().ObterHistoriaEfeitosAtuais().efeitos);
                     PaginaExecutoraAtual().ImporHistoriaEfeitosExeProcessoEfeito(PROCESSO.PROCESSANDO);
                     LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                     return true;
-                    //setTimeout(() => {
-                    //    ImporHistoriaEfeitosExeProcessoEfeito(PROCESSO.CONCLUIDO);
-                    //}, TEMPO_ANIMACAO_NORMAL);
                 }
                 else {
                     StartCoroutine(MontarLabelsHistoriaEfeitos(false));
@@ -191,9 +191,9 @@ public class TelaHistoria : MonoBehaviour, IPadraoObservador {
                     LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                     return true;
                 }
-            case PROCESSO.PROCESSANDO:
-                PaginaExecutoraAtual().ImporHistoriaEfeitosExeProcessoEfeito(PROCESSO.CONCLUIDO);
-                PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO.CONCLUIDO;
+            case PROCESSO.CONCLUIDO:
+                PaginaExecutoraAtual().ImporHistoriaEfeitosExeProcessoEfeito(PROCESSO.DESTRUIDO);
+                PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO_HISTORIA.PROCESSANDO_IMAGENS;
                 LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                 return true;
         }
@@ -203,13 +203,13 @@ public class TelaHistoria : MonoBehaviour, IPadraoObservador {
 
     bool AoNotificar_ProcessarTelaHistoria_ProcessandoImagens() {
         if ((PaginaExecutoraAtual().ObterHistoriaImagensAtuais() is null) || (string.IsNullOrWhiteSpace(PaginaExecutoraAtual().ObterHistoriaImagensAtuais().arquivo))) {
-            PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO.DESTRUIDO;
+            PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO_HISTORIA.CONCLUIDO;
             LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
             return true;
         }
         switch (PaginaExecutoraAtual().ObterHistoriaImagensAtuais().exeProcessoImagem) {
             case PROCESSO.ZERO:
-                PaginaExecutoraAtual().ImporHistoriaImagensExeProcessoImagem(PROCESSO.CONCLUIDO);
+                PaginaExecutoraAtual().ImporHistoriaImagensExeProcessoImagem(PROCESSO.INICIANDO);
                 LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                 return true;
             case PROCESSO.INICIANDO:
@@ -217,12 +217,11 @@ public class TelaHistoria : MonoBehaviour, IPadraoObservador {
                     StartCoroutine(MontarLabelsHistoriaImagens(false));
                 else
                     StartCoroutine(MontarLabelsHistoriaImagens(true));
-                PaginaExecutoraAtual().ImporHistoriaImagensExeProcessoImagem(PROCESSO.CONCLUIDO);
                 LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                 return true;
-            case PROCESSO.PROCESSANDO:
-                PaginaExecutoraAtual().ImporHistoriaEfeitosExeProcessoEfeito(PROCESSO.CONCLUIDO);
-                PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO.CONCLUIDO;
+            case PROCESSO.CONCLUIDO:
+                PaginaExecutoraAtual().ImporHistoriaEfeitosExeProcessoEfeito(PROCESSO.DESTRUIDO);
+                PaginaExecutoraAtual().historiaProcessoIndice = PROCESSO_HISTORIA.CONCLUIDO;
                 LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                 return true;
         }
@@ -230,40 +229,37 @@ public class TelaHistoria : MonoBehaviour, IPadraoObservador {
     }
 
 
-    /////async void MontarLabelsHistoriaTextos() {
     IEnumerator MontarLabelsHistoriaTextos() {
+        yield return null;
         foreach (string _textosHistoriaI in PaginaExecutoraAtual().ObterHistoriaTextosAtuais().textosHistoria) {
             Label _label = new Label();
             _label.AddToClassList("historiaTexto");
             _label.text = "";
             historiaGroupBox.Add(_label);
-            /////await DatilografarTextoAsync(_label, _textosHistoriaI, livroJogoMotor.historiaVelocidadeTexto);
-            yield return StartCoroutine(DatilografarTextoAsync(_label, _textosHistoriaI, livroJogoMotor.historiaVelocidadeTexto));
+            yield return StartCoroutine(DatilografarTextoAsync(_label, _textosHistoriaI, livroJogoMotor.historiaVelocidadeDoTexto));
         }
         PaginaExecutoraAtual().ObterHistoriaTextosAtuais().exeProcessoTexto = PROCESSO.CONCLUIDO;
         LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
     }
 
 
-    //// async Task DatilografarTextoAsync(Label label, string texto, float historiaVelocidadeTexto) {
     IEnumerator DatilografarTextoAsync(Label label, string texto, float historiaVelocidadeTexto) {
         label.text = "";
         foreach (char _letraI in texto) {
             label.text += _letraI;
-            ////  await Task.Delay(historiaVelocidadeTexto);
             yield return new WaitForSeconds(historiaVelocidadeTexto);
         }
     }
 
 
     void PularHistoria(ClickEvent evento) {
-        livroJogoMotor.historiaVelocidadeTexto = Constantes.HISTORIA_VELOCIDADE_TEXTO_RAPIDO;
+        livroJogoMotor.historiaVelocidadeDoTexto = Constantes.HISTORIA_VELOCIDADE_TEXTO_RAPIDO;
         comandosGroupBox.style.visibility = Uteis.ObterVisibility(false);
-        PaginaExecutoraAtual().historiaExibePularHistoriaButton = false;
     }
 
 
     IEnumerator MontarLabelsHistoriaEfeitos(bool aguardaAnimacao) {
+        yield return null;
         foreach (EfeitoExecucao _efeitoI in PaginaExecutoraAtual().ObterHistoriaEfeitosAtuais().efeitos) {
             Label _label = new Label();
             if (_efeitoI.quantidade >= 1)
@@ -281,13 +277,20 @@ public class TelaHistoria : MonoBehaviour, IPadraoObservador {
 
 
     IEnumerator MontarLabelsHistoriaImagens(bool aguardaAnimacao) {
-        if (!File.Exists(PaginaExecutoraAtual().ObterHistoriaImagensAtuais().arquivo))
+        yield return null;
+        if (!File.Exists(PaginaExecutoraAtual().ObterHistoriaImagensAtuais().arquivo)) {
+            PaginaExecutoraAtual().ObterHistoriaImagensAtuais().exeProcessoImagem = PROCESSO.CONCLUIDO;
+            LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
             yield break;
+        }
         Task<Texture2D> _textura = Uteis.CarregarImagemAsync(PaginaExecutoraAtual().ObterHistoriaImagensAtuais().arquivo);
         while (!_textura.IsCompleted)
             yield return null;
-        if (_textura.Result is null)
+        if (_textura.Result is null) {
+            PaginaExecutoraAtual().ObterHistoriaImagensAtuais().exeProcessoImagem = PROCESSO.CONCLUIDO;
+            LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
             yield break;
+        }
         Image _imagem = new Image();
         _imagem.image = _textura.Result;
         _imagem.scaleMode = ScaleMode.ScaleToFit;

@@ -25,9 +25,7 @@ namespace Assets.Scripts.Tipos {
 
         public int historiaIndice;
 
-        public PROCESSO historiaProcessoIndice = PROCESSO.ZERO;
-
-        public bool historiaExibePularHistoriaButton;
+        public PROCESSO_HISTORIA historiaProcessoIndice = PROCESSO_HISTORIA.ZERO;
 
         public PROCESSO combateProcesso = PROCESSO.ZERO;
 
@@ -97,6 +95,8 @@ namespace Assets.Scripts.Tipos {
             historias = Uteis.Clonar<Historia[]>(pagina.historias);
             combate = Uteis.Clonar<Combate>(pagina.combate);
             destinos = Uteis.Clonar<Destino[]>(pagina.destinos);
+            paginaIdPaginaDestino = PaginaUtils.PAGINA_ZERADA().idPagina;
+            paginaIdCapituloDestino = PaginaUtils.PAGINA_ZERADA().idCapitulo;
 
             if ((historias != null) && (historias.Length > 0)) {
                 foreach (Historia _historiaI in historias) {

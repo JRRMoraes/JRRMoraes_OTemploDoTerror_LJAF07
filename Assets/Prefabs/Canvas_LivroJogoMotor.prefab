@@ -125,7 +125,7 @@ MonoBehaviour:
   book: {fileID: 2499035417667028003}
   autoFlip: {fileID: 4829867647746919077}
   uiDocument: {fileID: 8871113129787658451}
-  historiaVelocidadeTexto: 0.075
+  historiaVelocidadeTexto: 0.025
 --- !u!114 &1643055870543000621
 MonoBehaviour:
   m_ObjectHideFlags: 0

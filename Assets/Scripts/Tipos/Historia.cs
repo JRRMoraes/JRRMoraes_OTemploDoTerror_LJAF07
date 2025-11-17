@@ -30,7 +30,7 @@ namespace Assets.Scripts.Tipos {
         public static HistoriaTextoExecucao CriarCom(string[] textosHistoria) {
             HistoriaTextoExecucao _historiaTextoExecucao = new HistoriaTextoExecucao();
             _historiaTextoExecucao.textosHistoria = textosHistoria;
-            if (textosHistoria is null)
+            if (_historiaTextoExecucao.textosHistoria is null)
                 _historiaTextoExecucao.textosHistoria = new string[] { };
             return _historiaTextoExecucao;
         }
@@ -75,12 +75,11 @@ namespace Assets.Scripts.Tipos {
         public static HistoriaImagemExecucao CriarCom(string imagem) {
             HistoriaImagemExecucao _historiaImagemExecucao = new HistoriaImagemExecucao();
             _historiaImagemExecucao.imagem = imagem;
-            _historiaImagemExecucao.arquivo = "";
             if (!string.IsNullOrWhiteSpace(_historiaImagemExecucao.imagem)) {
                 _historiaImagemExecucao.arquivo = LivroJogo.MontarArquivoECaminho(LivroJogo.IMAGEM_CAMINHO_LIVRO_JOGO, _historiaImagemExecucao.imagem + LivroJogo.IMAGEM_EXTENSAO);
                 if (!File.Exists(_historiaImagemExecucao.arquivo)) {
                     Debug.LogError($"Arquivo Imagem não encontrado: {_historiaImagemExecucao.arquivo}");
-                    _historiaImagemExecucao.arquivo = "";
+                    _historiaImagemExecucao.arquivo = null;
                 }
             }
             return _historiaImagemExecucao;

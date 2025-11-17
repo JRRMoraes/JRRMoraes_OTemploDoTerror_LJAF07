@@ -14,7 +14,8 @@ namespace Assets.Scripts.Tipos {
             INICIALIZADO,
             HISTORIAS,
             COMBATE,
-            DESTINOS
+            DESTINOS,
+            DESTRUIDO
         }
 
 
@@ -28,6 +29,17 @@ namespace Assets.Scripts.Tipos {
             ZERO,
             INICIANDO,
             PROCESSANDO,
+            CONCLUIDO,
+            DESTRUIDO
+        }
+
+
+        public enum PROCESSO_HISTORIA {
+            ZERO,
+            INICIANDO,
+            PROCESSANDO_TEXTOS,
+            PROCESSANDO_EFEITOS,
+            PROCESSANDO_IMAGENS,
             CONCLUIDO,
             DESTRUIDO
         }
