@@ -24,14 +24,7 @@ namespace Assets.Scripts.Componentes {
 
         void Awake() {
             livroJogoMotor = GetComponent<LivroJogoMotor>();
-            if (LivroJogoMotor.EhValido(livroJogoMotor, false))
-                livroJogoMotor.observadorAlvo_Visualizacao.Inscrever(this);
-        }
-
-
-        void OnDestroy() {
-            if (LivroJogoMotor.EhValido(livroJogoMotor, false))
-                livroJogoMotor.observadorAlvo_Visualizacao.Desinscrever(this);
+            LivroJogo.INSTANCIA.observadoresAlvos.Inscrever(this);
         }
 
 

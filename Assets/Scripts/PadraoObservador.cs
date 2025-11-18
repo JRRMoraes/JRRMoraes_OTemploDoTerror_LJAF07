@@ -3,12 +3,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Assets.Scripts.Tipos.Conjuntos;
 
 namespace Assets.Scripts {
 
     public interface IPadraoObservador {
 
-        void AoNotificar(Conjuntos.OBSERVADOR_CONDICAO observadorCondicao);
+        void AoNotificar(OBSERVADOR_CONDICAO observadorCondicao);
     }
 
 
@@ -34,14 +35,14 @@ namespace Assets.Scripts {
         }
 
 
-        IEnumerator Interno_Notificar(Conjuntos.OBSERVADOR_CONDICAO observadorCondicao) {
+        IEnumerator Interno_Notificar(OBSERVADOR_CONDICAO observadorCondicao) {
             foreach (var _observador in observadorers)
                 _observador.AoNotificar(observadorCondicao);
             yield return new WaitForSeconds(Constantes.TEMPO_OBSERVADOR);
         }
 
 
-        public void Notificar(Conjuntos.OBSERVADOR_CONDICAO observadorCondicao) {
+        public void Notificar(OBSERVADOR_CONDICAO observadorCondicao) {
             if (monoBehaviour != null)
                 monoBehaviour.StartCoroutine(Interno_Notificar(observadorCondicao));
             else
@@ -49,9 +50,15 @@ namespace Assets.Scripts {
         }
 
 
-        public void Notificar(Conjuntos.OBSERVADOR_CONDICAO[] observadorCondicoes) {
-            foreach (var _observadorCondicao in observadorCondicoes)
-                Notificar(_observadorCondicao);
+        public void Notificar(OBSERVADOR_CONDICAO[] observadorCondicoes) {
+            if ((observadorCondicoes != null) && (observadorCondicoes.Length >= 1)) {
+                foreach (var _observadorCondicao in observadorCondicoes)
+                    Notificar(_observadorCondicao);
+            }
+            else {
+                foreach (var _observadorCondicao in (OBSERVADOR_CONDICAO[])Enum.GetValues(typeof(OBSERVADOR_CONDICAO)))
+                    Notificar(_observadorCondicao);
+            }
         }
     }
 }

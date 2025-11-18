@@ -49,7 +49,7 @@ namespace Assets.Scripts.Tipos {
             _destinoExecucao.testeSomarDados = destino.testeSomarDados;
             _destinoExecucao.idPaginaAzar = destino.idPaginaAzar;
             _destinoExecucao.imagem = destino.imagem;
-            if (string.IsNullOrWhiteSpace(_destinoExecucao.imagem)) {
+            if (!string.IsNullOrWhiteSpace(_destinoExecucao.imagem)) {
                 _destinoExecucao.imagemArquivo = LivroJogo.MontarArquivoECaminho(LivroJogo.IMAGEM_CAMINHO_LIVRO_JOGO, _destinoExecucao.imagem + LivroJogo.IMAGEM_EXTENSAO);
                 if (!File.Exists(_destinoExecucao.imagemArquivo)) {
                     Debug.LogError($"Arquivo Imagem Destino não encontrado: {_destinoExecucao.imagemArquivo}");

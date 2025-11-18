@@ -55,11 +55,7 @@ namespace Assets.Scripts {
 
         ArquivadorDeJogo _arquivadorDeJogo;
 
-        public PadraoObservadorAlvo observadorAlvo_Livro = new PadraoObservadorAlvo();
-
-        public PadraoObservadorAlvo observadorAlvo_JogoAtual = new PadraoObservadorAlvo();
-
-        public PadraoObservadorAlvo observadorAlvo_PaginaExecutora = new PadraoObservadorAlvo();
+        public PadraoObservadorAlvo observadoresAlvos = new PadraoObservadorAlvo();
 
         [Header("CONSTANTES")]
 
@@ -75,9 +71,7 @@ namespace Assets.Scripts {
                 return;
             }
             _INSTANCIA = this;
-            observadorAlvo_Livro.monoBehaviour = _INSTANCIA;
-            observadorAlvo_JogoAtual.monoBehaviour = _INSTANCIA;
-            observadorAlvo_PaginaExecutora.monoBehaviour = _INSTANCIA;
+            observadoresAlvos.monoBehaviour = _INSTANCIA;
             DontDestroyOnLoad(gameObject);
         }
 
@@ -85,9 +79,7 @@ namespace Assets.Scripts {
         void Start() {
             CarregarLivro();
             CarregarJogosSalvos();
-            observadorAlvo_Livro.Notificar(OBSERVADOR_CONDICAO.JOGO_ATUAL);
-            observadorAlvo_JogoAtual.Notificar(OBSERVADOR_CONDICAO.JOGO_ATUAL);
-            observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
+            observadoresAlvos.Notificar(null);
         }
 
 
@@ -124,8 +116,7 @@ namespace Assets.Scripts {
             paginaExecutora = null;
             //setJogadorEfeitosAplicados([]);
             //setPadraoCapitulo(ECampanhaCapitulo.PAGINAS_INICIAIS);
-            observadorAlvo_JogoAtual.Notificar(OBSERVADOR_CONDICAO.JOGO_ATUAL);
-            observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
+            observadoresAlvos.Notificar(null);
         }
 
 
@@ -177,8 +168,6 @@ namespace Assets.Scripts {
             jogoAtual.campanhaIdPagina = idPaginaDestino;
             jogoAtual.campanhaIdCapitulo = idCapituloDestino;
             paginaExecutora = null;
-            observadorAlvo_JogoAtual.Notificar(OBSERVADOR_CONDICAO__JogoAtualEPaginaExecutora);
-            observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO__JogoAtualEPaginaExecutora);
         }
 
 

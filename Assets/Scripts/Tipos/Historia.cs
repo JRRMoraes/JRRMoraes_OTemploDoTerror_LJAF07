@@ -50,9 +50,14 @@ namespace Assets.Scripts.Tipos {
 
         public static HistoriaEfeitoExecucao CriarCom(Efeito[] efeitos) {
             HistoriaEfeitoExecucao _historiaEfeitoExecucao = new HistoriaEfeitoExecucao();
-            foreach (Efeito _efeitoI in efeitos) {
-                _historiaEfeitoExecucao.efeitos = Uteis.AdicionarNoArray<EfeitoExecucao>(_historiaEfeitoExecucao.efeitos,
-                    EfeitoExecucao.CriarCom(_efeitoI));
+            if (efeitos != null) {
+                foreach (Efeito _efeitoI in efeitos) {
+                    _historiaEfeitoExecucao.efeitos = Uteis.AdicionarNoArray<EfeitoExecucao>(_historiaEfeitoExecucao.efeitos,
+                        EfeitoExecucao.CriarCom(_efeitoI));
+                }
+            }
+            else {
+                _historiaEfeitoExecucao.efeitos = new EfeitoExecucao[] { };
             }
             return _historiaEfeitoExecucao;
         }

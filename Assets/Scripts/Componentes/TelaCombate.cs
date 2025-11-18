@@ -15,12 +15,12 @@ namespace Assets.Scripts.Componentes {
 
         void Awake() {
             livroJogoMotor = GetComponent<LivroJogoMotor>();
-            LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Inscrever(this);
+            LivroJogo.INSTANCIA.observadoresAlvos.Inscrever(this);
         }
 
 
         void OnDestroy() {
-            LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Desinscrever(this);
+            LivroJogo.INSTANCIA.observadoresAlvos.Desinscrever(this);
         }
 
         public PaginaExecutora PaginaExecutoraAtual() {
@@ -59,12 +59,12 @@ namespace Assets.Scripts.Componentes {
                     //    PaginaExecutoraAtual().combateProcesso = PROCESSO.INICIANDO;
                     //else
                     PaginaExecutoraAtual().combateProcesso = PROCESSO.CONCLUIDO;
-                    LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
+                    LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                     return true;
                 case PROCESSO.CONCLUIDO:
                     PaginaExecutoraAtual().combateProcesso = PROCESSO.DESTRUIDO;
                     PaginaExecutoraAtual().paginaEstado = PAGINA_EXECUTOR_ESTADO.DESTINOS;
-                    LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
+                    LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                     return true;
             }
             return false;

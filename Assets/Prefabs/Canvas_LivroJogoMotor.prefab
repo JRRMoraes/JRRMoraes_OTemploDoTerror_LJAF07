@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 634996227459310440}
   - component: {fileID: 1544061997023126932}
   - component: {fileID: 6068861536868132068}
+  - component: {fileID: 1564613221527434610}
   m_Layer: 5
   m_Name: Canvas_LivroJogoMotor
   m_TagString: Untagged
@@ -125,7 +126,7 @@ MonoBehaviour:
   book: {fileID: 2499035417667028003}
   autoFlip: {fileID: 4829867647746919077}
   uiDocument: {fileID: 8871113129787658451}
-  historiaVelocidadeTexto: 0.025
+  historiaVelocidadeNormalDoTexto: 0.02
 --- !u!114 &1643055870543000621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +187,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 535693b2cce8c79488b2afe2b4156be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Componentes.TelaDestino
+--- !u!114 &1564613221527434610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614616215826602027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7750667eadda49044a8e35c46a6b1e2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Componentes.RoladorDeDadosMotor
+  intervaloEntreSorteios: 0.2
+  quantidadeDeSorteios: 10
+  uiDocument: {fileID: 8871113129787658451}
 --- !u!1 &4447879918361862838
 GameObject:
   m_ObjectHideFlags: 0
