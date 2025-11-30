@@ -7,7 +7,7 @@
             <ui:Button text="CURAR ?" name="CurarJogadorButton" />
         </ui:GroupBox>
     </ui:GroupBox>
-    <ui:GroupBox name="DestinoSelecaoGroupBox">
+    <ui:GroupBox name="DestinoSelecaoGroupBox" style="flex-wrap: wrap;">
         <ui:Button text="Atravessará a peça em direção à passagem em arco na parede oposta?&#10;Vá para 20." style="white-space: pre-wrap;" />
         <ui:Button text="Colocará o anel no dedo?&#10;Vá para 277." style="white-space: pre-wrap;" />
     </ui:GroupBox>

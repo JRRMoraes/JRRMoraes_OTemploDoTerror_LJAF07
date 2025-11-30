@@ -2,8 +2,13 @@
     <ui:Template name="TelaHistoria" src="project://database/Assets/Scripts/UIDocuments/Desktop/TelaHistoria.uxml?fileID=9197481963319205126&amp;guid=4f4b2528c5d5da74d8bc6254d1b5599c&amp;type=3#TelaHistoria" />
     <ui:Template name="TelaCombate" src="project://database/Assets/Scripts/UIDocuments/Desktop/TelaCombate.uxml?fileID=9197481963319205126&amp;guid=f7da54529a7c5da419382278a34f6a63&amp;type=3#TelaCombate" />
     <ui:Template name="TelaDestino" src="project://database/Assets/Scripts/UIDocuments/Desktop/TelaDestino.uxml?fileID=9197481963319205126&amp;guid=0ca9b282d850d36428d500c543f8dd70&amp;type=3#TelaDestino" />
-    <ui:Label text="Label" name="PaginaTitulo" />
-    <ui:Instance template="TelaHistoria" name="TelaHistoria" />
-    <ui:Instance template="TelaCombate" name="TelaCombate" style="flex-direction: row;" />
-    <ui:Instance template="TelaDestino" name="TelaDestino" />
+    <Style src="project://database/Assets/Scripts/UIDocuments/LivroJogo.uss?fileID=7433441132597879392&amp;guid=9cb962d2be427cf458b6a5c85056ea23&amp;type=3#LivroJogo" />
+    <ui:VisualElement name="PaginaCampanha" style="flex-grow: 1;">
+        <ui:VisualElement name="CampanhaTituloVE" style="flex-grow: 0;">
+            <ui:Label text="Título" name="CampanhaTitulo" style="-unity-font-style: bold; font-size: 32px; -unity-text-align: upper-center; white-space: pre-wrap;" />
+        </ui:VisualElement>
+        <ui:Instance template="TelaHistoria" name="TelaHistoria" />
+        <ui:Instance template="TelaCombate" name="TelaCombate" style="flex-direction: row;" />
+        <ui:Instance template="TelaDestino" name="TelaDestino" />
+    </ui:VisualElement>
 </ui:UXML>

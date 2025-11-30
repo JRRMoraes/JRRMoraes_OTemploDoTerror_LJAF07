@@ -16,9 +16,11 @@ namespace Assets.Scripts {
 
         public AutoFlip autoFlip;
 
-        public UIDocument uiDocument;
+        public UIDocument uiDocument_PaginaDireitaCampanha;
 
-        public VisualElement raiz { get; set; }
+        public UIDocument uiDocument_PaginaEsquerdaPanilha;
+
+        public new Camera camera;
 
         public float historiaVelocidadeNormalDoTexto = Constantes.HISTORIA_VELOCIDADE_TEXTO_NORMAL;
 
@@ -28,8 +30,6 @@ namespace Assets.Scripts {
 
         void Awake() {
             LivroJogo.INSTANCIA.observadoresAlvos.Inscrever(this);
-            raiz = uiDocument.rootVisualElement;
-            raiz.dataSource = LivroJogo.INSTANCIA;
         }
 
 
@@ -44,17 +44,32 @@ namespace Assets.Scripts {
 
 
         void OnDestroy() {
-            if (LivroJogo.INSTANCIA != null) {
+            if (LivroJogo.INSTANCIA != null)
                 LivroJogo.INSTANCIA.observadoresAlvos.Desinscrever(this);
-            }
+        }
+
+
+        public VisualElement Raiz_PaginaDireitaCampanha() {
+            if (uiDocument_PaginaDireitaCampanha is null)
+                return null;
+            return uiDocument_PaginaDireitaCampanha.rootVisualElement;
+        }
+
+
+        public VisualElement Raiz_PaginaEsquerdaPanilha() {
+            if (uiDocument_PaginaEsquerdaPanilha is null)
+                return null;
+            return uiDocument_PaginaEsquerdaPanilha.rootVisualElement;
         }
 
 
         public static bool EhValido(LivroJogoMotor livroJogoMotor, bool analisaRaiz = true) {
             if (livroJogoMotor is null)
                 return false;
-            if ((analisaRaiz) && (livroJogoMotor.raiz is null))
-                return false;
+            if (analisaRaiz) {
+                if ((livroJogoMotor.uiDocument_PaginaDireitaCampanha is null) || (livroJogoMotor.uiDocument_PaginaEsquerdaPanilha is null))
+                    return false;
+            }
             return true;
         }
 
@@ -90,6 +105,12 @@ namespace Assets.Scripts {
                 visualizacao = VISUALIZACAO.CAMPANHA;
                 LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.VISUALIZACAO);
             }
+            if (camera != null) {
+                if (Input.GetKey(KeyCode.UpArrow))
+                    camera.transform.position += new Vector3(0, 1, 0);
+                else if (Input.GetKey(KeyCode.DownArrow))
+                    camera.transform.position += new Vector3(0, -1, 0);
+            }
         }
 
 
@@ -106,14 +127,20 @@ namespace Assets.Scripts {
         public bool AoNotificar_ObterPaginaExecutoraViaJogoAtual() {
             if (PaginaExecutora.EhValido(LivroJogo.INSTANCIA.paginaExecutora))
                 return false;
-            if (!Livro.EhValido(LivroJogo.INSTANCIA.livro))
+            if (!Livro.EhValido(LivroJogo.INSTANCIA.livro)) {
+                book.currentPage = 0;
                 return false;
-            if (!Jogo.EhValido(LivroJogo.INSTANCIA.jogoAtual))
+            }
+            if (!Jogo.EhValido(LivroJogo.INSTANCIA.jogoAtual, false)) {
+                book.currentPage = 0;
                 return false;
+            }
             Pagina _paginaAtual = LivroJogo.INSTANCIA.ObterPaginaAtualViaJogoAtual();
             if (!Pagina.EhValido(_paginaAtual))
                 return false;
             LivroJogo.INSTANCIA.paginaExecutora = new PaginaExecutora(_paginaAtual);
+            Raiz_PaginaDireitaCampanha().dataSource = LivroJogo.INSTANCIA.paginaExecutora;
+            Raiz_PaginaEsquerdaPanilha().dataSource = LivroJogo.INSTANCIA.jogoAtual.panilha;
             //IrParaOTopoDaPaginaViaScroll(); /////  window.scrollTo({ top: 0, behavior: "smooth" });
             LivroJogo.INSTANCIA.observadoresAlvos.Notificar(null);
             return true;
@@ -125,7 +152,7 @@ namespace Assets.Scripts {
                 return false;
             if (!Livro.EhValido(LivroJogo.INSTANCIA.livro))
                 return false;
-            if (!Jogo.EhValido(LivroJogo.INSTANCIA.jogoAtual))
+            if (!Jogo.EhValido(LivroJogo.INSTANCIA.jogoAtual, false))
                 return false;
             switch (LivroJogo.INSTANCIA.paginaExecutora.paginaEstado) {
                 case PAGINA_EXECUTOR_ESTADO.NULO:
@@ -136,12 +163,6 @@ namespace Assets.Scripts {
                     LivroJogo.INSTANCIA.paginaExecutora.paginaEstado = PAGINA_EXECUTOR_ESTADO.HISTORIAS;
                     LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                     return true;
-                    //case PAGINA_EXECUTOR_ESTADO.DESTINOS:
-                    //    LivroJogo.INSTANCIA.ehJogoCarregado = false;
-                    //    LivroJogo.INSTANCIA.paginaExecutora.paginaEstado = PAGINA_EXECUTOR_ESTADO.HISTORIAS;
-                    //    observadorAlvo_Visualizacao.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
-                    //    LivroJogo.INSTANCIA.observadorAlvo_PaginaExecutora.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
-                    //    return true;
             }
             return false;
         }

@@ -14,12 +14,15 @@ namespace Assets.Scripts.Componentes {
 
         VisualElement paginaPanilha;
 
-        VisualElement panilhaNova;
+        TabView panilhaTabView;
 
-        VisualElement panilhaCompleta;
+        Tab menuInicialTab;
 
-        VisualElement panilhaMenor;
+        Tab panilhaNovaTab;
 
+        Tab panilhaCompletaTab;
+
+        Tab panilhaMenorTab;
 
 
         void Awake() {
@@ -31,43 +34,46 @@ namespace Assets.Scripts.Componentes {
         public void AoNotificar(OBSERVADOR_CONDICAO observadorCondicao) {
             if (!LivroJogoMotor.EhValido(livroJogoMotor))
                 return;
-            if (!OBSERVADOR_CONDICAO__VisualizacaoEPaginaExecutora.Contains(observadorCondicao))
+            if (!OBSERVADOR_CONDICAO__JogoAtualEPaginaExecutora.Contains(observadorCondicao))
                 return;
             if (paginaPanilha is null)
-                paginaPanilha = livroJogoMotor.raiz.Query<VisualElement>("PaginaPanilha");
-            if (panilhaNova is null)
-                panilhaNova = livroJogoMotor.raiz.Query<VisualElement>("PanilhaNova");
-            if (panilhaCompleta is null)
-                panilhaCompleta = livroJogoMotor.raiz.Query<VisualElement>("PanilhaCompleta");
-            if (panilhaMenor is null)
-                panilhaMenor = livroJogoMotor.raiz.Query<VisualElement>("PanilhaMenor");
+                paginaPanilha = livroJogoMotor.Raiz_PaginaEsquerdaPanilha().Query<VisualElement>("PaginaPanilha");
+            if (panilhaTabView is null)
+                panilhaTabView = livroJogoMotor.Raiz_PaginaEsquerdaPanilha().Query<TabView>("PanilhaTabView");
+            if (menuInicialTab is null)
+                menuInicialTab = livroJogoMotor.Raiz_PaginaEsquerdaPanilha().Query<Tab>("MenuInicialTab");
+            if (panilhaNovaTab is null)
+                panilhaNovaTab = livroJogoMotor.Raiz_PaginaEsquerdaPanilha().Query<Tab>("PanilhaNovaTab");
+            if (panilhaCompletaTab is null)
+                panilhaCompletaTab = livroJogoMotor.Raiz_PaginaEsquerdaPanilha().Query<Tab>("PanilhaCompletaTab");
+            if (panilhaMenorTab is null)
+                panilhaMenorTab = livroJogoMotor.Raiz_PaginaEsquerdaPanilha().Query<Tab>("PanilhaMenorTab");
+
             AoNotificar_AlterarVisualizacao();
         }
 
 
         void AoNotificar_AlterarVisualizacao() {
-            if ((paginaPanilha is null) || (!PaginaExecutora.EhValido(LivroJogo.INSTANCIA.paginaExecutora)))
+            if (panilhaTabView is null)
                 return;
-            bool _ehPanilhaNova = (LivroJogo.INSTANCIA.paginaExecutora.idPagina == 1)
-                && (LivroJogo.INSTANCIA.paginaExecutora.idCapitulo == CAMPANHA_CAPITULO.PAGINAS_INICIAIS);
-            if (livroJogoMotor.visualizacao == VISUALIZACAO.PANILHA) {
-                panilhaNova.style.visibility = Uteis.ObterVisibility(_ehPanilhaNova);
-                panilhaCompleta.style.visibility = Uteis.ObterVisibility((!_ehPanilhaNova) && (true));
-                panilhaMenor.style.visibility = Uteis.ObterVisibility((!_ehPanilhaNova) && (false));
-                paginaPanilha.style.width = new Length(75, LengthUnit.Percent);
+            if (!Jogo.EhValido(LivroJogo.INSTANCIA.jogoAtual, false)) {
+                panilhaTabView.activeTab = menuInicialTab;
+                livroJogoMotor.book.currentPage = 0;
+                return;
             }
-            else if (livroJogoMotor.visualizacao == VISUALIZACAO.TUDO) {
-                panilhaNova.style.visibility = Uteis.ObterVisibility(_ehPanilhaNova);
-                panilhaCompleta.style.visibility = Uteis.ObterVisibility((!_ehPanilhaNova) && (true));
-                panilhaMenor.style.visibility = Uteis.ObterVisibility((!_ehPanilhaNova) && (false));
-                paginaPanilha.style.width = new Length(50, LengthUnit.Percent);
+            if (!PaginaExecutora.EhValido(LivroJogo.INSTANCIA.paginaExecutora))
+                return;
+            paginaPanilha.style.visibility = Uteis.ObterVisibility(true);
+            if ((LivroJogo.INSTANCIA.paginaExecutora.idPagina == 1) && (LivroJogo.INSTANCIA.paginaExecutora.idCapitulo == CAMPANHA_CAPITULO.PAGINAS_INICIAIS)) {
+                panilhaTabView.activeTab = panilhaNovaTab;
+                return;
             }
-            else if (livroJogoMotor.visualizacao == VISUALIZACAO.CAMPANHA) {
-                panilhaNova.style.visibility = Uteis.ObterVisibility(_ehPanilhaNova);
-                panilhaCompleta.style.visibility = Uteis.ObterVisibility((!_ehPanilhaNova) && (false));
-                panilhaMenor.style.visibility = Uteis.ObterVisibility((!_ehPanilhaNova) && (true));
-                paginaPanilha.style.width = new Length(25, LengthUnit.Percent);
-            }
+            if (livroJogoMotor.visualizacao == VISUALIZACAO.PANILHA)
+                panilhaTabView.activeTab = panilhaCompletaTab;
+            else if (livroJogoMotor.visualizacao == VISUALIZACAO.TUDO)
+                panilhaTabView.activeTab = panilhaCompletaTab;
+            else if (livroJogoMotor.visualizacao == VISUALIZACAO.CAMPANHA)
+                panilhaTabView.activeTab = panilhaMenorTab;
         }
     }
 }

@@ -1,23 +1,32 @@
 ﻿using Assets.Scripts.Tipos;
+using System;
 using System.Collections;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Unity.Hierarchy;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using static Assets.Scripts.Tipos.Conjuntos;
-using static UnityEditor.Progress;
 using Button = UnityEngine.UIElements.Button;
 using Image = UnityEngine.UIElements.Image;
 
 
 namespace Assets.Scripts.Componentes {
+
+    [RequireComponent(typeof(LivroJogoMotor))]
     public class TelaDestino : MonoBehaviour, IPadraoObservador {
 
         LivroJogoMotor livroJogoMotor;
+
+        VisualElement paginaPanilha;
+
+        VisualElement paginaCampanha;
+
+        //[SerializeField] private VisualTreeAsset uxmlTelaDestinoSelecaoButton;
+        //private VisualElement raizTelaDestinoSelecaoButton;
+
+        VisualElement telaDestino;
 
         VisualElement destinoComandosGroupBox;
 
@@ -54,20 +63,30 @@ namespace Assets.Scripts.Componentes {
         public void AoNotificar(OBSERVADOR_CONDICAO observadorCondicao) {
             if (!LivroJogoMotor.EhValido(livroJogoMotor))
                 return;
+            if (paginaPanilha is null)
+                paginaPanilha = livroJogoMotor.Raiz_PaginaEsquerdaPanilha().Query<VisualElement>("PaginaPanilha");
+            if (paginaCampanha is null)
+                paginaCampanha = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<VisualElement>("PaginaCampanha");
+
+            if (telaDestino is null)
+                telaDestino = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<VisualElement>("TelaDestino");
+
+
+
             if (destinoComandosGroupBox is null)
-                destinoComandosGroupBox = livroJogoMotor.raiz.Query<VisualElement>("DestinoComandosGroupBox");
+                destinoComandosGroupBox = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<VisualElement>("DestinoComandosGroupBox");
             if (salvarJogoAtualButton is null) {
-                salvarJogoAtualButton = livroJogoMotor.raiz.Query<Button>("SalvarJogoAtualButton");
+                salvarJogoAtualButton = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<Button>("SalvarJogoAtualButton");
                 if (salvarJogoAtualButton != null)
                     salvarJogoAtualButton.RegisterCallback<ClickEvent>(AoSalvarJogo);
             }
             if (curarJogadorButton is null) {
-                curarJogadorButton = livroJogoMotor.raiz.Query<Button>("CurarJogadorButton");
+                curarJogadorButton = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<Button>("CurarJogadorButton");
                 if (curarJogadorButton != null)
                     curarJogadorButton.RegisterCallback<ClickEvent>(AoCurarJogador);
             }
             if (destinoSelecaoGroupBox is null)
-                destinoSelecaoGroupBox = livroJogoMotor.raiz.Query<VisualElement>("DestinoSelecaoGroupBox");
+                destinoSelecaoGroupBox = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<VisualElement>("DestinoSelecaoGroupBox");
 
             if ((destinoComandosGroupBox is null) || (destinoSelecaoGroupBox is null))
                 return;
@@ -79,7 +98,7 @@ namespace Assets.Scripts.Componentes {
             }
             if (PaginaExecutoraAtual().paginaEstado != PAGINA_EXECUTOR_ESTADO.DESTINOS)
                 return;
-            if (!Jogo.EhValido(LivroJogo.INSTANCIA.jogoAtual))
+            if (!Jogo.EhValido(LivroJogo.INSTANCIA.jogoAtual, false))
                 return;
 
             if (AoNotificar_ProcessarSalvamento(observadorCondicao))
@@ -92,57 +111,117 @@ namespace Assets.Scripts.Componentes {
                 return;
         }
 
+
+        void ProcessarDestinoDesativaBotoes(bool destinoDesativaBotoes) {
+            PaginaExecutoraAtual().destinoDesativaBotoes = destinoDesativaBotoes;
+            if (PaginaExecutoraAtual().destinoDesativaBotoes) {
+                salvarJogoAtualButton.SetEnabled(false);
+                curarJogadorButton.SetEnabled(false);
+                foreach (DestinoExecucao _destinoI in PaginaExecutoraAtual().destinoItens) {
+                    if (_destinoI.selecaoButton != null)
+                        _destinoI.selecaoButton.SetEnabled(false);
+                }
+            }
+            else {
+                salvarJogoAtualButton.SetEnabled((PaginaExecutoraAtual().destinoProcessoSalvando == PROCESSO.ZERO));
+                curarJogadorButton.SetEnabled((PaginaExecutoraAtual().destinoProcessoCurando == PROCESSO.ZERO)
+                    && (LivroJogo.INSTANCIA.jogoAtual.panilha != null)
+                    && (LivroJogo.INSTANCIA.jogoAtual.panilha.provisao >= 1));
+                foreach (DestinoExecucao _destinoI in PaginaExecutoraAtual().destinoItens) {
+                    if (_destinoI.selecaoButton != null)
+                        _destinoI.selecaoButton.SetEnabled(JogoAtualValidacoes.ValidarAprovacoesDestino(_destinoI.aprovacoes));
+                }
+            }
+        }
+
+
         bool AoNotificar_ProcessarSalvamento(OBSERVADOR_CONDICAO observadorCondicao) {
             if (!OBSERVADOR_CONDICAO__JogoAtualEPaginaExecutora.Contains(observadorCondicao))
                 return false;
-            if (PaginaExecutoraAtual().destinoProcesso != PROCESSO.PROCESSANDO)
+            if (PaginaExecutoraAtual().destinoProcesso != PROCESSO.PROCESSANDO) {
+                salvarJogoAtualButton.SetEnabled(true);
+                salvarJogoAtualButton.style.display = Uteis.ObterDisplayStyle(false);
                 return false;
-            if (LivroJogo.INSTANCIA.ehJogoCarregado)
-                return false;
+            }
             switch (PaginaExecutoraAtual().destinoProcessoSalvando) {
+                case PROCESSO.ZERO:
+                    if (!LivroJogo.INSTANCIA.ehJogoCarregado)
+                        salvarJogoAtualButton.style.display = Uteis.ObterDisplayStyle(true);
+                    else
+                        PaginaExecutoraAtual().destinoProcessoSalvando = PROCESSO.DESTRUIDO;
+                    ProcessarDestinoDesativaBotoes(false);
+                    return false;
                 case PROCESSO.INICIANDO:
-                    LivroJogo.INSTANCIA.SalvarJogoAtualNoJogoSalvo();
                     PaginaExecutoraAtual().destinoProcessoSalvando = PROCESSO.PROCESSANDO;
-                    LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO__JogoAtualEPaginaExecutora);
+                    LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
+                    StartCoroutine(AguardarProcessoSalvamentoProcessandoParaConcluido());
                     return true;
-                case PROCESSO.PROCESSANDO:
-                    ////yield return new WaitForSeconds(2);
-                    PaginaExecutoraAtual().destinoProcessoSalvando = PROCESSO.CONCLUIDO;
-                    LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO__JogoAtualEPaginaExecutora);
+                case PROCESSO.CONCLUIDO:
+                    salvarJogoAtualButton.text = "JOGO SALVO !!!";
+                    PaginaExecutoraAtual().destinoProcessoSalvando = PROCESSO.DESTRUIDO;
+                    LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
+                    ProcessarDestinoDesativaBotoes(false);
                     return true;
-                    //setTimeout(() => {
-                    //    setDesativaBotoes(false);
-                    //    setSalvando(EProcesso.CONCLUIDO);
-                    //}, 2000);
             }
             return false;
+        }
+
+
+        IEnumerator AguardarProcessoSalvamentoProcessandoParaConcluido() {
+            yield return null;
+            LivroJogo.INSTANCIA.SalvarJogoAtualNoJogoSalvo();
+            yield return new WaitForSeconds(Constantes.TEMPO_ANIMACAO_NORMAL);
+            PaginaExecutoraAtual().destinoProcessoSalvando = PROCESSO.CONCLUIDO;
+            LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
         }
 
 
         bool AoNotificar_ProcessarCurando(OBSERVADOR_CONDICAO observadorCondicao) {
             if (!OBSERVADOR_CONDICAO__JogoAtualEPaginaExecutora.Contains(observadorCondicao))
                 return false;
-            if (PaginaExecutoraAtual().destinoProcesso != PROCESSO.PROCESSANDO)
+            if (PaginaExecutoraAtual().destinoProcesso != PROCESSO.PROCESSANDO) {
+                curarJogadorButton.SetEnabled(true);
+                curarJogadorButton.style.display = Uteis.ObterDisplayStyle(false);
                 return false;
+            }
             switch (PaginaExecutoraAtual().destinoProcessoCurando) {
+                case PROCESSO.ZERO:
+                    if (LivroJogo.INSTANCIA.jogoAtual.panilha is null) {
+                        PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO.DESTRUIDO;
+                    }
+                    else if (LivroJogo.INSTANCIA.jogoAtual.panilha.provisao >= 1) {
+                        curarJogadorButton.text = $"CURAR-SE ?  ( {LivroJogo.INSTANCIA.jogoAtual.panilha.provisao.ToString()} provisões )";
+                        curarJogadorButton.style.display = Uteis.ObterDisplayStyle(true);
+                    }
+                    else {
+                        curarJogadorButton.text = $"SEM CURA  ( 0 provisões )";
+                        curarJogadorButton.style.display = Uteis.ObterDisplayStyle(true);
+                        PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO.DESTRUIDO;
+                    }
+                    ProcessarDestinoDesativaBotoes(false);
+                    return false;
                 case PROCESSO.INICIANDO:
-                    ////     AplicarCuraEnergiaECustoProvisao();
                     PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO.PROCESSANDO;
-                    LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO__JogoAtualEPaginaExecutora);
+                    LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
+                    StartCoroutine(AguardarProcessoCurandoProcessandoParaConcluido());
                     return true;
-                case PROCESSO.PROCESSANDO:
-                    ////yield return new WaitForSeconds(2);
-                    PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO.CONCLUIDO;
-                    LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO__JogoAtualEPaginaExecutora);
+                case PROCESSO.CONCLUIDO:
+                    PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO.ZERO;
+                    LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
+                    ProcessarDestinoDesativaBotoes(false);
                     return true;
-                    //setTimeout(() => {
-                    //    setDesativaBotoes(false);
-                    //    setCurando(EProcesso.CONCLUIDO);
-                    //}, 2000);
             }
             return false;
         }
 
+
+        IEnumerator AguardarProcessoCurandoProcessandoParaConcluido() {
+            yield return null;
+            ////     AplicarCuraEnergiaECustoProvisao();
+            yield return new WaitForSeconds(Constantes.TEMPO_ANIMACAO_NORMAL);
+            PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO.CONCLUIDO;
+            LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
+        }
 
 
         bool AoNotificar_ProcessarTesteAtributo(OBSERVADOR_CONDICAO observadorCondicao) {
@@ -155,7 +234,8 @@ namespace Assets.Scripts.Componentes {
                     PaginaExecutoraAtual().destinoRolagemTotal = 0;
                     roladorDeDados.Rolar();
                     PaginaExecutoraAtual().destinoProcessoRolagem = PROCESSO.PROCESSANDO;
-                    LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO__JogoAtualEPaginaExecutora);
+                    LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
+                    ///                        StartCoroutine(AguardarProcessoSalvamentoProcessandoParaConcluido());
                     return true;
                 case PROCESSO.CONCLUIDO:
                     PaginaExecutoraAtual().destinoRolagemTotal += PaginaExecutoraAtual().destinoRolagemDestino.testeSomarDados;
@@ -171,7 +251,7 @@ namespace Assets.Scripts.Componentes {
                     PaginaExecutoraAtual().paginaIdPaginaDestino = _idPagina;
                     PaginaExecutoraAtual().paginaIdCapituloDestino = PaginaExecutoraAtual().destinoRolagemDestino.idCapitulo;
                     PaginaExecutoraAtual().destinoProcessoRolagem = PROCESSO.DESTRUIDO;
-                    LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO__JogoAtualEPaginaExecutora);
+                    LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                     return true;
             }
             return false;
@@ -207,10 +287,12 @@ namespace Assets.Scripts.Componentes {
                 case PROCESSO.PROCESSANDO:
                     if ((PaginaExecutoraAtual().paginaIdPaginaDestino == PaginaUtils.PAGINA_ZERADA().idPagina) && (PaginaExecutoraAtual().paginaIdCapituloDestino == PaginaUtils.PAGINA_ZERADA().idCapitulo))
                         return false;
-                    PaginaExecutoraAtual().destinoProcesso = PROCESSO.CONCLUIDO;
-                    livroJogoMotor.PassarPaginasNoBookAutoFlip(JogoAtual().campanhaIdPagina, PaginaExecutoraAtual().paginaIdPaginaDestino);
-                    LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
-                    return true;
+                    if (paginaPanilha != null)
+                        paginaPanilha.style.visibility = Uteis.ObterVisibility(false);
+                    if (paginaCampanha != null)
+                        paginaCampanha.style.visibility = Uteis.ObterVisibility(false);
+                    StartCoroutine(AguardarProcessoDestinoProcessandoParaConcluido());////?????????
+                    return false;
                 case PROCESSO.CONCLUIDO:
                     if ((PaginaExecutoraAtual().paginaIdPaginaDestino == PaginaUtils.PAGINA_ZERADA().idPagina) && (PaginaExecutoraAtual().paginaIdCapituloDestino == PaginaUtils.PAGINA_ZERADA().idCapitulo))
                         return false;
@@ -226,8 +308,9 @@ namespace Assets.Scripts.Componentes {
 
 
         void AoReiniciarJogo(ClickEvent evento) {
-            PaginaExecutoraAtual().destinoDesativaBotoes = true;
-            SceneManager.LoadScene("MenuInicial");
+            ProcessarDestinoDesativaBotoes(true);
+            LivroJogo.INSTANCIA.ResetarJogo();
+            SceneManager.LoadScene("LivroJogo");
         }
 
 
@@ -249,7 +332,10 @@ namespace Assets.Scripts.Componentes {
 
         void MontarElementosDeDestinosSelecoes() {
             foreach (DestinoExecucao _destinoI in PaginaExecutoraAtual().destinoItens) {
+                /////raizTelaDestinoSelecaoButton = uxmlTelaDestinoSelecaoButton.Instantiate();
+                /////destinoSelecaoGroupBox.rootVisualElement.Add(raizTelaDestinoSelecaoButton);
                 Button _destinoSelecaoButton = new Button();
+                _destinoI.selecaoButton = _destinoSelecaoButton;
                 _destinoSelecaoButton.AddToClassList("destinoSelecao");
                 _destinoSelecaoButton.RegisterCallback<ClickEvent>((evento) => AoSelecionarDestino(evento, _destinoI));
                 //                desativado ={ AoObterDesativaBotao(destinoI)}
@@ -259,11 +345,12 @@ namespace Assets.Scripts.Componentes {
                     StartCoroutine(MontarDestinoSelecaoButtonImagem(_destinoI, _destinoSelecaoButton));
                 destinoSelecaoGroupBox.Add(_destinoSelecaoButton);
             }
+            ProcessarDestinoDesativaBotoes(false);
         }
 
 
         void AoSelecionarDestino(ClickEvent evento, DestinoExecucao destinoExecucao) {
-            //     setDesativaBotoes(true);
+            ProcessarDestinoDesativaBotoes(true);
             if (destinoExecucao.testeAtributo == ATRIBUTO_DESTINO_TESTE.NULO) {
                 PaginaExecutoraAtual().paginaIdPaginaDestino = destinoExecucao.idPagina;
                 PaginaExecutoraAtual().paginaIdCapituloDestino = destinoExecucao.idCapitulo;
@@ -278,33 +365,37 @@ namespace Assets.Scripts.Componentes {
 
 
         void AoSalvarJogo(ClickEvent evento) {
-            //     setDesativaBotoes(true);
+            ProcessarDestinoDesativaBotoes(true);
             PaginaExecutoraAtual().destinoProcessoSalvando = PROCESSO.INICIANDO;
             LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
         }
 
 
         void AoCurarJogador(ClickEvent evento) {
-            //     setDesativaBotoes(true);
+            ProcessarDestinoDesativaBotoes(true);
             PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO.INICIANDO;
             LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
         }
 
 
         void MontarDestinoSelecaoButtonTextos(DestinoExecucao destinoExecucao, Button destinoSelecaoButton) {
-            if (!string.IsNullOrWhiteSpace(destinoExecucao.textoDestino)) {
-                destinoSelecaoButton.text = destinoExecucao.textoDestino;
-            }
-            else if ((destinoExecucao.textosDestino != null) && (destinoExecucao.textosDestino.Length >= 1)) {
+            if ((destinoExecucao.textosDestino != null) && (destinoExecucao.textosDestino.Length >= 1)) {
                 foreach (string _textoDestinoI in destinoExecucao.textosDestino) {
                     Label _textoDestinoLabel = new Label();
                     _textoDestinoLabel.text = _textoDestinoI;
+                    if (string.IsNullOrWhiteSpace(_textoDestinoLabel.text))
+                        _textoDestinoLabel.text = $"???  {destinoExecucao.idPagina}  ???";
                     _textoDestinoLabel.AddToClassList("historiaTexto");
                     destinoSelecaoButton.Add(_textoDestinoLabel);
                 }
             }
             else {
-                destinoSelecaoButton.text = "???";
+                Label _textoDestinoLabel = new Label();
+                _textoDestinoLabel.text = destinoExecucao.textoDestino;
+                if (string.IsNullOrWhiteSpace(_textoDestinoLabel.text))
+                    _textoDestinoLabel.text = $"???  {destinoExecucao.idPagina}  ???";
+                _textoDestinoLabel.AddToClassList("historiaTexto");
+                destinoSelecaoButton.Add(_textoDestinoLabel);
             }
         }
 
@@ -314,6 +405,7 @@ namespace Assets.Scripts.Componentes {
                 return;
             roladorDeDados = new RoladorDeDados();
             roladorDeDados.roladorDeDadosMotor = GetComponent<RoladorDeDadosMotor>();
+            roladorDeDados.raizVisualElement = destinoSelecaoButton;
             if (destinoExecucao.testeAtributo == ATRIBUTO_DESTINO_TESTE.HABILIDADE) {
                 roladorDeDados.dadosRolados.Add(new DadoRolado(DADO.D6_VERDE, "dadoTesteAtributo0"));
                 roladorDeDados.dadosRolados.Add(new DadoRolado(DADO.D6_VERDE, "dadoTesteAtributo1"));
@@ -322,14 +414,17 @@ namespace Assets.Scripts.Componentes {
                 roladorDeDados.dadosRolados.Add(new DadoRolado(DADO.D6_DOURADO, "dadoTesteAtributo0"));
                 roladorDeDados.dadosRolados.Add(new DadoRolado(DADO.D6_DOURADO, "dadoTesteAtributo1"));
             }
+            VisualElement _destinoSelecaoAtributo = new VisualElement();
+            _destinoSelecaoAtributo.AddToClassList("destinoSelecaoAtributo");
+            destinoSelecaoButton.Add(_destinoSelecaoAtributo);
             VisualElement _dadoImagem0 = new VisualElement();
             _dadoImagem0.name = "dadoTesteAtributo0";
-            _dadoImagem0.AddToClassList("destinoDadoTesteAtributo");
-            destinoSelecaoButton.Add(_dadoImagem0);
+            _dadoImagem0.AddToClassList("dadoVE");
+            _destinoSelecaoAtributo.Add(_dadoImagem0);
             VisualElement _dadoImagem1 = new VisualElement();
             _dadoImagem1.name = "dadoTesteAtributo1";
-            _dadoImagem1.AddToClassList("destinoDadoTesteAtributo");
-            destinoSelecaoButton.Add(_dadoImagem1);
+            _dadoImagem1.AddToClassList("dadoVE");
+            _destinoSelecaoAtributo.Add(_dadoImagem1);
             roladorDeDados.OnResultadoFinal = TesteAtributoResultadoFinal;
             roladorDeDados.Iniciar();
         }
@@ -362,6 +457,15 @@ namespace Assets.Scripts.Componentes {
             //_imagem.style.height = 200;
             _imagem.AddToClassList("historiaImagem");
             destinoSelecaoButton.Add(_imagem);
+        }
+
+
+        IEnumerator AguardarProcessoDestinoProcessandoParaConcluido() {
+            yield return null;
+            livroJogoMotor.PassarPaginasNoBookAutoFlip(JogoAtual().campanhaIdPagina, PaginaExecutoraAtual().paginaIdPaginaDestino);
+            yield return new WaitForSeconds(Constantes.TEMPO_ANIMACAO_NORMAL);
+            PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO.CONCLUIDO;
+            LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
         }
     }
 }

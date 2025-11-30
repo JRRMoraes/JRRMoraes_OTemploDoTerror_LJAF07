@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Tipos;
+using Newtonsoft.Json;
 using System;
 using Unity.Jobs;
 using UnityEngine;
@@ -7,6 +8,7 @@ using static Assets.Scripts.Tipos.Conjuntos;
 
 namespace Assets.Scripts.Tipos {
 
+    [System.Serializable]
     public class PaginaExecutora : Pagina {
 
         public PAGINA_EXECUTOR_ESTADO paginaEstado = PAGINA_EXECUTOR_ESTADO.NULO;
@@ -88,7 +90,7 @@ namespace Assets.Scripts.Tipos {
         public PaginaExecutora(Pagina pagina) {
             if (!Pagina.EhValido(pagina))
                 return;
-            Debug.Log(pagina);
+            Debug.Log("PaginaExecutadora 0 : " + JsonConvert.SerializeObject(pagina));
             idPagina = pagina.idPagina;
             idCapitulo = pagina.idCapitulo;
             titulo = pagina.titulo;
@@ -152,7 +154,7 @@ namespace Assets.Scripts.Tipos {
             //else {
             //    ImporAudioMusicaViaMomento(EAudioMomentoMusica.CAMPANHA);
             //}
-            Debug.Log(this);
+            Debug.Log("PaginaExecutadora 1 : " + JsonConvert.SerializeObject(this));
         }
 
 

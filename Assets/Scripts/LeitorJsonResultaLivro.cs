@@ -1,6 +1,7 @@
-﻿using System.IO;
+﻿using Assets.Scripts.Tipos;
+using Newtonsoft.Json;
+using System.IO;
 using UnityEngine;
-using Assets.Scripts.Tipos;
 
 
 namespace Assets.Scripts {
@@ -15,11 +16,10 @@ namespace Assets.Scripts {
                     Debug.LogError($"Arquivo JSON não encontrado: {_arquivo}");
                     return _livro;
                 }
-
                 string _json = File.ReadAllText(_arquivo);
                 Debug.Log($"_json = {_json}");
-                JsonUtility.FromJsonOverwrite(_json, _livro);
-                Debug.Log($"Livro = {JsonUtility.ToJson(_livro)}");
+                _livro = JsonConvert.DeserializeObject<Livro>(_json);
+                Debug.Log($"Livro = {JsonConvert.SerializeObject(_livro)}");
             }
             catch (System.Exception ex) {
                 Debug.LogError($"Erro ao ler JSON: {ex.Message}");

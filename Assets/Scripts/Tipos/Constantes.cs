@@ -38,6 +38,6 @@
         public const string COMBATE_APROVACAO_DERROTA__INIMIGO_COM_SERIE_DE_ATAQUE_VENCIDO_CONSECUTIVO_2 = "InimigoComSerieDeAtaqueVencidoConsecutivo_2";
 
         public const float HISTORIA_VELOCIDADE_TEXTO_NORMAL = 0.020f;
-        public const float HISTORIA_VELOCIDADE_TEXTO_RAPIDO = 0.001f;
+        public const float HISTORIA_VELOCIDADE_TEXTO_RAPIDO = 0f;
     }
 }

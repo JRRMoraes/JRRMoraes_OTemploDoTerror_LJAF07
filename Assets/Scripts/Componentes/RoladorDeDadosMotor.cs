@@ -12,14 +12,6 @@ namespace Assets.Scripts.Componentes {
         public float intervaloEntreSorteios = 0.2f;
 
         public int quantidadeDeSorteios = 10;
-
-        public UIDocument uiDocument;
-
-
-
-        public VisualElement ObterRaiz() {
-            return uiDocument.rootVisualElement;
-        }
     }
 
 
@@ -29,11 +21,13 @@ namespace Assets.Scripts.Componentes {
     [System.Serializable]
     public class RoladorDeDados {
 
+        public RoladorDeDadosMotor roladorDeDadosMotor { get; set; }
+
+        public VisualElement raizVisualElement { get; set; }
+
         public List<DadoRolado> dadosRolados = new List<DadoRolado>();
 
         public Action<int[]> OnResultadoFinal;
-
-        public RoladorDeDadosMotor roladorDeDadosMotor { get; set; }
 
         int[] resultados;
 
@@ -46,16 +40,17 @@ namespace Assets.Scripts.Componentes {
             dadosFinalizados = 0;
             if (roladorDeDadosMotor is null)
                 return false;
-            if (roladorDeDadosMotor.ObterRaiz() is null)
+            if (raizVisualElement is null)
                 return false;
             if (dadosRolados.Count <= 0)
                 return false;
             bool _ok = true;
             int _indiceI = 0;
             foreach (DadoRolado _dadoRoladoI in dadosRolados) {
+                _dadoRoladoI.id = _indiceI;
                 _dadoRoladoI.spritesDado = DadosUteis.ObterSpritesDados(_dadoRoladoI.dado);
-                _dadoRoladoI.elementoImagem = roladorDeDadosMotor.ObterRaiz().Q<VisualElement>(_dadoRoladoI.nomeImagem);
-                _dadoRoladoI.OnResultado = (_resultado) => RegistrarResultados(_indiceI, _resultado);
+                _dadoRoladoI.elementoImagem = raizVisualElement.Q<VisualElement>(_dadoRoladoI.nomeImagem);
+                _dadoRoladoI.OnResultado = RegistrarResultados;
                 _dadoRoladoI.ehValido = (_dadoRoladoI.spritesDado != null)
                     && (_dadoRoladoI.spritesDado.Length >= 1)
                     && (_dadoRoladoI.elementoImagem != null);
@@ -66,8 +61,10 @@ namespace Assets.Scripts.Componentes {
         }
 
 
-        void RegistrarResultados(int indice, int resultado) {
-            resultados[indice] = resultado;
+        void RegistrarResultados(DadoRolado dadoRolado) {
+            if (resultados.Length < dadoRolado.id)
+                return;
+            resultados[dadoRolado.id] = dadoRolado.resultado;
             dadosFinalizados++;
             if (dadosFinalizados == dadosRolados.Count)
                 OnResultadoFinal?.Invoke(resultados);
@@ -79,6 +76,8 @@ namespace Assets.Scripts.Componentes {
                 return;
             foreach (DadoRolado _dadoRoladoI in dadosRolados) {
                 _dadoRoladoI.elementoImagem.style.backgroundImage = new StyleBackground(_dadoRoladoI.spritesDado[0]);
+                //_dadoRoladoI.elementoImagem.style.height = _dadoRoladoI.spritesDado[0].rect.height;
+                //_dadoRoladoI.elementoImagem.style.width = (_dadoRoladoI.spritesDado[0].rect.width * 2);
                 _dadoRoladoI.elementoImagem.SetEnabled(false);
             }
         }
@@ -89,8 +88,11 @@ namespace Assets.Scripts.Componentes {
                 OnResultadoFinal?.Invoke(null);
                 return;
             }
-            foreach (DadoRolado _dadoRoladoI in dadosRolados)
+            foreach (DadoRolado _dadoRoladoI in dadosRolados) {
+                _dadoRoladoI.concluido = false;
+                _dadoRoladoI.resultado = 0;
                 roladorDeDadosMotor.StartCoroutine(RolarDado(_dadoRoladoI));
+            }
         }
 
 
@@ -108,7 +110,9 @@ namespace Assets.Scripts.Componentes {
                 _ultimo = _lado;
                 yield return new WaitForSeconds(roladorDeDadosMotor.intervaloEntreSorteios);
             }
-            dadoRolado.OnResultado?.Invoke(_resultado);
+            dadoRolado.concluido = true;
+            dadoRolado.resultado = _resultado;
+            dadoRolado.OnResultado?.Invoke(dadoRolado);
         }
     }
 
@@ -119,6 +123,8 @@ namespace Assets.Scripts.Componentes {
     [System.Serializable]
     public class DadoRolado {
 
+        public int id { get; set; }
+
         public DADO dado;
 
         public Sprite[] spritesDado { get; set; }
@@ -127,9 +133,13 @@ namespace Assets.Scripts.Componentes {
 
         public VisualElement elementoImagem { get; set; }
 
-        public Action<int> OnResultado { get; set; }
+        public Action<DadoRolado> OnResultado { get; set; }
 
         public bool ehValido { get; set; }
+
+        public bool concluido { get; set; }
+
+        public int resultado { get; set; }
 
 
 
@@ -145,5 +155,4 @@ namespace Assets.Scripts.Componentes {
             return spritesDado.Length;
         }
     }
-
 }

@@ -97,15 +97,16 @@ namespace Assets.Scripts {
             jogoSalvo_3 = _arquivadorDeJogo.CarregarJogo(jogoSalvo_3.idJogo);
             /////
             ///// teste
-            if (!Jogo.EhValido(jogoAtual)) {
+  /*          if (!Jogo.EhValido(jogoAtual)) {
+                ehJogoCarregado = true;
                 jogoAtual = LivroJogo.INSTANCIA.jogoSalvo_3.Clonar();
                 jogoAtual.AjustarSeForNovoJogo();
                 if (jogoAtual.campanhaIdPagina == 1) {
-                    jogoAtual.campanhaIdPagina = 2;
+                    jogoAtual.campanhaIdPagina = 5;
                 }
                 if (!Panilha.EhValido(jogoAtual.panilha))
                     jogoAtual.panilha = Panilha.CriarPanilhaViaRolagens(new DadosRoladosTotaisParaPanilhaNova() { habilidade = 10, energia = 14, sorte = 9 }, "TtTtT", JOGO_NIVEL.FACIL);
-            }
+            }*/
             ///// teste
             /////
         }
@@ -141,27 +142,6 @@ namespace Assets.Scripts {
         }
 
 
-        public void SelecionarJogoSalvo_1(ClickEvent evento) {
-            jogoAtual = jogoSalvo_1.Clonar();
-            ehJogoCarregado = jogoAtual.AjustarSeForNovoJogo();
-            SceneManager.LoadScene("LivroJogo", LoadSceneMode.Single);
-        }
-
-
-        public void SelecionarJogoSalvo_2(ClickEvent evento) {
-            jogoAtual = jogoSalvo_2.Clonar();
-            ehJogoCarregado = jogoAtual.AjustarSeForNovoJogo();
-            SceneManager.LoadScene("LivroJogo", LoadSceneMode.Single);
-        }
-
-
-        public void SelecionarJogoSalvo_3(ClickEvent evento) {
-            jogoAtual = jogoSalvo_3.Clonar();
-            ehJogoCarregado = jogoAtual.AjustarSeForNovoJogo();
-            SceneManager.LoadScene("LivroJogo", LoadSceneMode.Single);
-        }
-
-
         public void ImporCampanhaDestinoNoJogoAtual(int idPaginaDestino, CAMPANHA_CAPITULO idCapituloDestino) {
             if ((jogoAtual.campanhaIdPagina == idPaginaDestino) && (jogoAtual.campanhaIdCapitulo == idCapituloDestino))
                 return;
@@ -178,7 +158,7 @@ namespace Assets.Scripts {
 
 
         public Pagina ObterPaginaAtualViaJogoAtual() {
-            if ((!Livro.EhValido(LivroJogo.INSTANCIA.livro)) || (!Jogo.EhValido(jogoAtual)))
+            if ((!Livro.EhValido(LivroJogo.INSTANCIA.livro)) || (!Jogo.EhValido(jogoAtual, false)))
                 return PaginaUtils.PAGINA_ZERADA();
             if (jogoAtual.campanhaIdCapitulo == CAMPANHA_CAPITULO.NULO) {
                 jogoAtual.campanhaIdPagina = PaginaUtils.PAGINA_INICIAL().idPagina;

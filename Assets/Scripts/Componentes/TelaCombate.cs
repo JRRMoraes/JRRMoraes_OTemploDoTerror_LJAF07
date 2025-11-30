@@ -32,7 +32,7 @@ namespace Assets.Scripts.Componentes {
             if (!LivroJogoMotor.EhValido(livroJogoMotor))
                 return;
             if (combateGroupBox is null)
-                combateGroupBox = livroJogoMotor.raiz.Query<VisualElement>("CombateGroupBox");
+                combateGroupBox = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<VisualElement>("CombateGroupBox");
 
             AoNotificar_ProcessarTelaCombate(observadorCondicao);
         }
@@ -50,7 +50,7 @@ namespace Assets.Scripts.Componentes {
             }
             if (PaginaExecutoraAtual().paginaEstado != PAGINA_EXECUTOR_ESTADO.COMBATE)
                 return false;
-            if (!Jogo.EhValido(LivroJogo.INSTANCIA.jogoAtual))
+            if (!Jogo.EhValido(LivroJogo.INSTANCIA.jogoAtual, false))
                 return false;
 
             switch (PaginaExecutoraAtual().combateProcesso) {

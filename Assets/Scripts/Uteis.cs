@@ -45,6 +45,11 @@ namespace Assets.Scripts {
         }
 
 
+        public static DisplayStyle ObterDisplayStyle(bool ehVisivel) {
+            return (ehVisivel) ? DisplayStyle.Flex : DisplayStyle.None;
+        }
+
+
         public static async Task<Texture2D> CarregarImagemAsync(string caminho) {
             byte[] _dados;
 #if UNITY_ANDROID && !UNITY_EDITOR

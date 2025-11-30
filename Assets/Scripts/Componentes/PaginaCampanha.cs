@@ -12,7 +12,9 @@ namespace Assets.Scripts.Componentes {
 
         VisualElement paginaCampanha;
 
-        Label paginaTitulo;
+        VisualElement campanhaTituloVE;
+
+        Label campanhaTitulo;
 
 
 
@@ -26,50 +28,40 @@ namespace Assets.Scripts.Componentes {
             if (!LivroJogoMotor.EhValido(livroJogoMotor))
                 return;
             if (paginaCampanha is null)
-                paginaCampanha = livroJogoMotor.raiz.Query<VisualElement>("PaginaCampanha");
-            if (paginaTitulo is null)
-                paginaTitulo = livroJogoMotor.raiz.Query<Label>("PaginaTitulo");
+                paginaCampanha = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<VisualElement>("PaginaCampanha");
+            if (campanhaTituloVE is null)
+                campanhaTituloVE = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<VisualElement>("CampanhaTituloVE");
+            if (campanhaTitulo is null)
+                campanhaTitulo = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<Label>("CampanhaTitulo");
 
-            if (AoNotificar_AlterarVisualizacao(observadorCondicao))
-                return;
             if (AoNotificar_ExecutarPaginaPanilha(observadorCondicao))
                 return;
-        }
-
-
-        bool AoNotificar_AlterarVisualizacao(OBSERVADOR_CONDICAO observadorCondicao) {
-            if (observadorCondicao != OBSERVADOR_CONDICAO.VISUALIZACAO)
-                return false;
-            if (paginaCampanha is null)
-                return false;
-            if (livroJogoMotor.visualizacao == VISUALIZACAO.PANILHA) {
-                paginaCampanha.style.width = new Length(25, LengthUnit.Percent);
-            }
-            else if (livroJogoMotor.visualizacao == VISUALIZACAO.TUDO) {
-                paginaCampanha.style.width = new Length(50, LengthUnit.Percent);
-            }
-            else if (livroJogoMotor.visualizacao == VISUALIZACAO.CAMPANHA) {
-                paginaCampanha.style.width = new Length(75, LengthUnit.Percent);
-            }
-            return true;
         }
 
 
         bool AoNotificar_ExecutarPaginaPanilha(OBSERVADOR_CONDICAO observadorCondicao) {
             if (observadorCondicao != OBSERVADOR_CONDICAO.PAGINA_EXECUTORA)
                 return false;
-            if ((paginaCampanha is null) || (paginaTitulo is null))
+            if ((campanhaTituloVE is null) || (campanhaTitulo is null))
                 return false;
             if (!PaginaExecutora.EhValido(LivroJogo.INSTANCIA.paginaExecutora)) {
-                paginaTitulo.text = "";
+                campanhaTitulo.text = "";
+                campanhaTitulo.ClearClassList();
+                campanhaTitulo.RemoveFromHierarchy();
+                campanhaTituloVE.Add(campanhaTitulo);
                 return true;
             }
             if (LivroJogo.INSTANCIA.paginaExecutora.paginaEstado != PAGINA_EXECUTOR_ESTADO.INICIALIZADO)
                 return false;
-            if (!string.IsNullOrWhiteSpace(LivroJogo.INSTANCIA.paginaExecutora.titulo))
-                paginaTitulo.text = LivroJogo.INSTANCIA.paginaExecutora.titulo;
-            else if (LivroJogo.INSTANCIA.paginaExecutora.idPagina >= 1)
-                paginaTitulo.text = LivroJogo.INSTANCIA.paginaExecutora.idPagina.ToString();
+            paginaCampanha.style.visibility = Uteis.ObterVisibility(true);
+            if (!string.IsNullOrWhiteSpace(LivroJogo.INSTANCIA.paginaExecutora.titulo)) {
+                campanhaTitulo.text = LivroJogo.INSTANCIA.paginaExecutora.titulo;
+                campanhaTitulo.AddToClassList("campanhaTituloTexto");
+            }
+            else if (LivroJogo.INSTANCIA.paginaExecutora.idPagina >= 1) {
+                campanhaTitulo.text = LivroJogo.INSTANCIA.paginaExecutora.idPagina.ToString();
+                campanhaTitulo.AddToClassList("campanhaTituloNumero");
+            }
             return true;
         }
     }

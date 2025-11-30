@@ -36,8 +36,10 @@ namespace Assets.Scripts {
 
 
         IEnumerator Interno_Notificar(OBSERVADOR_CONDICAO observadorCondicao) {
-            foreach (var _observador in observadorers)
-                _observador.AoNotificar(observadorCondicao);
+            foreach (var _observador in observadorers) {
+                if (_observador != null)
+                    _observador.AoNotificar(observadorCondicao);
+            }
             yield return new WaitForSeconds(Constantes.TEMPO_OBSERVADOR);
         }
 

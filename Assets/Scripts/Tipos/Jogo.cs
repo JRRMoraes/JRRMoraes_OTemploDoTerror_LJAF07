@@ -28,12 +28,12 @@ namespace Assets.Scripts.Tipos {
         }
 
 
-        public static bool EhValido(Jogo jogo) {
+        public static bool EhValido(Jogo jogo, bool validaPanilha= true) {
             if (jogo is null)
                 return false;
             if (jogo.idJogo == 0)
                 return false;
-            if (!Panilha.EhValido(jogo.panilha))
+            if ((validaPanilha) && (!Panilha.EhValido(jogo.panilha)))
                 return false;
             if (jogo.campanhaIdCapitulo == PaginaUtils.PAGINA_ZERADA().idCapitulo)
                 return false;
@@ -46,14 +46,14 @@ namespace Assets.Scripts.Tipos {
 
 
         public bool AjustarSeForNovoJogo() {
-            if (Jogo.EhValido(this))
-                return false;
+            if (Jogo.EhValido(this, true))
+                return true;
             panilha = null;
             campanhaIdCapitulo = PaginaUtils.PAGINA_INICIAL().idCapitulo;
             campanhaIdPagina = PaginaUtils.PAGINA_INICIAL().idPagina;
             dataCriacao = DateTime.Now;
             dataSalvo = dataCriacao;
-            return true;
+            return false;
         }
 
 

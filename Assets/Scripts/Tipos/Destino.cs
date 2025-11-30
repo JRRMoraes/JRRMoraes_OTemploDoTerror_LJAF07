@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Assets.Scripts.Tipos {
 
@@ -34,6 +35,8 @@ namespace Assets.Scripts.Tipos {
     public class DestinoExecucao : Destino {
 
         public string imagemArquivo;
+
+        public Button selecaoButton;
 
 
         public static DestinoExecucao CriarCom(Destino destino) {

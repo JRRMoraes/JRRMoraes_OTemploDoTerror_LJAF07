@@ -159,19 +159,7 @@
                     "textosHistoria": [
                         "Em diversos momentos da sua aventura, tanto durante os combates quanto durante as situações em que você pode ter ou não sorte (detalhes sobre elas são dados nas próprias páginas), você pode apelar para sua sorte para tornar o resultado mais favorável.",
                         "Mas tome cuidado! Usar a sorte é um negócio arriscado e, se você não tiver sorte, os resultados podem ser desastrosos.",
-                        "O procedimento para usar a sorte é o seguinte: jogue dois dados.",
-                        "- Se o número obtido for igual ou menor do que seu índice de SORTE atual, você teve sorte, e o resultado será a seu favor.",
-                        "- Se o número obtido for maior do que o seu índice de SORTE atual, você não teve sorte e sofrerá as consequências.",
-                        "Esse procedimento é conhecido como Testar a sua Sorte. A cada vez que 'Testar a sua Sorte', você terá que subtrair um ponto do seu índice de SORTE atual. Portanto, você logo compreenderá que, quanto mais confiar na sua sorte, mais arriscado isso se tornará.",
-                        "Em certas páginas do livro, você será orientado a Testar a sua Sorte e será comunicado quanto às consequências de ter ou não ter sorte.",
-                        "Porém, nos combates, você tem sempre a opção de usar a sorte, seja para causar um ferimento mais grave numa criatura que você acabou de ferir, seja para minimizar os efeitos de um ferimento que a criatura acabou de causar em você.",
-                        "Se você tiver acabado de ferir a criatura, pode Testar a sua Sorte conforme descrito acima.",
-                        "- Se tiver sorte, terá causado um ferimento grave e poderá subtrair 2 pontos extras do índice de ENERGIA da criatura.",
-                        "- Porém, se não tiver sorte, o ferimento será um mero arranhão, e você terá que devolver 1 ponto à ENERGIA da criatura (isto é, em vez dos 2 pontos normais de danos, você terá conseguido apenas 1).",
-                        "Se a criatura tiver acabado de feri-lo, você poderá Testar a sua Sorte para tentar minimizar o ferimento.",
-                        "- Se tiver sorte, conseguiu evitar que o golpe o atingisse com toda força. Você recupera 1 ponto de ENERGIA (isto é, em lugar de causar os 2 pontos de danos, o golpe causa apenas 1).",
-                        "- Se não tiver sorte, você recebeu um ferimento mais grave. Subtraia 1 ponto extra de sua ENERGIA.",
-                        "Lembre-se que você tem que subtrair um ponto da sua própria SORTE sempre que Testar a sua Sorte."
+                         "Lembre-se que você tem que subtrair um ponto da sua própria SORTE sempre que Testar a sua Sorte."
                     ],
                     "efeitos": [
                         {
@@ -1161,7 +1149,7 @@
             ],
             "destinos": [
                 {
-                    "idPagina": "#FIM_DETONADO#",
+                    "idPagina": -99999,
                     "textoDestino": "Parabéns"
                 }
             ]

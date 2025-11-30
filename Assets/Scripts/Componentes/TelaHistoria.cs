@@ -13,6 +13,12 @@ public class TelaHistoria : MonoBehaviour, IPadraoObservador {
 
     LivroJogoMotor livroJogoMotor;
 
+    VisualElement paginaCampanha;
+
+    VisualElement campanhaTituloVE;
+
+    Label campanhaTitulo;
+
     VisualElement historiaGroupBox;
 
     VisualElement comandosGroupBox;
@@ -40,12 +46,16 @@ public class TelaHistoria : MonoBehaviour, IPadraoObservador {
     public void AoNotificar(OBSERVADOR_CONDICAO observadorCondicao) {
         if (!LivroJogoMotor.EhValido(livroJogoMotor))
             return;
+        if (campanhaTituloVE is null)
+            campanhaTituloVE = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<VisualElement>("CampanhaTituloVE");
+        if (campanhaTitulo is null)
+            campanhaTitulo = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<Label>("CampanhaTitulo");
         if (historiaGroupBox is null)
-            historiaGroupBox = livroJogoMotor.raiz.Query<VisualElement>("HistoriaGroupBox");
+            historiaGroupBox = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<VisualElement>("HistoriaGroupBox");
         if (comandosGroupBox is null)
-            comandosGroupBox = livroJogoMotor.raiz.Query<VisualElement>("ComandosGroupBox");
+            comandosGroupBox = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<VisualElement>("ComandosGroupBox");
         if (pularHistoriaButton is null) {
-            pularHistoriaButton = livroJogoMotor.raiz.Query<Button>("PularHistoriaButton");
+            pularHistoriaButton = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<Button>("PularHistoriaButton");
             if (pularHistoriaButton != null)
                 pularHistoriaButton.RegisterCallback<ClickEvent>(PularHistoria);
         }
@@ -67,7 +77,7 @@ public class TelaHistoria : MonoBehaviour, IPadraoObservador {
         }
         if (PaginaExecutoraAtual().paginaEstado != PAGINA_EXECUTOR_ESTADO.HISTORIAS)
             return false;
-        if (!Jogo.EhValido(LivroJogo.INSTANCIA.jogoAtual))
+        if (!Jogo.EhValido(LivroJogo.INSTANCIA.jogoAtual, false))
             return false;
 
         switch (PaginaExecutoraAtual().historiaProcesso) {
@@ -231,24 +241,47 @@ public class TelaHistoria : MonoBehaviour, IPadraoObservador {
 
     IEnumerator MontarLabelsHistoriaTextos() {
         yield return null;
+        bool _mesclaCampanhaTitulo = (campanhaTitulo != null)
+            && (string.IsNullOrWhiteSpace(LivroJogo.INSTANCIA.paginaExecutora.titulo))
+            && (LivroJogo.INSTANCIA.paginaExecutora.idPagina >= 1);
         foreach (string _textosHistoriaI in PaginaExecutoraAtual().ObterHistoriaTextosAtuais().textosHistoria) {
             Label _label = new Label();
             _label.AddToClassList("historiaTexto");
             _label.text = "";
-            historiaGroupBox.Add(_label);
-            yield return StartCoroutine(DatilografarTextoAsync(_label, _textosHistoriaI, livroJogoMotor.historiaVelocidadeDoTexto));
+            if (_mesclaCampanhaTitulo) {
+                VisualElement _historiaTexto1oVE = new VisualElement();
+                _historiaTexto1oVE.AddToClassList("historiaTexto1oVE");
+                campanhaTitulo.RemoveFromHierarchy();
+                _historiaTexto1oVE.Add(campanhaTitulo);
+                _historiaTexto1oVE.Add(_label);
+                historiaGroupBox.Add(_historiaTexto1oVE);
+                _mesclaCampanhaTitulo = false;
+            }
+            else {
+                historiaGroupBox.Add(_label);
+            }
+            yield return StartCoroutine(DatilografarTextoAsync(_label, _textosHistoriaI));
         }
         PaginaExecutoraAtual().ObterHistoriaTextosAtuais().exeProcessoTexto = PROCESSO.CONCLUIDO;
         LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
     }
 
 
-    IEnumerator DatilografarTextoAsync(Label label, string texto, float historiaVelocidadeTexto) {
+    IEnumerator DatilografarTextoAsync(Label label, string texto) {
         label.text = "";
-        foreach (char _letraI in texto) {
-            label.text += _letraI;
-            yield return new WaitForSeconds(historiaVelocidadeTexto);
+        bool _rapido = (livroJogoMotor.historiaVelocidadeDoTexto == Constantes.HISTORIA_VELOCIDADE_TEXTO_RAPIDO);
+        if (!_rapido) {
+            foreach (char _letraI in texto) {
+                label.text += _letraI;
+                yield return new WaitForSeconds(livroJogoMotor.historiaVelocidadeDoTexto);
+                if (livroJogoMotor.historiaVelocidadeDoTexto == Constantes.HISTORIA_VELOCIDADE_TEXTO_RAPIDO) {
+                    _rapido = true;
+                    break;
+                }
+            }
         }
+        if (_rapido)
+            label.text = texto;
     }
 
 
