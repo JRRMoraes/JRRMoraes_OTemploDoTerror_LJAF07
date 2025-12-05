@@ -54,15 +54,15 @@ namespace Assets.Scripts.Componentes {
                 return false;
 
             switch (PaginaExecutoraAtual().combateProcesso) {
-                case PROCESSO.ZERO:
+                case PROCESSO2.ZERO:
                     //if (PaginaExecutoraAtual().combate != null)
                     //    PaginaExecutoraAtual().combateProcesso = PROCESSO.INICIANDO;
                     //else
-                    PaginaExecutoraAtual().combateProcesso = PROCESSO.CONCLUIDO;
+                    PaginaExecutoraAtual().combateProcesso = PROCESSO2.CONCLUIDO;
                     LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                     return true;
-                case PROCESSO.CONCLUIDO:
-                    PaginaExecutoraAtual().combateProcesso = PROCESSO.DESTRUIDO;
+                case PROCESSO2.CONCLUIDO:
+                    PaginaExecutoraAtual().combateProcesso = PROCESSO2.DESTRUIDO;
                     PaginaExecutoraAtual().paginaEstado = PAGINA_EXECUTOR_ESTADO.DESTINOS;
                     LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                     return true;

@@ -19,10 +19,6 @@ namespace Assets.Scripts.Componentes {
 
         LivroJogoMotor livroJogoMotor;
 
-        VisualElement paginaPanilha;
-
-        VisualElement paginaCampanha;
-
         //[SerializeField] private VisualTreeAsset uxmlTelaDestinoSelecaoButton;
         //private VisualElement raizTelaDestinoSelecaoButton;
 
@@ -63,10 +59,7 @@ namespace Assets.Scripts.Componentes {
         public void AoNotificar(OBSERVADOR_CONDICAO observadorCondicao) {
             if (!LivroJogoMotor.EhValido(livroJogoMotor))
                 return;
-            if (paginaPanilha is null)
-                paginaPanilha = livroJogoMotor.Raiz_PaginaEsquerdaPanilha().Query<VisualElement>("PaginaPanilha");
-            if (paginaCampanha is null)
-                paginaCampanha = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<VisualElement>("PaginaCampanha");
+ 
 
             if (telaDestino is null)
                 telaDestino = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<VisualElement>("TelaDestino");
@@ -109,6 +102,8 @@ namespace Assets.Scripts.Componentes {
                 return;
             if (AoNotificar_ProcessarTelaDestino(observadorCondicao))
                 return;
+            if (AoNotificar_ProcessarPassarPaginaDoBook(observadorCondicao))
+                return;
         }
 
 
@@ -123,8 +118,8 @@ namespace Assets.Scripts.Componentes {
                 }
             }
             else {
-                salvarJogoAtualButton.SetEnabled((PaginaExecutoraAtual().destinoProcessoSalvando == PROCESSO.ZERO));
-                curarJogadorButton.SetEnabled((PaginaExecutoraAtual().destinoProcessoCurando == PROCESSO.ZERO)
+                salvarJogoAtualButton.SetEnabled((PaginaExecutoraAtual().destinoProcessoSalvando == PROCESSO2.ZERO));
+                curarJogadorButton.SetEnabled((PaginaExecutoraAtual().destinoProcessoCurando == PROCESSO2.ZERO)
                     && (LivroJogo.INSTANCIA.jogoAtual.panilha != null)
                     && (LivroJogo.INSTANCIA.jogoAtual.panilha.provisao >= 1));
                 foreach (DestinoExecucao _destinoI in PaginaExecutoraAtual().destinoItens) {
@@ -138,27 +133,27 @@ namespace Assets.Scripts.Componentes {
         bool AoNotificar_ProcessarSalvamento(OBSERVADOR_CONDICAO observadorCondicao) {
             if (!OBSERVADOR_CONDICAO__JogoAtualEPaginaExecutora.Contains(observadorCondicao))
                 return false;
-            if (PaginaExecutoraAtual().destinoProcesso != PROCESSO.PROCESSANDO) {
+            if (PaginaExecutoraAtual().destinoProcesso != PROCESSO2.PROCESSANDO) {
                 salvarJogoAtualButton.SetEnabled(true);
                 salvarJogoAtualButton.style.display = Uteis.ObterDisplayStyle(false);
                 return false;
             }
             switch (PaginaExecutoraAtual().destinoProcessoSalvando) {
-                case PROCESSO.ZERO:
+                case PROCESSO2.ZERO:
                     if (!LivroJogo.INSTANCIA.ehJogoCarregado)
                         salvarJogoAtualButton.style.display = Uteis.ObterDisplayStyle(true);
                     else
-                        PaginaExecutoraAtual().destinoProcessoSalvando = PROCESSO.DESTRUIDO;
+                        PaginaExecutoraAtual().destinoProcessoSalvando = PROCESSO2.DESTRUIDO;
                     ProcessarDestinoDesativaBotoes(false);
                     return false;
-                case PROCESSO.INICIANDO:
-                    PaginaExecutoraAtual().destinoProcessoSalvando = PROCESSO.PROCESSANDO;
+                case PROCESSO2.INICIANDO:
+                    PaginaExecutoraAtual().destinoProcessoSalvando = PROCESSO2.PROCESSANDO;
                     LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                     StartCoroutine(AguardarProcessoSalvamentoProcessandoParaConcluido());
                     return true;
-                case PROCESSO.CONCLUIDO:
+                case PROCESSO2.CONCLUIDO:
                     salvarJogoAtualButton.text = "JOGO SALVO !!!";
-                    PaginaExecutoraAtual().destinoProcessoSalvando = PROCESSO.DESTRUIDO;
+                    PaginaExecutoraAtual().destinoProcessoSalvando = PROCESSO2.DESTRUIDO;
                     LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                     ProcessarDestinoDesativaBotoes(false);
                     return true;
@@ -171,7 +166,7 @@ namespace Assets.Scripts.Componentes {
             yield return null;
             LivroJogo.INSTANCIA.SalvarJogoAtualNoJogoSalvo();
             yield return new WaitForSeconds(Constantes.TEMPO_ANIMACAO_NORMAL);
-            PaginaExecutoraAtual().destinoProcessoSalvando = PROCESSO.CONCLUIDO;
+            PaginaExecutoraAtual().destinoProcessoSalvando = PROCESSO2.CONCLUIDO;
             LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
         }
 
@@ -179,15 +174,15 @@ namespace Assets.Scripts.Componentes {
         bool AoNotificar_ProcessarCurando(OBSERVADOR_CONDICAO observadorCondicao) {
             if (!OBSERVADOR_CONDICAO__JogoAtualEPaginaExecutora.Contains(observadorCondicao))
                 return false;
-            if (PaginaExecutoraAtual().destinoProcesso != PROCESSO.PROCESSANDO) {
+            if (PaginaExecutoraAtual().destinoProcesso != PROCESSO2.PROCESSANDO) {
                 curarJogadorButton.SetEnabled(true);
                 curarJogadorButton.style.display = Uteis.ObterDisplayStyle(false);
                 return false;
             }
             switch (PaginaExecutoraAtual().destinoProcessoCurando) {
-                case PROCESSO.ZERO:
+                case PROCESSO2.ZERO:
                     if (LivroJogo.INSTANCIA.jogoAtual.panilha is null) {
-                        PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO.DESTRUIDO;
+                        PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO2.DESTRUIDO;
                     }
                     else if (LivroJogo.INSTANCIA.jogoAtual.panilha.provisao >= 1) {
                         curarJogadorButton.text = $"CURAR-SE ?  ( {LivroJogo.INSTANCIA.jogoAtual.panilha.provisao.ToString()} provisões )";
@@ -196,17 +191,17 @@ namespace Assets.Scripts.Componentes {
                     else {
                         curarJogadorButton.text = $"SEM CURA  ( 0 provisões )";
                         curarJogadorButton.style.display = Uteis.ObterDisplayStyle(true);
-                        PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO.DESTRUIDO;
+                        PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO2.DESTRUIDO;
                     }
                     ProcessarDestinoDesativaBotoes(false);
                     return false;
-                case PROCESSO.INICIANDO:
-                    PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO.PROCESSANDO;
+                case PROCESSO2.INICIANDO:
+                    PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO2.PROCESSANDO;
                     LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                     StartCoroutine(AguardarProcessoCurandoProcessandoParaConcluido());
                     return true;
-                case PROCESSO.CONCLUIDO:
-                    PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO.ZERO;
+                case PROCESSO2.CONCLUIDO:
+                    PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO2.ZERO;
                     LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                     ProcessarDestinoDesativaBotoes(false);
                     return true;
@@ -219,7 +214,7 @@ namespace Assets.Scripts.Componentes {
             yield return null;
             ////     AplicarCuraEnergiaECustoProvisao();
             yield return new WaitForSeconds(Constantes.TEMPO_ANIMACAO_NORMAL);
-            PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO.CONCLUIDO;
+            PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO2.CONCLUIDO;
             LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
         }
 
@@ -227,17 +222,17 @@ namespace Assets.Scripts.Componentes {
         bool AoNotificar_ProcessarTesteAtributo(OBSERVADOR_CONDICAO observadorCondicao) {
             if (!OBSERVADOR_CONDICAO__JogoAtualEPaginaExecutora.Contains(observadorCondicao))
                 return false;
-            if (PaginaExecutoraAtual().destinoProcesso != PROCESSO.PROCESSANDO)
+            if (PaginaExecutoraAtual().destinoProcesso != PROCESSO2.PROCESSANDO)
                 return false;
             switch (PaginaExecutoraAtual().destinoProcessoRolagem) {
-                case PROCESSO.INICIANDO:
+                case PROCESSO2.INICIANDO:
                     PaginaExecutoraAtual().destinoRolagemTotal = 0;
                     roladorDeDados.Rolar();
-                    PaginaExecutoraAtual().destinoProcessoRolagem = PROCESSO.PROCESSANDO;
+                    PaginaExecutoraAtual().destinoProcessoRolagem = PROCESSO2.PROCESSANDO;
                     LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                     ///                        StartCoroutine(AguardarProcessoSalvamentoProcessandoParaConcluido());
                     return true;
-                case PROCESSO.CONCLUIDO:
+                case PROCESSO2.CONCLUIDO:
                     PaginaExecutoraAtual().destinoRolagemTotal += PaginaExecutoraAtual().destinoRolagemDestino.testeSomarDados;
                     bool _teveSorte = false;
                     if (PaginaExecutoraAtual().destinoRolagemDestino.testeAtributo == ATRIBUTO_DESTINO_TESTE.HABILIDADE) {
@@ -250,7 +245,7 @@ namespace Assets.Scripts.Componentes {
                     int _idPagina = (_teveSorte) ? PaginaExecutoraAtual().destinoRolagemDestino.idPagina : PaginaExecutoraAtual().destinoRolagemDestino.idPaginaAzar;
                     PaginaExecutoraAtual().paginaIdPaginaDestino = _idPagina;
                     PaginaExecutoraAtual().paginaIdCapituloDestino = PaginaExecutoraAtual().destinoRolagemDestino.idCapitulo;
-                    PaginaExecutoraAtual().destinoProcessoRolagem = PROCESSO.DESTRUIDO;
+                    PaginaExecutoraAtual().destinoProcessoRolagem = PROCESSO2.DESTRUIDO;
                     LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                     return true;
             }
@@ -262,41 +257,38 @@ namespace Assets.Scripts.Componentes {
             if (!OBSERVADOR_CONDICAO__JogoAtualEPaginaExecutora.Contains(observadorCondicao))
                 return false;
             switch (PaginaExecutoraAtual().destinoProcesso) {
-                case PROCESSO.ZERO:
+                case PROCESSO2.ZERO:
                     if (LivroJogo.INSTANCIA.EhFimDeJogo()) {
                         MontarElementosDeFimDeJogo();
-                        PaginaExecutoraAtual().destinoProcesso = PROCESSO.CONCLUIDO;
+                        PaginaExecutoraAtual().destinoProcesso = PROCESSO2.CONCLUIDO;
                         LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                         return true;
                     }
                     if (PaginaExecutoraAtual().destinos != null)
-                        PaginaExecutoraAtual().destinoProcesso = PROCESSO.INICIANDO;
+                        PaginaExecutoraAtual().destinoProcesso = PROCESSO2.INICIANDO;
                     else
-                        PaginaExecutoraAtual().destinoProcesso = PROCESSO.CONCLUIDO;
+                        PaginaExecutoraAtual().destinoProcesso = PROCESSO2.CONCLUIDO;
                     PaginaExecutoraAtual().destinoDesativaBotoes = false;
-                    PaginaExecutoraAtual().destinoProcessoSalvando = PROCESSO.ZERO;
-                    PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO.ZERO;
+                    PaginaExecutoraAtual().destinoProcessoSalvando = PROCESSO2.ZERO;
+                    PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO2.ZERO;
                     LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                     return true;
-                case PROCESSO.INICIANDO:
+                case PROCESSO2.INICIANDO:
                     destinoComandosGroupBox.style.visibility = Uteis.ObterVisibility(!LivroJogo.INSTANCIA.ehJogoCarregado);
                     MontarElementosDeDestinosSelecoes();
-                    PaginaExecutoraAtual().destinoProcesso = PROCESSO.PROCESSANDO;
+                    PaginaExecutoraAtual().destinoProcesso = PROCESSO2.PROCESSANDO;
                     LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
                     return true;
-                case PROCESSO.PROCESSANDO:
+                case PROCESSO2.PROCESSANDO:
                     if ((PaginaExecutoraAtual().paginaIdPaginaDestino == PaginaUtils.PAGINA_ZERADA().idPagina) && (PaginaExecutoraAtual().paginaIdCapituloDestino == PaginaUtils.PAGINA_ZERADA().idCapitulo))
                         return false;
-                    if (paginaPanilha != null)
-                        paginaPanilha.style.visibility = Uteis.ObterVisibility(false);
-                    if (paginaCampanha != null)
-                        paginaCampanha.style.visibility = Uteis.ObterVisibility(false);
-                    StartCoroutine(AguardarProcessoDestinoProcessandoParaConcluido());////?????????
+                    /////livroJogoMotor.bookPageCurlMotor.observadoresAlvos.Inscrever(this);
+                    livroJogoMotor.bookPageCurlMotor.PassarPaginas(JogoAtual().campanhaIdPagina, PaginaExecutoraAtual().paginaIdPaginaDestino);
                     return false;
-                case PROCESSO.CONCLUIDO:
+                case PROCESSO2.CONCLUIDO:
                     if ((PaginaExecutoraAtual().paginaIdPaginaDestino == PaginaUtils.PAGINA_ZERADA().idPagina) && (PaginaExecutoraAtual().paginaIdCapituloDestino == PaginaUtils.PAGINA_ZERADA().idCapitulo))
                         return false;
-                    PaginaExecutoraAtual().destinoProcesso = PROCESSO.DESTRUIDO;
+                    PaginaExecutoraAtual().destinoProcesso = PROCESSO2.DESTRUIDO;
                     PaginaExecutoraAtual().paginaEstado = PAGINA_EXECUTOR_ESTADO.DESTRUIDO;
                     LivroJogo.INSTANCIA.ehJogoCarregado = false;
                     LivroJogo.INSTANCIA.ImporCampanhaDestinoNoJogoAtual(PaginaExecutoraAtual().paginaIdPaginaDestino, PaginaExecutoraAtual().paginaIdCapituloDestino);
@@ -304,6 +296,18 @@ namespace Assets.Scripts.Componentes {
                     return true;
             }
             return false;
+        }
+
+
+
+        bool AoNotificar_ProcessarPassarPaginaDoBook(OBSERVADOR_CONDICAO observadorCondicao) {
+            if (observadorCondicao != OBSERVADOR_CONDICAO.PASSAR_PAGINA_DO_BOOK)
+                return false;
+            if (PaginaExecutoraAtual().destinoProcesso != PROCESSO2.PROCESSANDO)
+                return false;
+            PaginaExecutoraAtual().destinoProcesso = PROCESSO2.CONCLUIDO;
+            LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
+            return true;
         }
 
 
@@ -358,7 +362,7 @@ namespace Assets.Scripts.Componentes {
             }
             else {
                 PaginaExecutoraAtual().destinoRolagemDestino = destinoExecucao;
-                PaginaExecutoraAtual().destinoProcessoRolagem = PROCESSO.INICIANDO;
+                PaginaExecutoraAtual().destinoProcessoRolagem = PROCESSO2.INICIANDO;
                 LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
             }
         }
@@ -366,14 +370,14 @@ namespace Assets.Scripts.Componentes {
 
         void AoSalvarJogo(ClickEvent evento) {
             ProcessarDestinoDesativaBotoes(true);
-            PaginaExecutoraAtual().destinoProcessoSalvando = PROCESSO.INICIANDO;
+            PaginaExecutoraAtual().destinoProcessoSalvando = PROCESSO2.INICIANDO;
             LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
         }
 
 
         void AoCurarJogador(ClickEvent evento) {
             ProcessarDestinoDesativaBotoes(true);
-            PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO.INICIANDO;
+            PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO2.INICIANDO;
             LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
         }
 
@@ -435,7 +439,7 @@ namespace Assets.Scripts.Componentes {
                 foreach (int _itemI in resultados)
                     PaginaExecutoraAtual().destinoRolagemTotal += _itemI;
             }
-            PaginaExecutoraAtual().destinoProcessoRolagem = PROCESSO.CONCLUIDO;
+            PaginaExecutoraAtual().destinoProcessoRolagem = PROCESSO2.CONCLUIDO;
             LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
         }
 
@@ -457,15 +461,6 @@ namespace Assets.Scripts.Componentes {
             //_imagem.style.height = 200;
             _imagem.AddToClassList("historiaImagem");
             destinoSelecaoButton.Add(_imagem);
-        }
-
-
-        IEnumerator AguardarProcessoDestinoProcessandoParaConcluido() {
-            yield return null;
-            livroJogoMotor.PassarPaginasNoBookAutoFlip(JogoAtual().campanhaIdPagina, PaginaExecutoraAtual().paginaIdPaginaDestino);
-            yield return new WaitForSeconds(Constantes.TEMPO_ANIMACAO_NORMAL);
-            PaginaExecutoraAtual().destinoProcessoCurando = PROCESSO.CONCLUIDO;
-            LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
         }
     }
 }

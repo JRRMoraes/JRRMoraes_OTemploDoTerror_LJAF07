@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.LIB;
+using System;
 using System.IO;
 using UnityEngine;
 
@@ -24,7 +25,7 @@ namespace Assets.Scripts.Tipos {
 
         public string[] textosHistoria;
 
-        public Conjuntos.PROCESSO exeProcessoTexto = Conjuntos.PROCESSO.ZERO;
+        public ProcessoMotorIEnumerator exeProcessoTexto = new ProcessoMotorIEnumerator();
 
 
         public static HistoriaTextoExecucao CriarCom(string[] textosHistoria) {
@@ -45,7 +46,7 @@ namespace Assets.Scripts.Tipos {
 
         public EfeitoExecucao[] efeitos;
 
-        public Conjuntos.PROCESSO exeProcessoEfeito = Conjuntos.PROCESSO.ZERO;
+        public ProcessoMotorIEnumerator exeProcessoEfeito = new ProcessoMotorIEnumerator();
 
 
         public static HistoriaEfeitoExecucao CriarCom(Efeito[] efeitos) {
@@ -74,7 +75,7 @@ namespace Assets.Scripts.Tipos {
 
         public string arquivo;
 
-        public Conjuntos.PROCESSO exeProcessoImagem = Conjuntos.PROCESSO.ZERO;
+        public ProcessoMotorIEnumerator exeProcessoImagem = new ProcessoMotorIEnumerator();
 
 
         public static HistoriaImagemExecucao CriarCom(string imagem) {

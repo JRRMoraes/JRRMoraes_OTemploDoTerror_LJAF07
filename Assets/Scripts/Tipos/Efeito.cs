@@ -22,7 +22,7 @@ namespace Assets.Scripts.Tipos {
     [System.Serializable]
     public class EfeitoExecucao : Efeito {
 
-        public Conjuntos.PROCESSO exeProcessoEfeito;
+        public Conjuntos.PROCESSO2 exeProcessoEfeito;
 
         public int exeIdEfeito;
 
@@ -33,7 +33,7 @@ namespace Assets.Scripts.Tipos {
             _efeitoExecucao.atributoEfeito = efeito.atributoEfeito;
             _efeitoExecucao.nomeEfeito = efeito.nomeEfeito;
             _efeitoExecucao.quantidade = efeito.quantidade;
-            _efeitoExecucao.exeProcessoEfeito = PROCESSO.ZERO;
+            _efeitoExecucao.exeProcessoEfeito = PROCESSO2.ZERO;
             _efeitoExecucao.exeIdEfeito = UnityEngine.Random.Range(1, 1000);
             return _efeitoExecucao;
         }
@@ -68,7 +68,7 @@ namespace Assets.Scripts.Tipos {
             _efeito.textoEfeito = texto;
             _efeito.nomeEfeito = "";
             _efeito.quantidade = quantidade;
-            _efeito.exeProcessoEfeito = Conjuntos.PROCESSO.ZERO;
+            _efeito.exeProcessoEfeito = Conjuntos.PROCESSO2.ZERO;
             _efeito.exeIdEfeito = idEfeito;
             return new EfeitoExecucao[] { _efeito };
         }
@@ -100,7 +100,7 @@ namespace Assets.Scripts.Tipos {
             _efeito.textoEfeito = "CUSTO DA SORTE";
             _efeito.nomeEfeito = "";
             _efeito.quantidade = Constantes.SORTE_CUSTO_JOGADOR;
-            _efeito.exeProcessoEfeito = Conjuntos.PROCESSO.ZERO;
+            _efeito.exeProcessoEfeito = Conjuntos.PROCESSO2.ZERO;
             _efeito.exeIdEfeito = 99004;
             return new EfeitoExecucao[] { _efeito };
         }
@@ -114,14 +114,14 @@ namespace Assets.Scripts.Tipos {
             _efeito1.textoEfeito = "CURANDO";
             _efeito1.nomeEfeito = "";
             _efeito1.quantidade = Constantes.CURAR_CURA_ENERGIA_JOGADOR;
-            _efeito1.exeProcessoEfeito = Conjuntos.PROCESSO.ZERO;
+            _efeito1.exeProcessoEfeito = Conjuntos.PROCESSO2.ZERO;
             _efeito1.exeIdEfeito = 99100 + provisao;
             EfeitoExecucao _efeito2 = new EfeitoExecucao();
             _efeito2.atributoEfeito = Conjuntos.ATRIBUTO.PROVISAO;
             _efeito2.textoEfeito = "CUSTO DA CURA";
             _efeito2.nomeEfeito = "";
             _efeito2.quantidade = Constantes.CURAR_CUSTO_PROVISAO_JOGADOR;
-            _efeito2.exeProcessoEfeito = Conjuntos.PROCESSO.ZERO;
+            _efeito2.exeProcessoEfeito = Conjuntos.PROCESSO2.ZERO;
             _efeito2.exeIdEfeito = 99150 + provisao;
             return new EfeitoExecucao[] { _efeito1, _efeito2 };
         }
@@ -133,7 +133,7 @@ namespace Assets.Scripts.Tipos {
             _efeito.textoEfeito = texto;
             _efeito.nomeEfeito = "";
             _efeito.quantidade = quantidade;
-            _efeito.exeProcessoEfeito = Conjuntos.PROCESSO.ZERO;
+            _efeito.exeProcessoEfeito = Conjuntos.PROCESSO2.ZERO;
             _efeito.exeIdEfeito = idEfeito;
             _efeito.exeIdInimigo = idInimigo;
             return new EfeitoInimigoExecucao[] { _efeito };

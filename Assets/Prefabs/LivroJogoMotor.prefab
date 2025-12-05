@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 7027216062977501825}
   - component: {fileID: 771045675364868791}
   - component: {fileID: 3246553066738647186}
+  - component: {fileID: 6931432520709425581}
   m_Layer: 0
   m_Name: LivroJogoMotor
   m_TagString: Untagged
@@ -130,8 +131,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   visualizacao: 1
-  book: {fileID: 3471032979305701584}
-  autoFlip: {fileID: 5179029208302721435}
   uiDocument_PaginaDireitaCampanha: {fileID: 5703418004989341336}
   uiDocument_PaginaEsquerdaPanilha: {fileID: 4331779009953003071}
   camera: {fileID: 0}
@@ -234,6 +233,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Componentes.RoladorDeDadosMotor
   intervaloEntreSorteios: 0.2
   quantidadeDeSorteios: 10
+--- !u!114 &6931432520709425581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432653789025770968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4295196814beb9b4c8b60446476037ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  book: {fileID: 3471032979305701584}
+  autoFlip: {fileID: 5179029208302721435}
 --- !u!1 &2157553297875180825
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,7 +594,7 @@ PrefabInstance:
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: background
       value: 
-      objectReference: {fileID: 21300000, guid: 15ed983576f1e2f409be9be3b1bebe8a, type: 3}
+      objectReference: {fileID: 2746070240498474880, guid: 5fd8289a79068c542809b0c04f062307, type: 3}
     - target: {fileID: 11415212, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: currentPage
       value: 0
@@ -725,7 +738,7 @@ PrefabInstance:
     - target: {fileID: 11430880, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 15ed983576f1e2f409be9be3b1bebe8a, type: 3}
+      objectReference: {fileID: 2746070240498474880, guid: 5fd8289a79068c542809b0c04f062307, type: 3}
     - target: {fileID: 22280180, guid: fe9bfb5044c0cc646baba1ad7d354100, type: 3}
       propertyPath: m_CullTransparentMesh
       value: 0

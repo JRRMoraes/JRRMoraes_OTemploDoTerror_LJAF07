@@ -12,9 +12,7 @@ namespace Assets.Scripts {
 
         public VISUALIZACAO visualizacao = VISUALIZACAO.TUDO;
 
-        public Book book;
-
-        public AutoFlip autoFlip;
+        public BookPageCurlMotor bookPageCurlMotor { get; set; }
 
         public UIDocument uiDocument_PaginaDireitaCampanha;
 
@@ -30,6 +28,7 @@ namespace Assets.Scripts {
 
         void Awake() {
             LivroJogo.INSTANCIA.observadoresAlvos.Inscrever(this);
+            bookPageCurlMotor = GetComponent<BookPageCurlMotor>();
         }
 
 
@@ -74,22 +73,7 @@ namespace Assets.Scripts {
         }
 
 
-        public void PassarPaginasNoBookAutoFlip(int idPaginaAtual, int idPaginaNova) {
-            if ((book is null) || (autoFlip is null))
-                return;
-            if (idPaginaAtual <= idPaginaNova) {
-                if ((book.currentPage + 2) <= book.TotalPageCount)
-                    autoFlip.FlipRightPage();
-                else
-                    autoFlip.FlipLeftPage();
-            }
-            else {
-                if ((book.currentPage - 2) >= 0)
-                    autoFlip.FlipLeftPage();
-                else
-                    autoFlip.FlipRightPage();
-            }
-        }
+
 
 
         void EntradaVisualizacaoDesktop() {
@@ -128,11 +112,11 @@ namespace Assets.Scripts {
             if (PaginaExecutora.EhValido(LivroJogo.INSTANCIA.paginaExecutora))
                 return false;
             if (!Livro.EhValido(LivroJogo.INSTANCIA.livro)) {
-                book.currentPage = 0;
+                bookPageCurlMotor.ImporPaginaAtual(0);
                 return false;
             }
             if (!Jogo.EhValido(LivroJogo.INSTANCIA.jogoAtual, false)) {
-                book.currentPage = 0;
+                bookPageCurlMotor.ImporPaginaAtual(0);
                 return false;
             }
             Pagina _paginaAtual = LivroJogo.INSTANCIA.ObterPaginaAtualViaJogoAtual();

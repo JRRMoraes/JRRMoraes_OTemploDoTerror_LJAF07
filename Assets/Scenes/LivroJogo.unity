@@ -604,10 +604,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LivroJogoMotor
       objectReference: {fileID: 0}
-    - target: {fileID: 3471032979305701584, guid: 37e6b50c1d7da1b4e98a99fce7a14fb3, type: 3}
-      propertyPath: background
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4142254033068562677, guid: 37e6b50c1d7da1b4e98a99fce7a14fb3, type: 3}
       propertyPath: m_Camera
       value: 

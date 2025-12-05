@@ -58,7 +58,7 @@ namespace Assets.Scripts.Componentes {
                 return;
             if (!Jogo.EhValido(LivroJogo.INSTANCIA.jogoAtual, false)) {
                 panilhaTabView.activeTab = menuInicialTab;
-                livroJogoMotor.book.currentPage = 0;
+                livroJogoMotor.bookPageCurlMotor.ImporPaginaAtual(0);
                 return;
             }
             if (!PaginaExecutora.EhValido(LivroJogo.INSTANCIA.paginaExecutora))

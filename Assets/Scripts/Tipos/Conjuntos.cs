@@ -25,7 +25,7 @@ namespace Assets.Scripts.Tipos {
         }
 
 
-        public enum PROCESSO {
+        public enum PROCESSO2 {
             ZERO,
             INICIANDO,
             PROCESSANDO,
@@ -108,7 +108,8 @@ namespace Assets.Scripts.Tipos {
         public enum OBSERVADOR_CONDICAO {
             VISUALIZACAO,
             JOGO_ATUAL,
-            PAGINA_EXECUTORA
+            PAGINA_EXECUTORA,
+            PASSAR_PAGINA_DO_BOOK
         }
         public static OBSERVADOR_CONDICAO[] OBSERVADOR_CONDICAO__VisualizacaoEPaginaExecutora = new OBSERVADOR_CONDICAO[] { OBSERVADOR_CONDICAO.VISUALIZACAO, OBSERVADOR_CONDICAO.PAGINA_EXECUTORA };
         public static OBSERVADOR_CONDICAO[] OBSERVADOR_CONDICAO__JogoAtualEPaginaExecutora = new OBSERVADOR_CONDICAO[] { OBSERVADOR_CONDICAO.JOGO_ATUAL, OBSERVADOR_CONDICAO.PAGINA_EXECUTORA };

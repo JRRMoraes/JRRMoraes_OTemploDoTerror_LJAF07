@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Tipos;
+﻿using Assets.Scripts.LIB;
+using Assets.Scripts.Tipos;
 using Newtonsoft.Json;
 using System;
 using Unity.Jobs;
@@ -17,7 +18,7 @@ namespace Assets.Scripts.Tipos {
 
         public CAMPANHA_CAPITULO paginaIdCapituloDestino;
 
-        public PROCESSO historiaProcesso = PROCESSO.ZERO;
+        public ProcessoMotorIEnumerator historiaProcesso = new ProcessoMotorIEnumerator();
 
         public HistoriaTextoExecucao[] historiaTextos;
 
@@ -27,17 +28,17 @@ namespace Assets.Scripts.Tipos {
 
         public int historiaIndice;
 
-        public PROCESSO_HISTORIA historiaProcessoIndice = PROCESSO_HISTORIA.ZERO;
+        public ProcessoMotorIEnumerator historiaProcessoIndice = new ProcessoMotorIEnumerator();
 
-        public PROCESSO combateProcesso = PROCESSO.ZERO;
+        public PROCESSO2 combateProcesso = PROCESSO2.ZERO;
 
         public InimigoExecucao[] combateInimigos;
 
         public POSTURA_INIMIGO[] combateInimigos_PosturaInimigo;
 
-        public PROCESSO[] combateInimigos_ProcessoRolagemAtaque;
+        public PROCESSO2[] combateInimigos_ProcessoRolagemAtaque;
 
-        public PROCESSO[] combateInimigos_ProcessoRolagemSorteConfirmacao;
+        public PROCESSO2[] combateInimigos_ProcessoRolagemSorteConfirmacao;
 
         public EfeitoInimigoExecucao[] combateInimigosEfeitosAplicados;
 
@@ -53,7 +54,7 @@ namespace Assets.Scripts.Tipos {
 
         public int combateSerieDeAtaqueAtual;
 
-        public PROCESSO combateProcessoSerieDeAtaque;
+        public PROCESSO2 combateProcessoSerieDeAtaque;
 
         public RESULTADO_COMBATE combateResultadoFinalDerrota;
 
@@ -67,11 +68,11 @@ namespace Assets.Scripts.Tipos {
 
         //combateDadosSorteRef: MutableRefObject<DieContainerRef | null>[];
 
-        public PROCESSO destinoProcesso = PROCESSO.ZERO;
+        public PROCESSO2 destinoProcesso = PROCESSO2.ZERO;
 
         public DestinoExecucao[] destinoItens;
 
-        public PROCESSO destinoProcessoRolagem;
+        public PROCESSO2 destinoProcessoRolagem;
 
         public int destinoRolagemTotal;
 
@@ -81,9 +82,9 @@ namespace Assets.Scripts.Tipos {
 
         public bool destinoDesativaBotoes = false;
 
-        public PROCESSO destinoProcessoSalvando = PROCESSO.ZERO;
+        public PROCESSO2 destinoProcessoSalvando = PROCESSO2.ZERO;
 
-        public PROCESSO destinoProcessoCurando = PROCESSO.ZERO;
+        public PROCESSO2 destinoProcessoCurando = PROCESSO2.ZERO;
 
 
 
@@ -119,8 +120,8 @@ namespace Assets.Scripts.Tipos {
                 foreach (Inimigo _inimigoI in combate.inimigos) {
                     combateInimigos = Uteis.AdicionarNoArray<InimigoExecucao>(combateInimigos, InimigoExecucao.CriarCom(_inimigoI, _indiceInimigo));
                     combateInimigos_PosturaInimigo = Uteis.AdicionarNoArray<POSTURA_INIMIGO>(combateInimigos_PosturaInimigo, POSTURA_INIMIGO.AGUARDANDO);
-                    combateInimigos_ProcessoRolagemAtaque = Uteis.AdicionarNoArray<PROCESSO>(combateInimigos_ProcessoRolagemAtaque, PROCESSO.ZERO);
-                    combateInimigos_ProcessoRolagemSorteConfirmacao = Uteis.AdicionarNoArray<PROCESSO>(combateInimigos_ProcessoRolagemSorteConfirmacao, PROCESSO.ZERO);
+                    combateInimigos_ProcessoRolagemAtaque = Uteis.AdicionarNoArray<PROCESSO2>(combateInimigos_ProcessoRolagemAtaque, PROCESSO2.ZERO);
+                    combateInimigos_ProcessoRolagemSorteConfirmacao = Uteis.AdicionarNoArray<PROCESSO2>(combateInimigos_ProcessoRolagemSorteConfirmacao, PROCESSO2.ZERO);
                     combateInimigosEfeitosAplicados = Uteis.AdicionarNoArray<EfeitoInimigoExecucao>(combateInimigosEfeitosAplicados, EfeitoInimigoExecucao.CriarCom(_inimigoI, _indiceInimigo));
                     _indiceInimigo++;
                 }
@@ -168,6 +169,8 @@ namespace Assets.Scripts.Tipos {
 
 
         public HistoriaTextoExecucao ObterHistoriaTextosAtuais() {
+            if (historiaTextos is null)
+                return null;
             if (historiaTextos.Length <= historiaIndice)
                 return null;
             return historiaTextos[historiaIndice];
@@ -175,6 +178,8 @@ namespace Assets.Scripts.Tipos {
 
 
         public HistoriaEfeitoExecucao ObterHistoriaEfeitosAtuais() {
+            if (historiaEfeitos is null)
+                return null;
             if (historiaEfeitos.Length <= historiaIndice)
                 return null;
             return historiaEfeitos[historiaIndice];
@@ -182,27 +187,41 @@ namespace Assets.Scripts.Tipos {
 
 
         public HistoriaImagemExecucao ObterHistoriaImagensAtuais() {
+            if (historiaImagens is null)
+                return null;
             if (historiaImagens.Length <= historiaIndice)
                 return null;
             return historiaImagens[historiaIndice];
         }
 
 
-        public void ImporHistoriaTextosExeProcessoTexto(PROCESSO processo) {
-            if ((historiaTextos != null) && (ObterHistoriaTextosAtuais() != null) && (ObterHistoriaTextosAtuais().exeProcessoTexto != processo))
-                ObterHistoriaTextosAtuais().exeProcessoTexto = processo;
+        public void ImporHistoriaTextosExeProcessoTexto(PROCESSO processo, bool ehProcessamento) {
+            if ((historiaTextos != null) && (ObterHistoriaTextosAtuais() != null)) {
+                if (ehProcessamento)
+                    ObterHistoriaTextosAtuais().exeProcessoTexto.Processar(processo);
+                else
+                    ObterHistoriaTextosAtuais().exeProcessoTexto.ImporProcesso(processo);
+            }
         }
 
 
-        public void ImporHistoriaEfeitosExeProcessoEfeito(PROCESSO processo) {
-            if ((historiaEfeitos != null) && (ObterHistoriaEfeitosAtuais() != null) && (ObterHistoriaEfeitosAtuais().exeProcessoEfeito != processo))
-                ObterHistoriaEfeitosAtuais().exeProcessoEfeito = processo;
+        public void ImporHistoriaEfeitosExeProcessoEfeito(PROCESSO processo, bool ehProcessamento) {
+            if ((historiaEfeitos != null) && (ObterHistoriaEfeitosAtuais() != null)) {
+                if (ehProcessamento)
+                    ObterHistoriaEfeitosAtuais().exeProcessoEfeito.Processar(processo);
+                else
+                    ObterHistoriaEfeitosAtuais().exeProcessoEfeito.ImporProcesso(processo);
+            }
         }
 
 
-        public void ImporHistoriaImagensExeProcessoImagem(PROCESSO processo) {
-            if ((historiaImagens != null) && (ObterHistoriaImagensAtuais() != null) && (ObterHistoriaImagensAtuais().exeProcessoImagem != processo))
-                ObterHistoriaImagensAtuais().exeProcessoImagem = processo;
+        public void ImporHistoriaImagensExeProcessoImagem(PROCESSO processo, bool ehProcessamento) {
+            if ((historiaImagens != null) && (ObterHistoriaImagensAtuais() != null)) {
+                if (ehProcessamento)
+                    ObterHistoriaImagensAtuais().exeProcessoImagem.Processar(processo);
+                else
+                    ObterHistoriaImagensAtuais().exeProcessoImagem.ImporProcesso(processo);
+            }
         }
     }
 }

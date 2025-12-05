@@ -22,15 +22,4 @@
 
         public int sorte;
     }
-
-
-    [System.Serializable]
-    public class RolagemDeDadosParaPanilhaNova {
-
-        public Conjuntos.PROCESSO processoRolagem = Conjuntos.PROCESSO.ZERO;
-
-        public DadosRoladosParaPanilhaNova rolagens;
-
-        public DadosRoladosTotaisParaPanilhaNova totais;
-    }
 }
