@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -8,10 +9,15 @@ namespace Assets.Scripts.LIB {
 
     public enum PROCESSO {
         _ZERADO,
+        _ZERADO_EXEC,
         INICIANDO,
+        INICIANDO_EXEC,
         PROCESSANDO,
+        PROCESSANDO_EXEC,
         CONCLUINDO,
+        CONCLUINDO_EXEC,
         _FINALIZADO,
+        _FINALIZADO_EXEC,
         __NULO
     }
 
@@ -20,11 +26,13 @@ namespace Assets.Scripts.LIB {
 
 
     [System.Serializable]
-    public class ProcessoMotorIEnumerator {
+    public class ProcessoMotor {
 
         public MonoBehaviour monoBehaviour { get; set; }
 
-        public PROCESSO processo { get; private set; } = PROCESSO._ZERADO;
+        public PROCESSO processo { get { return _processo; } }
+        [SerializeField]
+        PROCESSO _processo = PROCESSO._ZERADO;
 
         PROCESSO processoUltimo = PROCESSO.__NULO;
 
@@ -32,20 +40,29 @@ namespace Assets.Scripts.LIB {
 
         public Func<bool, bool> rotinaEhValido;
 
-        public List<Func<Action<PROCESSO, bool>, IEnumerator>> rotinasZerado = new List<Func<Action<PROCESSO, bool>, IEnumerator>>();
+        public List<Func<Action<PROCESSO>, IEnumerator>> rotinasZerado = new List<Func<Action<PROCESSO>, IEnumerator>>();
 
-        public List<Func<Action<PROCESSO, bool>, IEnumerator>> rotinasIniciando = new List<Func<Action<PROCESSO, bool>, IEnumerator>>();
+        public List<Func<Action<PROCESSO>, IEnumerator>> rotinasIniciando = new List<Func<Action<PROCESSO>, IEnumerator>>();
 
-        public List<Func<Action<PROCESSO, bool>, IEnumerator>> rotinasProcessando = new List<Func<Action<PROCESSO, bool>, IEnumerator>>();
+        public List<Func<Action<PROCESSO>, IEnumerator>> rotinasProcessando = new List<Func<Action<PROCESSO>, IEnumerator>>();
 
-        public List<Func<Action<PROCESSO, bool>, IEnumerator>> rotinasConcluindo = new List<Func<Action<PROCESSO, bool>, IEnumerator>>();
+        public List<Func<Action<PROCESSO>, IEnumerator>> rotinasConcluindo = new List<Func<Action<PROCESSO>, IEnumerator>>();
 
-        public List<Func<Action<PROCESSO, bool>, IEnumerator>> rotinasFinalizado = new List<Func<Action<PROCESSO, bool>, IEnumerator>>();
+        public List<Func<Action<PROCESSO>, IEnumerator>> rotinasFinalizado = new List<Func<Action<PROCESSO>, IEnumerator>>();
 
+        public List<Task<PROCESSO>> tarefasZerado = new List<Task<PROCESSO>>();
+
+        public List<Task<PROCESSO>> tarefasIniciando = new List<Task<PROCESSO>>();
+
+        public List<Task<PROCESSO>> tarefasProcessando = new List<Task<PROCESSO>>();
+
+        public List<Task<PROCESSO>> tarefasConcluindo = new List<Task<PROCESSO>>();
+
+        public List<Task<PROCESSO>> tarefasFinalizado = new List<Task<PROCESSO>>();
 
 
         public void ImporProcesso(PROCESSO novoProcesso) {
-            processo = novoProcesso;
+            _processo = novoProcesso;
         }
 
 
@@ -78,7 +95,7 @@ namespace Assets.Scripts.LIB {
 
 
         IEnumerator Interno_Processar(PROCESSO novoProcesso) {
-            processo = novoProcesso;
+            _processo = novoProcesso;
             primeiraVez = (processo != processoUltimo);
             processoUltimo = processo;
             if (rotinaEhValido != null) {
@@ -105,20 +122,25 @@ namespace Assets.Scripts.LIB {
         }
 
 
-        IEnumerator Interno_ProcessarRotinas(List<Func<Action<PROCESSO, bool>, IEnumerator>> rotinas) {
-            if (rotinas.Count <= 0)
-                yield break;
+        IEnumerator Interno_ProcessarRotinas(List<Func<Action<PROCESSO>, IEnumerator>> rotinas) {
             for (int I = 0; I < rotinas.Count; I++) {
-                IEnumerator _rotina = rotinas[I]((_processoAlteradoI, _ehProcessamentoI) => {
-                    if (_processoAlteradoI != PROCESSO.__NULO) {
-                        if (_ehProcessamentoI)
-                            Processar(_processoAlteradoI);
-                        else
-                            ImporProcesso(_processoAlteradoI);
-                    }
+                IEnumerator _rotina = rotinas[I](_processoRetornadoI => {
+                    if (_processoRetornadoI != PROCESSO.__NULO)
+                        Processar(_processoRetornadoI);
                 });
                 monoBehaviour.StartCoroutine(_rotina);
                 yield return null;
+            }
+        }
+
+
+        IEnumerator Interno_ProcessarTarefas(List<Task<PROCESSO>> tarefas) {
+            for (int I = 0; I < tarefas.Count; I++) {
+                Task<PROCESSO> _tarefa = tarefas[I];
+                while (!_tarefa.IsCompleted)
+                    yield return null;
+                if (_tarefa.Result != PROCESSO.__NULO)
+                    Processar(_tarefa.Result);
             }
         }
 

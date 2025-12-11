@@ -25,7 +25,7 @@ namespace Assets.Scripts.Tipos {
 
         public string[] textosHistoria;
 
-        public ProcessoMotorIEnumerator exeProcessoTexto = new ProcessoMotorIEnumerator();
+        public ProcessoMotor exeProcessoTexto = new ProcessoMotor();
 
 
         public static HistoriaTextoExecucao CriarCom(string[] textosHistoria) {
@@ -46,7 +46,7 @@ namespace Assets.Scripts.Tipos {
 
         public EfeitoExecucao[] efeitos;
 
-        public ProcessoMotorIEnumerator exeProcessoEfeito = new ProcessoMotorIEnumerator();
+        public ProcessoMotor exeProcessoEfeito = new ProcessoMotor();
 
 
         public static HistoriaEfeitoExecucao CriarCom(Efeito[] efeitos) {
@@ -75,7 +75,7 @@ namespace Assets.Scripts.Tipos {
 
         public string arquivo;
 
-        public ProcessoMotorIEnumerator exeProcessoImagem = new ProcessoMotorIEnumerator();
+        public ProcessoMotor exeProcessoImagem = new ProcessoMotor();
 
 
         public static HistoriaImagemExecucao CriarCom(string imagem) {

@@ -19,10 +19,6 @@ namespace Assets.Scripts.Componentes {
         }
 
 
-        void OnDestroy() {
-            LivroJogo.INSTANCIA.observadoresAlvos.Desinscrever(this);
-        }
-
         public PaginaExecutora PaginaExecutoraAtual() {
             return LivroJogo.INSTANCIA.paginaExecutora;
         }

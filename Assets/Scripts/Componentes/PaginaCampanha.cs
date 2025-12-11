@@ -27,12 +27,21 @@ namespace Assets.Scripts.Componentes {
         public void AoNotificar(OBSERVADOR_CONDICAO observadorCondicao) {
             if (!LivroJogoMotor.EhValido(livroJogoMotor))
                 return;
-            if (paginaCampanha is null)
+            if (paginaCampanha is null) {
                 paginaCampanha = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<VisualElement>("PaginaCampanha");
-            if (campanhaTituloVE is null)
+                if (paginaCampanha is null)
+                    return;
+            }
+            if (campanhaTituloVE is null) {
                 campanhaTituloVE = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<VisualElement>("CampanhaTituloVE");
-            if (campanhaTitulo is null)
+                if (campanhaTituloVE is null)
+                    return;
+            }
+            if (campanhaTitulo is null) {
                 campanhaTitulo = livroJogoMotor.Raiz_PaginaDireitaCampanha().Query<Label>("CampanhaTitulo");
+                if (campanhaTitulo is null)
+                    return;
+            }
 
             if (AoNotificar_ExecutarPaginaPanilha(observadorCondicao))
                 return;
@@ -42,9 +51,10 @@ namespace Assets.Scripts.Componentes {
         bool AoNotificar_ExecutarPaginaPanilha(OBSERVADOR_CONDICAO observadorCondicao) {
             if (observadorCondicao != OBSERVADOR_CONDICAO.PAGINA_EXECUTORA)
                 return false;
-            if ((campanhaTituloVE is null) || (campanhaTitulo is null))
-                return false;
-            if (!PaginaExecutora.EhValido(LivroJogo.INSTANCIA.paginaExecutora)) {
+            bool _limpa = (!PaginaExecutora.EhValido(LivroJogo.INSTANCIA.paginaExecutora))
+                || (LivroJogo.INSTANCIA.paginaExecutora.paginaEstado == PAGINA_EXECUTOR_ESTADO.NULO);
+            if (_limpa) {
+                paginaCampanha.style.display = Uteis.ObterDisplayStyle(false);
                 campanhaTitulo.text = "";
                 campanhaTitulo.ClearClassList();
                 campanhaTitulo.RemoveFromHierarchy();
@@ -53,7 +63,7 @@ namespace Assets.Scripts.Componentes {
             }
             if (LivroJogo.INSTANCIA.paginaExecutora.paginaEstado != PAGINA_EXECUTOR_ESTADO.INICIALIZADO)
                 return false;
-            paginaCampanha.style.visibility = Uteis.ObterVisibility(true);
+            paginaCampanha.style.display = Uteis.ObterDisplayStyle(true);
             if (!string.IsNullOrWhiteSpace(LivroJogo.INSTANCIA.paginaExecutora.titulo)) {
                 campanhaTitulo.text = LivroJogo.INSTANCIA.paginaExecutora.titulo;
                 campanhaTitulo.AddToClassList("campanhaTituloTexto");

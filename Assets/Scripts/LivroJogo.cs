@@ -182,9 +182,9 @@ namespace Assets.Scripts {
         public void AdicionarEmJogadorEfeitosAplicados(EfeitoExecucao[] efeitosExecucao) {
             foreach (EfeitoExecucao _efeitoI in efeitosExecucao) {
                 if (jogadorEfeitosAplicados is null)
-                    Uteis.AdicionarNoArray<EfeitoExecucao>(jogadorEfeitosAplicados, _efeitoI);
+                    jogadorEfeitosAplicados = Uteis.AdicionarNoArray<EfeitoExecucao>(jogadorEfeitosAplicados, _efeitoI);
                 else if (!jogadorEfeitosAplicados.Any((_efeitoI2) => _efeitoI2.exeIdEfeito == _efeitoI.exeIdEfeito))
-                    Uteis.AdicionarNoArray<EfeitoExecucao>(jogadorEfeitosAplicados, _efeitoI);
+                    jogadorEfeitosAplicados = Uteis.AdicionarNoArray<EfeitoExecucao>(jogadorEfeitosAplicados, _efeitoI);
             }
         }
 

@@ -23,11 +23,6 @@ public class MenuInicial : MonoBehaviour, IPadraoObservador {
     }
 
 
-    void OnDestroy() {
-        LivroJogo.INSTANCIA.observadoresAlvos.Desinscrever(this);
-    }
-
-
     public void AoNotificar(OBSERVADOR_CONDICAO observadorCondicao) {
         if (!LivroJogoMotor.EhValido(livroJogoMotor))
             return;

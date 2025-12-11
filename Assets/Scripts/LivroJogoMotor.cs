@@ -1,5 +1,8 @@
 using Assets.Scripts.Componentes;
+using Assets.Scripts.LIB;
 using Assets.Scripts.Tipos;
+using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -39,12 +42,6 @@ namespace Assets.Scripts {
 
         void Update() {
             EntradaVisualizacaoDesktop();
-        }
-
-
-        void OnDestroy() {
-            if (LivroJogo.INSTANCIA != null)
-                LivroJogo.INSTANCIA.observadoresAlvos.Desinscrever(this);
         }
 
 
@@ -105,6 +102,8 @@ namespace Assets.Scripts {
                 return;
             if (AoNotificar_ProcessarPaginaExecutora())
                 return;
+            if (AoNotificar_ProcessarJogadorEfeitosAplicados())
+                return;
         }
 
 
@@ -149,6 +148,44 @@ namespace Assets.Scripts {
                     return true;
             }
             return false;
+        }
+
+
+        public bool AoNotificar_ProcessarJogadorEfeitosAplicados() {
+            if (!PaginaExecutora.EhValido(LivroJogo.INSTANCIA.paginaExecutora))
+                return false;
+            if (!Livro.EhValido(LivroJogo.INSTANCIA.livro))
+                return false;
+            if (!Jogo.EhValido(LivroJogo.INSTANCIA.jogoAtual, false))
+                return false;
+            if ((LivroJogo.INSTANCIA.jogadorEfeitosAplicados is null) || (LivroJogo.INSTANCIA.jogadorEfeitosAplicados.Length <= 0))
+                return false;
+            foreach (EfeitoExecucao _efeitoExecucaoI in LivroJogo.INSTANCIA.jogadorEfeitosAplicados) {
+                if (_efeitoExecucaoI.exeProcessoEfeito.processo != PROCESSO._ZERADO)
+                    continue;
+                _efeitoExecucaoI.exeProcessoEfeito.monoBehaviour = this;
+                _efeitoExecucaoI.exeProcessoEfeito.rotinasIniciando.Add((_aoAlterarProcessoI) => RotinaProcesso_EfeitoExecucao_Iniciando(_aoAlterarProcessoI, _efeitoExecucaoI));
+                _efeitoExecucaoI.exeProcessoEfeito.rotinasConcluindo.Add((_aoAlterarProcessoI) => RotinaProcesso_EfeitoExecucao_Concluindo(_aoAlterarProcessoI, _efeitoExecucaoI));
+                _efeitoExecucaoI.exeProcessoEfeito.Processar(PROCESSO.INICIANDO);
+            }
+            LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
+            return true;
+        }
+
+
+        IEnumerator RotinaProcesso_EfeitoExecucao_Iniciando(Action<PROCESSO> aoAlterarProcesso, EfeitoExecucao efeitoExecucao) {
+            aoAlterarProcesso?.Invoke(PROCESSO.INICIANDO_EXEC);
+            yield return new WaitForSeconds(Constantes.TEMPO_ANIMACAO_NORMAL);
+            aoAlterarProcesso?.Invoke(PROCESSO.CONCLUINDO);
+        }
+
+
+        IEnumerator RotinaProcesso_EfeitoExecucao_Concluindo(Action<PROCESSO> aoAlterarProcesso, EfeitoExecucao efeitoExecucao) {
+            aoAlterarProcesso?.Invoke(PROCESSO.CONCLUINDO_EXEC);
+            yield return new WaitForSeconds(Constantes.TEMPO_ANIMACAO_NORMAL);
+            LivroJogo.INSTANCIA.jogadorEfeitosAplicados = LivroJogo.INSTANCIA.jogadorEfeitosAplicados
+                    .Where(_efeitoI => _efeitoI.exeIdEfeito != efeitoExecucao.exeIdEfeito).ToArray();
+            LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.PAGINA_EXECUTORA);
         }
     }
 }

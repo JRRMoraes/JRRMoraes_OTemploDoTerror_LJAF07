@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Scripts/UIDocuments/LivroJogo.uss?fileID=7433441132597879392&amp;guid=9cb962d2be427cf458b6a5c85056ea23&amp;type=3#LivroJogo" />
     <ui:GroupBox name="HistoriaGroupBox" style="flex-grow: 1; flex-shrink: 1;" />
-    <ui:GroupBox name="ComandosGroupBox" style="flex-shrink: 0;">
+    <ui:GroupBox name="ComandosGroupBox" style="flex-shrink: 1;">
         <ui:Button text="Pular História" name="PularHistoriaButton" style="align-self: center; -unity-font-style: bold-and-italic; font-size: 16px;" />
     </ui:GroupBox>
 </ui:UXML>

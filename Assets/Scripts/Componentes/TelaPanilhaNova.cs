@@ -54,7 +54,7 @@ namespace Assets.Scripts.Componentes {
 
         Button rolarNovamenteButton;
 
-        ProcessoMotorIEnumerator processoPanilhaNova = new ProcessoMotorIEnumerator();
+        ProcessoMotor processoPanilhaNova = new ProcessoMotor();
 
         string nomeInformado = null;
 
@@ -66,7 +66,7 @@ namespace Assets.Scripts.Componentes {
 
         int rolagensAtributos;
 
-        ProcessoMotorIEnumerator processoRolagem = new ProcessoMotorIEnumerator();
+        ProcessoMotor processoRolagem = new ProcessoMotor();
 
 
 
@@ -200,20 +200,21 @@ namespace Assets.Scripts.Componentes {
         }
 
 
-        IEnumerator RotinaProcesso_PanilhaNova_Zerado(Action<PROCESSO, bool> aoAlterarProcesso) {
+        IEnumerator RotinaProcesso_PanilhaNova_Zerado(Action<PROCESSO> aoAlterarProcesso) {
             panilhaNovaTabView.activeTab = nomeTab;
-            falhaNomeLabel.style.visibility = Uteis.ObterVisibility(false);
-            aoAlterarProcesso?.Invoke(PROCESSO.INICIANDO, false);
+            falhaNomeLabel.style.display = Uteis.ObterDisplayStyle(false);
+            aoAlterarProcesso?.Invoke(PROCESSO.INICIANDO);
             LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.JOGO_ATUAL);
             yield return null;
         }
 
 
-        IEnumerator RotinaProcesso_PanilhaNova_Iniciando(Action<PROCESSO, bool> aoAlterarProcesso) {
+        IEnumerator RotinaProcesso_PanilhaNova_Iniciando(Action<PROCESSO> aoAlterarProcesso) {
             if (string.IsNullOrWhiteSpace(nomeInformado))
                 yield break;
             if (nivelRadioButtonGroup.value <= -1)
                 yield break;
+            aoAlterarProcesso?.Invoke(PROCESSO.INICIANDO_EXEC);
             panilhaNovaTabView.activeTab = atributosTab;
             rolagensAtributos = 3;
             roladorDeDados = new RoladorDeDados();
@@ -230,15 +231,15 @@ namespace Assets.Scripts.Componentes {
             sorteResultadoLabel.text = "?";
             dadosRoladosTotaisParaPanilhaNova = new DadosRoladosTotaisParaPanilhaNova();
             processoRolagem.Processar(PROCESSO._ZERADO);
-            aoAlterarProcesso?.Invoke(PROCESSO.PROCESSANDO, true);
+            aoAlterarProcesso?.Invoke(PROCESSO.PROCESSANDO);
             LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.JOGO_ATUAL);
             yield return null;
         }
 
 
-        IEnumerator RotinaProcesso_PanilhaNova_Concluido(Action<PROCESSO, bool> aoAlterarProcesso) {
+        IEnumerator RotinaProcesso_PanilhaNova_Concluido(Action<PROCESSO> aoAlterarProcesso) {
             LivroJogo.INSTANCIA.jogoAtual.panilha = Panilha.CriarPanilhaViaRolagens(dadosRoladosTotaisParaPanilhaNova, nomeInformado, jogoNivelInformado);
-            aoAlterarProcesso?.Invoke(PROCESSO._FINALIZADO, false);
+            aoAlterarProcesso?.Invoke(PROCESSO._FINALIZADO);
             LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.JOGO_ATUAL);
             yield return null;
         }
@@ -264,7 +265,7 @@ namespace Assets.Scripts.Componentes {
         }
 
 
-        IEnumerator RotinaProcesso_Rolagem_Zerado(Action<PROCESSO, bool> aoAlterarProcesso) {
+        IEnumerator RotinaProcesso_Rolagem_Zerado(Action<PROCESSO> aoAlterarProcesso) {
             salvarAtributosButton.SetEnabled(true);
             rolarNovamenteButton.SetEnabled(true);
             if (rolagensAtributos == 3) {
@@ -287,31 +288,33 @@ namespace Assets.Scripts.Componentes {
                 salvarAtributosButton.text = "Salvar ATRIBUTOS  ( tentativas acabaram )";
                 rolarNovamenteButton.style.display = Uteis.ObterDisplayStyle(false);
             }
-            aoAlterarProcesso?.Invoke(PROCESSO.__NULO, false);
+            aoAlterarProcesso?.Invoke(PROCESSO.__NULO);
             yield return null;
         }
 
 
-        IEnumerator RotinaProcesso_Rolagem_Iniciando(Action<PROCESSO, bool> aoAlterarProcesso) {
+        IEnumerator RotinaProcesso_Rolagem_Iniciando(Action<PROCESSO> aoAlterarProcesso) {
+            aoAlterarProcesso?.Invoke(PROCESSO.INICIANDO_EXEC);
             salvarAtributosButton.SetEnabled(false);
             rolarNovamenteButton.SetEnabled(false);
             rolagensAtributos--;
             dadosRoladosTotaisParaPanilhaNova = new DadosRoladosTotaisParaPanilhaNova();
             roladorDeDados.Rolar();
-            aoAlterarProcesso?.Invoke(PROCESSO.PROCESSANDO, false);
+            aoAlterarProcesso?.Invoke(PROCESSO.PROCESSANDO);
             LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.JOGO_ATUAL);
             yield return null;
         }
 
 
-        IEnumerator RotinaProcesso_Rolagem_Concluindo(Action<PROCESSO, bool> aoAlterarProcesso) {
+        IEnumerator RotinaProcesso_Rolagem_Concluindo(Action<PROCESSO> aoAlterarProcesso) {
+            aoAlterarProcesso?.Invoke(PROCESSO.CONCLUINDO_EXEC);
             dadosRoladosTotaisParaPanilhaNova.habilidade += 6;
             dadosRoladosTotaisParaPanilhaNova.energia += 12;
             dadosRoladosTotaisParaPanilhaNova.sorte += 6;
             habilidadeResultadoLabel.text = dadosRoladosTotaisParaPanilhaNova.habilidade.ToString();
             energiaResultadoLabel.text = dadosRoladosTotaisParaPanilhaNova.energia.ToString();
             sorteResultadoLabel.text = dadosRoladosTotaisParaPanilhaNova.sorte.ToString();
-            aoAlterarProcesso?.Invoke(PROCESSO._ZERADO, false);
+            aoAlterarProcesso?.Invoke(PROCESSO._ZERADO);
             LivroJogo.INSTANCIA.observadoresAlvos.Notificar(OBSERVADOR_CONDICAO.JOGO_ATUAL);
             yield return null;
         }
@@ -320,13 +323,13 @@ namespace Assets.Scripts.Componentes {
         void AoSalvarNome(ClickEvent evento) {
             string _nome = nomeTextField.value;
             if (string.IsNullOrWhiteSpace(_nome)) {
-                falhaNomeLabel.style.visibility = Uteis.ObterVisibility(true);
+                falhaNomeLabel.style.display = Uteis.ObterDisplayStyle(true);
                 nomeTextField.Focus();
                 return;
             }
             int _nivel = nivelRadioButtonGroup.value;
             if ((_nivel <= -1) || (_nivel >= 2)) {
-                falhaNivelLabel.style.visibility = Uteis.ObterVisibility(true);
+                falhaNivelLabel.style.display = Uteis.ObterDisplayStyle(true);
                 nivelRadioButtonGroup.Focus();
                 return;
             }

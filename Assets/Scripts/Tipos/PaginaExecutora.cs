@@ -18,7 +18,7 @@ namespace Assets.Scripts.Tipos {
 
         public CAMPANHA_CAPITULO paginaIdCapituloDestino;
 
-        public ProcessoMotorIEnumerator historiaProcesso = new ProcessoMotorIEnumerator();
+        public ProcessoMotor historiaProcesso = new ProcessoMotor();
 
         public HistoriaTextoExecucao[] historiaTextos;
 
@@ -28,7 +28,7 @@ namespace Assets.Scripts.Tipos {
 
         public int historiaIndice;
 
-        public ProcessoMotorIEnumerator historiaProcessoIndice = new ProcessoMotorIEnumerator();
+        public ProcessoMotor historiaProcessoIndice = new ProcessoMotor();
 
         public PROCESSO2 combateProcesso = PROCESSO2.ZERO;
 
@@ -68,11 +68,11 @@ namespace Assets.Scripts.Tipos {
 
         //combateDadosSorteRef: MutableRefObject<DieContainerRef | null>[];
 
-        public PROCESSO2 destinoProcesso = PROCESSO2.ZERO;
+        public ProcessoMotor destinoProcesso = new ProcessoMotor();
 
         public DestinoExecucao[] destinoItens;
 
-        public PROCESSO2 destinoProcessoRolagem;
+        public ProcessoMotor destinoProcessoRolagem = new ProcessoMotor();
 
         public int destinoRolagemTotal;
 
@@ -82,9 +82,9 @@ namespace Assets.Scripts.Tipos {
 
         public bool destinoDesativaBotoes = false;
 
-        public PROCESSO2 destinoProcessoSalvando = PROCESSO2.ZERO;
+        public ProcessoMotor destinoProcessoSalvando = new ProcessoMotor();
 
-        public PROCESSO2 destinoProcessoCurando = PROCESSO2.ZERO;
+        public ProcessoMotor destinoProcessoCurando = new ProcessoMotor();
 
 
 

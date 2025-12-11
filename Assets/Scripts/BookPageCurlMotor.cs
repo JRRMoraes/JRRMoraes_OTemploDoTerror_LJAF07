@@ -9,13 +9,15 @@ using UnityEngine.UIElements;
 using static Assets.Scripts.Tipos.Conjuntos;
 
 
-public class BookPageCurlMotor : MonoBehaviour, IPadraoObservador {
+public class BookPageCurlMotor : MonoBehaviour {
 
     public Book book;
 
     public AutoFlip autoFlip;
 
-    ProcessoMotorIEnumerator processoPagina = new ProcessoMotorIEnumerator();
+    public PadraoObservadorAlvo observadoresAoConcluir = new PadraoObservadorAlvo();
+
+    ProcessoMotor processoPagina = new ProcessoMotor();
 
     LivroJogoMotor livroJogoMotor;
 
@@ -44,22 +46,12 @@ public class BookPageCurlMotor : MonoBehaviour, IPadraoObservador {
     }
 
 
-    public void AoNotificar(OBSERVADOR_CONDICAO observadorCondicao) {
-        if (observadorCondicao != OBSERVADOR_CONDICAO.PASSAR_PAGINA_DO_BOOK)
-            return;
-        if (!LivroJogoMotor.EhValido(livroJogoMotor))
-            return;
-
-        processoPagina.Processar();
-    }
-
-
-    IEnumerator RotinaProcesso_Pagina_Iniciando(Action<PROCESSO, bool> aoAlterarProcesso) {
-        yield return null;
+    IEnumerator RotinaProcesso_Pagina_Iniciando(Action<PROCESSO> aoAlterarProcesso) {
+        aoAlterarProcesso?.Invoke(PROCESSO.INICIANDO_EXEC);
         if (paginaPanilha != null)
-            paginaPanilha.style.visibility = Uteis.ObterVisibility(false);
+            paginaPanilha.style.display = Uteis.ObterDisplayStyle(false);
         if (paginaCampanha != null)
-            paginaCampanha.style.visibility = Uteis.ObterVisibility(false);
+            paginaCampanha.style.display = Uteis.ObterDisplayStyle(false);
         yield return new WaitForSeconds(Constantes.TEMPO_ANIMACAO_PEQUENO);
         if (idPaginaAtual <= idPaginaNova) {
             if ((book.currentPage + 2) <= book.TotalPageCount)
@@ -74,24 +66,25 @@ public class BookPageCurlMotor : MonoBehaviour, IPadraoObservador {
                 autoFlip.FlipRightPage();
         }
         yield return new WaitForSeconds(Constantes.TEMPO_ANIMACAO_PEQUENO);
-        aoAlterarProcesso?.Invoke(PROCESSO.PROCESSANDO, true);
+        aoAlterarProcesso?.Invoke(PROCESSO.PROCESSANDO);
     }
 
 
-    IEnumerator RotinaProcesso_Pagina_Concluido(Action<PROCESSO, bool> aoAlterarProcesso) {
+    IEnumerator RotinaProcesso_Pagina_Concluido(Action<PROCESSO> aoAlterarProcesso) {
         /*  yield return null;
             if (paginaPanilha != null)
-                paginaPanilha.style.visibility = Uteis.ObterVisibility(true);
+                paginaPanilha.style.display = Uteis.ObterDisplayStyle(true);
             if (paginaCampanha != null)
-                paginaCampanha.style.visibility = Uteis.ObterVisibility(true);
+                paginaCampanha.style.display = Uteis.ObterDisplayStyle(true);
         */
-        aoAlterarProcesso?.Invoke(PROCESSO._FINALIZADO, true);
+        observadoresAoConcluir.Notificar(OBSERVADOR_CONDICAO.PASSAR_PAGINA_DO_BOOK);
+        aoAlterarProcesso?.Invoke(PROCESSO._FINALIZADO);
         yield return null;
     }
 
 
-    IEnumerator RotinaProcesso_Pagina_Finalizado(Action<PROCESSO, bool> aoAlterarProcesso) {
-        aoAlterarProcesso?.Invoke(PROCESSO._ZERADO, false);
+    IEnumerator RotinaProcesso_Pagina_Finalizado(Action<PROCESSO> aoAlterarProcesso) {
+        aoAlterarProcesso?.Invoke(PROCESSO._ZERADO);
         LivroJogo.INSTANCIA.observadoresAlvos.Notificar(null);
         yield return null;
     }

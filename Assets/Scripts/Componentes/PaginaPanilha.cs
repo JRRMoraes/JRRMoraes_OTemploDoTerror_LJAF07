@@ -61,9 +61,11 @@ namespace Assets.Scripts.Componentes {
                 livroJogoMotor.bookPageCurlMotor.ImporPaginaAtual(0);
                 return;
             }
-            if (!PaginaExecutora.EhValido(LivroJogo.INSTANCIA.paginaExecutora))
+            if (!PaginaExecutora.EhValido(LivroJogo.INSTANCIA.paginaExecutora)) {
+                paginaPanilha.style.display = Uteis.ObterDisplayStyle(false);
                 return;
-            paginaPanilha.style.visibility = Uteis.ObterVisibility(true);
+            }
+            paginaPanilha.style.display = Uteis.ObterDisplayStyle(true);
             if ((LivroJogo.INSTANCIA.paginaExecutora.idPagina == 1) && (LivroJogo.INSTANCIA.paginaExecutora.idCapitulo == CAMPANHA_CAPITULO.PAGINAS_INICIAIS)) {
                 panilhaTabView.activeTab = panilhaNovaTab;
                 return;

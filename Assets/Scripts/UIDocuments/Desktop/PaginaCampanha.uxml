@@ -7,8 +7,8 @@
         <ui:VisualElement name="CampanhaTituloVE" style="flex-grow: 0;">
             <ui:Label text="Título" name="CampanhaTitulo" style="-unity-font-style: bold; font-size: 32px; -unity-text-align: upper-center; white-space: pre-wrap;" />
         </ui:VisualElement>
-        <ui:Instance template="TelaHistoria" name="TelaHistoria" />
-        <ui:Instance template="TelaCombate" name="TelaCombate" style="flex-direction: row;" />
-        <ui:Instance template="TelaDestino" name="TelaDestino" />
+        <ui:Instance template="TelaHistoria" name="TelaHistoria" style="flex-grow: 1;" />
+        <ui:Instance template="TelaCombate" name="TelaCombate" style="flex-direction: row; flex-grow: 1;" />
+        <ui:Instance template="TelaDestino" name="TelaDestino" style="flex-grow: 1;" />
     </ui:VisualElement>
 </ui:UXML>
